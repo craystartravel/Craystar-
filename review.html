@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Craystar Experience | Craystar Travel Agency</title>
+<meta name="description" content="Tell us about your trip with Craystar Travel Agency. Your review helps other travelers and takes less than 2 minutes.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://craystartravelagency.com/review.html">
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #0a1628 0%, #1a2f4a 100%);
+    color: #f5f5f5;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    backdrop-filter: blur(10px);
+  }
+  .logo-area { text-align: center; margin-bottom: 1.5rem; }
+  .logo-area img { max-width: 140px; height: auto; }
+  h1 { text-align: center; margin: 0 0 0.5rem; font-size: 1.75rem; color: #d4af37; }
+  h2 { color: #d4af37; margin-bottom: 1rem; }
+  .subtitle { text-align: center; opacity: 0.85; margin-bottom: 2rem; font-size: 1rem; }
+  .field { margin-bottom: 1.25rem; }
+  label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.95rem; }
+  .required { color: #d4af37; }
+  .hint { display: block; font-size: 0.82rem; opacity: 0.7; margin-top: 0.3rem; font-weight: 400; }
+  input[type="text"], input[type="email"], select, textarea {
+    width: 100%; padding: 0.75rem 0.9rem; font-size: 1rem;
+    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px; color: #fff; font-family: inherit;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: #d4af37; background: rgba(255, 255, 255, 0.12);
+  }
+  textarea { resize: vertical; min-height: 120px; }
+  select option { background: #0a1628; color: #fff; }
+  .stars { display: flex; gap: 0.5rem; font-size: 2rem; margin-top: 0.25rem; }
+  .star { cursor: pointer; opacity: 0.3; transition: opacity 0.15s, transform 0.15s; user-select: none; }
+  .star.active { opacity: 1; color: #d4af37; }
+  .star:hover { transform: scale(1.15); }
+  .checkbox-field { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .checkbox-field input {
+    margin-top: 0.2rem; width: 18px; height: 18px;
+    accent-color: #d4af37; flex-shrink: 0;
+  }
+  .checkbox-field label { margin: 0; font-weight: 400; font-size: 0.9rem; line-height: 1.4; }
+  button, .btn {
+    display: inline-block; width: 100%; padding: 1rem;
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+    color: #0a1628; border: none; border-radius: 8px;
+    font-size: 1.05rem; font-weight: 700; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    font-family: inherit; text-decoration: none; text-align: center;
+  }
+  button:hover, .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3); }
+  .btn-secondary {
+    background: transparent; color: #d4af37;
+    border: 1px solid #d4af37; margin-top: 0.75rem;
+  }
+  .btn-secondary:hover { background: rgba(212, 175, 55, 0.1); box-shadow: none; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .thank-you, .google-prompt { display: none; text-align: center; padding: 1rem 0; }
+  .thank-you p, .google-prompt p { opacity: 0.9; margin-bottom: 0.5rem; }
+  .google-prompt .google-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+  .google-prompt .star-row {
+    color: #d4af37; font-size: 1.5rem;
+    letter-spacing: 4px; margin: 0.5rem 0 1rem;
+  }
+  .copy-note {
+    background: rgba(212, 175, 55, 0.12); border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px; padding: 0.75rem; margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .footer-note { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6; }
+  .error { color: #ff6b6b; font-size: 0.85rem; margin-top: 0.3rem; display: none; }
+  .category-badge {
+    display: inline-block; background: rgba(212, 175, 55, 0.2);
+    color: #d4af37; padding: 0.25rem 0.75rem;
+    border-radius: 999px; font-size: 0.8rem; margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- STEP 1: FORM -->
+  <div id="form-wrapper">
+    <div class="logo-area">
+      <img src="https://craystartravelagency.com/logo.png" alt="Craystar Travel Agency">
+    </div>
+
+    <h1>Share Your Experience</h1>
+    <p class="subtitle">Thank you for traveling with Craystar! Your review helps other families plan their perfect trip. Takes about 2 minutes.</p>
+
+    <form id="reviewForm" action="https://api.web3forms.com/submit" method="POST">
+
+      <!-- Web3Forms access key -->
+      <input type="hidden" name="access_key" value="f676a61a-8435-4616-ba2d-f5acd2da128a">
+      <input type="hidden" name="subject" id="subject" value="New Client Review — Craystar Travel">
+      <input type="hidden" name="from_name" value="Craystar Review Form">
+      <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
+      <!-- Auto-tagging hidden fields -->
+      <input type="hidden" name="category" id="category" value="">
+      <input type="hidden" name="supplier_group" id="supplier_group" value="">
+      <input type="hidden" name="rating_tier" id="rating_tier" value="">
+      <input type="hidden" name="submission_date" id="submission_date" value="">
+      <input type="hidden" name="suggested_page" id="suggested_page" value="">
+
+      <div class="field">
+        <label for="name">Your Name <span class="required">*</span>
+          <span class="hint">First name and last initial is fine (e.g., "Jennifer M.")</span>
+        </label>
+        <input type="text" id="name" name="name" required placeholder="Jennifer M.">
+      </div>
+
+      <div class="field">
+        <label for="email">Email <span class="required">*</span>
+          <span class="hint">So we can follow up if needed — never published.</span>
+        </label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+
+      <div class="field">
+        <label for="trip_type">What type of trip did we plan? <span class="required">*</span></label>
+        <select id="trip_type" name="trip_type" required>
+          <option value="">— Select one —</option>
+          <optgroup label="Disney">
+            <option value="Walt Disney World" data-group="disney" data-page="/disney.html">Walt Disney World</option>
+            <option value="Disneyland" data-group="disney" data-page="/disney.html">Disneyland</option>
+            <option value="Disney Cruise Line" data-group="disney" data-page="/disney.html">Disney Cruise Line</option>
+            <option value="Aulani" data-group="disney" data-page="/disney.html">Aulani</option>
+            <option value="Adventures by Disney" data-group="disney" data-page="/disney.html">Adventures by Disney</option>
+          </optgroup>
+          <optgroup label="Universal">
+            <option value="Universal Orlando" data-group="universal" data-page="/universal.html">Universal Orlando</option>
+            <option value="Universal Hollywood" data-group="universal" data-page="/universal.html">Universal Hollywood</option>
+          </optgroup>
+          <optgroup label="Cruises">
+            <option value="Royal Caribbean Cruise" data-group="cruise" data-page="/cruises.html">Royal Caribbean</option>
+            <option value="Carnival Cruise" data-group="cruise" data-page="/cruises.html">Carnival</option>
+            <option value="Norwegian Cruise" data-group="cruise" data-page="/cruises.html">Norwegian</option>
+            <option value="Celebrity Cruise" data-group="cruise" data-page="/cruises.html">Celebrity</option>
+            <option value="Princess Cruise" data-group="cruise" data-page="/cruises.html">Princess</option>
+            <option value="Viking Cruise" data-group="cruise" data-page="/cruises.html">Viking</option>
+          </optgroup>
+          <optgroup label="All-Inclusive Resorts">
+            <option value="Sandals Resort" data-group="resort" data-page="/resorts.html">Sandals</option>
+            <option value="Beaches Resort" data-group="resort" data-page="/resorts.html">Beaches</option>
+            <option value="Hyatt Inclusive Collection" data-group="resort" data-page="/resorts.html">Hyatt Inclusive Collection</option>
+            <option value="Riu" data-group="resort" data-page="/resorts.html">Riu</option>
+            <option value="Club Med" data-group="resort" data-page="/resorts.html">Club Med</option>
+          </optgroup>
+          <optgroup label="Occasion">
+            <option value="Honeymoon" data-group="occasion" data-page="/resorts.html">Honeymoon</option>
+            <option value="Destination Wedding" data-group="occasion" data-page="/resorts.html">Destination Wedding</option>
+            <option value="Group Travel" data-group="occasion" data-page="/">Group Travel</option>
+            <option value="Other" data-group="other" data-page="/">Other</option>
+          </optgroup>
+        </select>
+        <div id="category-display"></div>
+      </div>
+
+      <div class="field">
+        <label for="trip_month">When did you travel?
+          <span class="hint">Month and year (e.g., "March 2026")</span>
+        </label>
+        <input type="text" id="trip_month" name="trip_month" placeholder="March 2026">
+      </div>
+
+      <div class="field">
+        <label>Your Rating <span class="required">*</span>
+          <span class="hint">Tap the stars</span>
+        </label>
+        <div class="stars" role="radiogroup" aria-label="Star rating">
+          <span class="star" data-value="1" role="radio" aria-label="1 star" tabindex="0">★</span>
+          <span class="star" data-value="2" role="radio" aria-label="2 stars" tabindex="0">★</span>
+          <span class="star" data-value="3" role="radio" aria-label="3 stars" tabindex="0">★</span>
+          <span class="star" data-value="4" role="radio" aria-label="4 stars" tabindex="0">★</span>
+          <span class="star" data-value="5" role="radio" aria-label="5 stars" tabindex="0">★</span>
+        </div>
+        <input type="hidden" id="rating" name="rating" required>
+        <div class="error" id="rating-error">Please select a star rating.</div>
+      </div>
+
+      <div class="field">
+        <label for="review">Your Review <span class="required">*</span>
+          <span class="hint">2–5 sentences is perfect. What stood out? What did we get right?</span>
+        </label>
+        <textarea id="review" name="review" required minlength="40" placeholder="Eric planned every detail of our trip and even got us..."></textarea>
+      </div>
+
+      <div class="checkbox-field">
+        <input type="checkbox" id="permission" name="permission" value="Yes — publish with first name and last initial" required>
+        <label for="permission">
+          I give Craystar Travel Agency permission to share this review publicly on their website and social media, using my first name and last initial only. <span class="required">*</span>
+        </label>
+      </div>
+
+      <button type="submit" id="submitBtn">Send My Review</button>
+
+    </form>
+
+    <p class="footer-note">Your email is never published. Thank you for supporting Craystar!</p>
+  </div>
+
+  <!-- STEP 2A: GOOGLE PROMPT (shows only for 5-star reviews) -->
+  <div id="google-prompt" class="google-prompt">
+    <div class="google-icon">🎉</div>
+    <h2>Wow — thank you!</h2>
+    <div class="star-row">★★★★★</div>
+    <p>Your review means the world to us. Since you had such a great experience, would you mind sharing it on <strong>Google</strong> too?</p>
+    <p>It takes 30 seconds and helps other travelers find Craystar.</p>
+
+    <div class="copy-note" id="copyNote" style="display:none;">
+      ✅ We copied your review to your clipboard — just paste it on Google!
+    </div>
+
+    <a href="#" id="googleLink" class="btn" target="_blank" rel="noopener">
+      ⭐ Leave a Google Review
+    </a>
+    <a href="https://craystartravelagency.com/" class="btn btn-secondary">
+      No thanks — back to Craystar
+    </a>
+  </div>
+
+  <!-- STEP 2B: STANDARD THANK YOU (for 1-4 star reviews) -->
+  <div id="thank-you" class="thank-you">
+    <h2>Thank you! 🌟</h2>
+    <p>Your review has been sent to Eric.</p>
+    <p>We appreciate your honest feedback — it helps us make every future trip even better.</p>
+    <p>If there's anything we could have done differently, Eric will reach out personally.</p>
+    <p style="margin-top: 1.5rem;">
+      <a href="https://craystartravelagency.com/" style="color:#d4af37;text-decoration:none;font-weight:600;">← Back to Craystar</a>
+    </p>
+  </div>
+
+</div>
+
+<script>
+  // ============================================================
+  // CONFIGURATION
+  // ============================================================
+
+  // 👉 IMPORTANT: Replace this with your actual Google review link once
+  // your Google Business Profile is verified.
+  //
+  // How to get yours:
+  // 1. Go to Google Business Profile → Home
+  // 2. Click "Get more reviews" → Share review form
+  // 3. Copy the short link (looks like https://g.page/r/XXXXXXXX/review)
+  // 4. Paste it below, replacing the URL.
+  //
+  // Until you replace this, 5-star clients will see a "Google review"
+  // button that goes to a generic Google search — still works, but
+  // your branded link is way better.
+  const GOOGLE_REVIEW_URL = 'https://g.page/r/CYTNXOI0e91SEBM/review';
+
+  // ============================================================
+  // STAR RATING
+  // ============================================================
+
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+  const ratingError = document.getElementById('rating-error');
+
+  function setRating(value) {
+    ratingInput.value = value;
+    stars.forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.value) <= value);
+    });
+    ratingError.style.display = 'none';
+    updateTags();
+  }
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => setRating(parseInt(star.dataset.value)));
+    star.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setRating(parseInt(star.dataset.value));
+      }
+    });
+  });
+
+  // ============================================================
+  // AUTO-TAGGING — fills hidden fields whenever trip type or rating changes
+  // ============================================================
+
+  const tripTypeSelect = document.getElementById('trip_type');
+  const categoryDisplay = document.getElementById('category-display');
+
+  function updateTags() {
+    const selected = tripTypeSelect.options[tripTypeSelect.selectedIndex];
+    const group = selected?.dataset?.group || '';
+    const page = selected?.dataset?.page || '';
+    const tripType = selected?.value || '';
+    const rating = ratingInput.value || '';
+
+    // Category tag (supplier group)
+    document.getElementById('category').value = group;
+    document.getElementById('supplier_group').value = group.toUpperCase();
+    document.getElementById('suggested_page').value = page;
+
+    // Rating tier for easy email filtering
+    let tier = '';
+    if (rating === '5') tier = '⭐ 5-STAR (publish + Google)';
+    else if (rating === '4') tier = '4-star (publish)';
+    else if (rating === '3') tier = '3-star (review internally)';
+    else if (rating === '1' || rating === '2') tier = '⚠️ LOW — follow up personally';
+    document.getElementById('rating_tier').value = tier;
+
+    // Submission date for record-keeping
+    document.getElementById('submission_date').value = new Date().toISOString().split('T')[0];
+
+    // Dynamic subject line for Eric's inbox — makes triage instant
+    if (tripType && rating) {
+      const ratingStars = '★'.repeat(parseInt(rating)) + '☆'.repeat(5 - parseInt(rating));
+      document.getElementById('subject').value =
+        `${ratingStars} ${tripType} Review — Craystar`;
+    }
+
+    // Visible category badge
+    if (group) {
+      const groupLabels = {
+        disney: '🏰 Disney',
+        universal: '🎬 Universal',
+        cruise: '🚢 Cruise',
+        resort: '🌴 Resort',
+        occasion: '💍 Special Occasion',
+        other: '✈️ Other'
+      };
+      categoryDisplay.innerHTML = `<span class="category-badge">${groupLabels[group] || group}</span>`;
+    } else {
+      categoryDisplay.innerHTML = '';
+    }
+  }
+
+  tripTypeSelect.addEventListener('change', updateTags);
+
+  // ============================================================
+  // FORM SUBMISSION + SMART REDIRECT
+  // ============================================================
+
+  const form = document.getElementById('reviewForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formWrapper = document.getElementById('form-wrapper');
+  const googlePrompt = document.getElementById('google-prompt');
+  const thankYou = document.getElementById('thank-you');
+  const googleLink = document.getElementById('googleLink');
+  const copyNote = document.getElementById('copyNote');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!ratingInput.value) {
+      ratingError.style.display = 'block';
+      document.querySelector('.stars').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    updateTags();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    const formData = new FormData(form);
+    const rating = parseInt(ratingInput.value);
+    const reviewText = document.getElementById('review').value;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        formWrapper.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // 5-star → prompt for Google review
+        // 1-4 stars → standard thank you (don't funnel unhappy clients to public Google)
+        if (rating === 5) {
+          // Pre-copy their review text so they can paste it on Google
+          try {
+            await navigator.clipboard.writeText(reviewText);
+            copyNote.style.display = 'block';
+          } catch (err) {
+            // Clipboard not available — not critical
+          }
+          googleLink.href = GOOGLE_REVIEW_URL;
+          googlePrompt.style.display = 'block';
+        } else {
+          thankYou.style.display = 'block';
+        }
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send My Review';
+      alert('Something went wrong. Please try again, or email your review to eric.crayton@craystartravelagency.com');
+    }
+  });
+</script>
+
+</body>
+</html>
