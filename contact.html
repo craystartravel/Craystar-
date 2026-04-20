@@ -267,6 +267,26 @@
     visibility: hidden;
   }
  
+  /* Conditional follow-up field — distinct so users notice it appearing */
+  .sn-conditional {
+    border-left: 3px solid var(--sn-accent);
+    padding-left: 1rem;
+    margin-left: .25rem;
+    background: #fdfbf4;
+    padding-top: .85rem;
+    padding-right: .85rem;
+    padding-bottom: .85rem;
+    border-radius: 0 6px 6px 0;
+    animation: sn-fade-in .25s ease-out;
+  }
+  @keyframes sn-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .sn-conditional > label:first-child {
+    color: var(--sn-accent-dark);
+  }
+ 
   /* Accessibility: never hide focus */
   .sn-form *:focus-visible {
     outline: 3px solid rgba(184,134,11,.4);
@@ -275,6 +295,15 @@
 </style>
 </head>
 <body>
+ 
+<!-- 
+  ============================================================
+  NOTE: If your existing site has a shared header/nav include,
+  paste it here (or copy the <header>/<nav> markup from one of
+  your other pages like cruises.html). This page inherits your
+  styles.css so the header should style correctly.
+  ============================================================
+-->
  
 <main>
  
@@ -448,6 +477,28 @@
           <span class="sn-help">As an SNG Certified Accessible Travel Advocate®, I can arrange rentals delivered straight to your stateroom.</span>
         </div>
  
+        <!-- Conditional: shown when bringing own wheelchair / power chair / scooter -->
+        <div class="sn-field sn-conditional" id="sn-dimensions-field" hidden>
+          <label for="equipment_width">Width of your device <span class="sn-required" aria-hidden="true">*</span></label>
+          <select id="equipment_width" name="Equipment Width">
+            <option value="">— Select width —</option>
+            <option value='Under 22"'>Under 22" wide</option>
+            <option value='22"–24"'>22"–24" wide</option>
+            <option value='25"–26"'>25"–26" wide</option>
+            <option value='27"–28"'>27"–28" wide</option>
+            <option value='29"–30"'>29"–30" wide</option>
+            <option value='Over 30"'>Over 30" wide</option>
+            <option value="Not sure — will measure">Not sure — I'll measure and follow up</option>
+          </select>
+          <span class="sn-help">Width at the widest point is the critical measurement for cabin doorways. Standard cabin doors are about 22–24"; accessible staterooms typically fit devices up to 32"+.</span>
+ 
+          <div style="margin-top:.9rem;">
+            <label for="equipment_specs">Length, weight, or make/model <span class="sn-optional">(optional)</span></label>
+            <input type="text" id="equipment_specs" name="Equipment Specs" placeholder='e.g., Pride Go-Go Elite, 40" long, 95 lbs'>
+            <span class="sn-help">Helpful for tender boats, elevators, and weight limits on some excursions.</span>
+          </div>
+        </div>
+ 
         <div class="sn-field">
           <label>Oxygen or respiratory equipment</label>
           <div class="sn-radios" role="radiogroup" aria-label="Oxygen needs">
@@ -598,13 +649,44 @@
     <span>All cruise line names and logos are property of their respective owners.</span>
   </div>
 </footer>
--->
  
 <script>
   (function() {
     const form = document.getElementById('sn-form');
     const result = document.getElementById('sn-result');
     const btn = document.getElementById('sn-submit-btn');
+ 
+    // ==========================================================
+    // Conditional dimensions field: show when user selects
+    // "Bringing my own" or "Combination" AND has checked a
+    // wheelchair, power wheelchair, or mobility scooter.
+    // ==========================================================
+    const dimensionsField = document.getElementById('sn-dimensions-field');
+    const widthSelect = document.getElementById('equipment_width');
+    const DIMENSIONED_DEVICES = ['Manual wheelchair', 'Power wheelchair', 'Mobility scooter'];
+    const BRING_OWN_VALUES = ['Bringing my own', 'Combination'];
+ 
+    function updateDimensionsVisibility() {
+      const sourceEl = document.querySelector('input[name="Equipment Source"]:checked');
+      const bringsOwn = sourceEl && BRING_OWN_VALUES.includes(sourceEl.value);
+      const hasLargeDevice = Array.from(
+        document.querySelectorAll('input[name="Mobility Aids"]')
+      ).some(cb => cb.checked && DIMENSIONED_DEVICES.includes(cb.value));
+ 
+      const shouldShow = bringsOwn && hasLargeDevice;
+      dimensionsField.hidden = !shouldShow;
+      widthSelect.required = shouldShow;
+      if (!shouldShow) {
+        widthSelect.value = '';
+        const specsInput = document.getElementById('equipment_specs');
+        if (specsInput) specsInput.value = '';
+      }
+    }
+ 
+    document.querySelectorAll('input[name="Equipment Source"]')
+      .forEach(r => r.addEventListener('change', updateDimensionsVisibility));
+    document.querySelectorAll('input[name="Mobility Aids"]')
+      .forEach(cb => cb.addEventListener('change', updateDimensionsVisibility));
  
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
