@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessible Cruise Planning | Special Needs Intake — Craystar Travel Agency</title>
+<meta name="description" content="Craystar Travel Agency is SNG Certified Accessible Travel Advocate®. Tell us about your accessibility needs and we'll plan a cruise built around you.">
+<link rel="canonical" href="https://craystartravelagency.com/special-needs.html">
+<meta name="robots" content="index,follow">
+ 
+<!-- Inherit your site's existing styles (header, footer, nav, typography) -->
+<link rel="stylesheet" href="styles.css">
+ 
+<!-- Scoped styles for this page's intake form -->
+<style>
+  :root {
+    --sn-bg: #fdfbf4;
+    --sn-border: #e5d9b6;
+    --sn-accent: #b8860b;
+    --sn-accent-dark: #8c6609;
+    --sn-ink: #1a1a1a;
+    --sn-muted: #555;
+    --sn-error: #b33a3a;
+    --sn-success: #1f6b3a;
+  }
+ 
+  .sn-hero {
+    max-width: 880px;
+    margin: 2rem auto 1.5rem;
+    padding: 2rem 1.5rem 1rem;
+    text-align: center;
+  }
+  .sn-hero .sn-eyebrow {
+    display: inline-block;
+    font-size: .75rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--sn-accent);
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+  .sn-hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.25rem);
+    margin: 0 0 .75rem;
+    color: var(--sn-ink);
+    line-height: 1.2;
+  }
+  .sn-hero p {
+    max-width: 640px;
+    margin: 0 auto;
+    color: var(--sn-muted);
+    line-height: 1.6;
+    font-size: 1.02rem;
+  }
+ 
+  .sn-credential-strip {
+    max-width: 880px;
+    margin: 0 auto 1.5rem;
+    padding: .9rem 1.2rem;
+    background: var(--sn-bg);
+    border: 1px solid var(--sn-border);
+    border-left: 4px solid var(--sn-accent);
+    border-radius: 8px;
+    font-size: .95rem;
+    color: #333;
+    line-height: 1.5;
+  }
+  .sn-credential-strip strong { color: var(--sn-ink); }
+ 
+  .sn-form-wrap {
+    max-width: 880px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+ 
+  .sn-form {
+    background: #fff;
+    border: 1px solid #e8e4d6;
+    border-radius: 12px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,.04);
+  }
+ 
+  .sn-form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+  }
+  .sn-form fieldset:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+  .sn-form legend {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--sn-ink);
+    padding: 0;
+    margin-bottom: 1rem;
+    display: block;
+    width: 100%;
+  }
+  .sn-form legend .sn-step {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    background: var(--sn-accent);
+    color: #fff;
+    border-radius: 50%;
+    font-size: .8rem;
+    margin-right: .6rem;
+    vertical-align: middle;
+  }
+ 
+  .sn-field { margin-bottom: 1.1rem; }
+  .sn-field label {
+    display: block;
+    font-weight: 600;
+    color: var(--sn-ink);
+    margin-bottom: .4rem;
+    font-size: .95rem;
+  }
+  .sn-field .sn-optional {
+    font-weight: 400;
+    color: #999;
+    font-size: .85rem;
+    margin-left: .3rem;
+  }
+  .sn-field .sn-help {
+    display: block;
+    color: var(--sn-muted);
+    font-size: .85rem;
+    margin-top: .3rem;
+    line-height: 1.4;
+  }
+ 
+  .sn-form input[type=text],
+  .sn-form input[type=email],
+  .sn-form input[type=tel],
+  .sn-form input[type=date],
+  .sn-form input[type=number],
+  .sn-form select,
+  .sn-form textarea {
+    width: 100%;
+    padding: .75rem .85rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1.5px solid #d8d4c4;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--sn-ink);
+    min-height: 44px;
+    box-sizing: border-box;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .sn-form input:focus,
+  .sn-form select:focus,
+  .sn-form textarea:focus {
+    outline: none;
+    border-color: var(--sn-accent);
+    box-shadow: 0 0 0 3px rgba(184,134,11,.15);
+  }
+  .sn-form textarea { min-height: 100px; resize: vertical; }
+ 
+  .sn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 560px) { .sn-row { grid-template-columns: 1fr; } }
+ 
+  .sn-checks, .sn-radios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem .75rem;
+    margin-top: .3rem;
+  }
+  @media (max-width: 560px) {
+    .sn-checks, .sn-radios { grid-template-columns: 1fr; }
+  }
+  .sn-check-item, .sn-radio-item {
+    display: flex;
+    align-items: flex-start;
+    padding: .6rem .75rem;
+    border: 1.5px solid #e4e0d0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: .95rem;
+    line-height: 1.35;
+    min-height: 44px;
+    background: #fafaf7;
+    transition: border-color .15s, background .15s;
+  }
+  .sn-check-item:hover, .sn-radio-item:hover {
+    border-color: var(--sn-accent);
+    background: #fff;
+  }
+  .sn-check-item input, .sn-radio-item input {
+    margin: 2px .55rem 0 0;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--sn-accent);
+  }
+ 
+  .sn-required { color: var(--sn-error); margin-left: .15rem; }
+ 
+  .sn-submit-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .sn-submit {
+    background: var(--sn-accent);
+    color: #fff;
+    border: none;
+    padding: .95rem 2.5rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: .02em;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 52px;
+    min-width: 240px;
+    transition: background .15s, transform .1s;
+  }
+  .sn-submit:hover { background: var(--sn-accent-dark); }
+  .sn-submit:active { transform: translateY(1px); }
+  .sn-submit:disabled { opacity: .6; cursor: not-allowed; }
+ 
+  .sn-privacy-note {
+    font-size: .85rem;
+    color: var(--sn-muted);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 520px;
+  }
+  .sn-privacy-note a { color: var(--sn-accent-dark); }
+ 
+  #sn-result {
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    font-size: .98rem;
+    line-height: 1.5;
+    display: none;
+  }
+  #sn-result.sn-success-box {
+    display: block;
+    background: #e8f5ed;
+    border: 1px solid #b8ddc4;
+    color: var(--sn-success);
+  }
+  #sn-result.sn-error-box {
+    display: block;
+    background: #fbe9e9;
+    border: 1px solid #e8b8b8;
+    color: var(--sn-error);
+  }
+ 
+  /* Honeypot — hidden from humans, visible to bots */
+  .sn-honeypot {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    visibility: hidden;
+  }
+ 
+  /* Accessibility: never hide focus */
+  .sn-form *:focus-visible {
+    outline: 3px solid rgba(184,134,11,.4);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+ 
+<main>
+ 
+  <section class="sn-hero">
+    <span class="sn-eyebrow">Accessible Cruise Planning</span>
+    <h1>Let's plan a cruise built around you.</h1>
+    <p>Share a few details about your trip and any accessibility needs. We'll reach out within one business day with personalized recommendations — at no cost to you.</p>
+  </section>
+ 
+  <div class="sn-credential-strip">
+    <strong>SNG Certified Accessible Travel Advocate<sup>®</sup>.</strong>
+    Craystar Travel Agency is certified through <a href="https://www.specialneedsatsea.com/" target="_blank" rel="noopener">Special Needs Group / Special Needs at Sea</a> to coordinate wheelchairs, scooters, oxygen, hospital beds, and specialty equipment — delivered directly to your stateroom.
+  </div>
+ 
+  <div class="sn-form-wrap">
+    <form id="sn-form" class="sn-form" novalidate>
+ 
+      <!-- Web3Forms hidden config -->
+      <input type="hidden" name="access_key" value="49234a63-f917-4fd7-9abf-fe428e19ce34">
+      <input type="hidden" name="subject" value="Special Needs Cruise Inquiry — Craystar">
+      <input type="hidden" name="from_name" value="Craystar Special Needs Intake Form">
+      <input type="hidden" name="redirect" value="false">
+      <!-- Honeypot -->
+      <div class="sn-honeypot" aria-hidden="true">
+        <label>Leave this field empty<input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></label>
+      </div>
+ 
+      <!-- ========== SECTION 1: CONTACT ========== -->
+      <fieldset>
+        <legend><span class="sn-step">1</span>Your Contact Information</legend>
+ 
+        <div class="sn-row">
+          <div class="sn-field">
+            <label for="first_name">First name <span class="sn-required" aria-hidden="true">*</span></label>
+            <input type="text" id="first_name" name="First Name" required autocomplete="given-name">
+          </div>
+          <div class="sn-field">
+            <label for="last_name">Last name <span class="sn-required" aria-hidden="true">*</span></label>
+            <input type="text" id="last_name" name="Last Name" required autocomplete="family-name">
+          </div>
+        </div>
+ 
+        <div class="sn-row">
+          <div class="sn-field">
+            <label for="email">Email <span class="sn-required" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <div class="sn-field">
+            <label for="phone">Phone <span class="sn-required" aria-hidden="true">*</span></label>
+            <input type="tel" id="phone" name="Phone" required autocomplete="tel">
+          </div>
+        </div>
+ 
+        <div class="sn-row">
+          <div class="sn-field">
+            <label for="city_state">City & State <span class="sn-optional">(optional)</span></label>
+            <input type="text" id="city_state" name="City and State" autocomplete="address-level2">
+          </div>
+          <div class="sn-field">
+            <label for="contact_pref">Preferred contact method</label>
+            <select id="contact_pref" name="Preferred Contact Method">
+              <option value="Email">Email</option>
+              <option value="Phone">Phone call</option>
+              <option value="Text">Text message</option>
+              <option value="No preference">No preference</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+ 
+      <!-- ========== SECTION 2: TRIP DETAILS ========== -->
+      <fieldset>
+        <legend><span class="sn-step">2</span>Your Trip</legend>
+ 
+        <div class="sn-row">
+          <div class="sn-field">
+            <label for="cruise_line">Preferred cruise line</label>
+            <select id="cruise_line" name="Preferred Cruise Line">
+              <option value="Royal Caribbean (featured)">Royal Caribbean</option>
+              <option value="Not sure — help me choose">Not sure — help me choose</option>
+              <option value="Disney Cruise Line">Disney Cruise Line</option>
+              <option value="Celebrity Cruises">Celebrity Cruises</option>
+              <option value="Princess Cruises">Princess Cruises</option>
+              <option value="Holland America">Holland America</option>
+              <option value="Norwegian">Norwegian</option>
+              <option value="Carnival">Carnival</option>
+              <option value="MSC">MSC</option>
+              <option value="Virgin Voyages">Virgin Voyages</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="sn-field">
+            <label for="departure_port">Preferred departure port <span class="sn-optional">(optional)</span></label>
+            <input type="text" id="departure_port" name="Preferred Departure Port" placeholder="e.g., Galveston, Miami, Port Canaveral">
+          </div>
+        </div>
+ 
+        <div class="sn-row">
+          <div class="sn-field">
+            <label for="travel_dates">Travel dates or timeframe</label>
+            <input type="text" id="travel_dates" name="Travel Dates" placeholder="e.g., Spring 2026, flexible in October">
+          </div>
+          <div class="sn-field">
+            <label for="trip_length">Trip length</label>
+            <select id="trip_length" name="Trip Length">
+              <option value="Not sure yet">Not sure yet</option>
+              <option value="3–4 nights">3–4 nights</option>
+              <option value="5–6 nights">5–6 nights</option>
+              <option value="7 nights">7 nights</option>
+              <option value="8–10 nights">8–10 nights</option>
+              <option value="11+ nights">11+ nights</option>
+            </select>
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label for="destinations">Destinations of interest <span class="sn-optional">(optional)</span></label>
+          <input type="text" id="destinations" name="Destinations of Interest" placeholder="e.g., Caribbean, Alaska, Mediterranean, Bahamas">
+        </div>
+ 
+        <div class="sn-row">
+          <div class="sn-field">
+            <label for="adults">Number of adults</label>
+            <input type="number" id="adults" name="Number of Adults" min="1" max="20" value="2">
+          </div>
+          <div class="sn-field">
+            <label for="children">Children (and ages) <span class="sn-optional">(optional)</span></label>
+            <input type="text" id="children" name="Children and Ages" placeholder="e.g., 2 kids (ages 6 and 9)">
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label for="budget">Approximate budget <span class="sn-optional">(optional)</span></label>
+          <select id="budget" name="Approximate Budget">
+            <option value="Not sure yet">Not sure yet</option>
+            <option value="Under $1,500 per person">Under $1,500 per person</option>
+            <option value="$1,500–$2,500 per person">$1,500–$2,500 per person</option>
+            <option value="$2,500–$4,000 per person">$2,500–$4,000 per person</option>
+            <option value="$4,000–$6,000 per person">$4,000–$6,000 per person</option>
+            <option value="$6,000+ per person">$6,000+ per person</option>
+            <option value="Total budget — I'll specify in notes">Total budget — I'll specify in notes</option>
+          </select>
+          <span class="sn-help">Helps us match you to the right cruise line and stateroom category.</span>
+        </div>
+      </fieldset>
+ 
+      <!-- ========== SECTION 3: MOBILITY & EQUIPMENT ========== -->
+      <fieldset>
+        <legend><span class="sn-step">3</span>Mobility & Equipment Needs</legend>
+ 
+        <div class="sn-field">
+          <label>Mobility aids used (check all that apply)</label>
+          <div class="sn-checks" role="group" aria-label="Mobility aids">
+            <label class="sn-check-item"><input type="checkbox" name="Mobility Aids" value="Manual wheelchair">Manual wheelchair</label>
+            <label class="sn-check-item"><input type="checkbox" name="Mobility Aids" value="Power wheelchair">Power wheelchair</label>
+            <label class="sn-check-item"><input type="checkbox" name="Mobility Aids" value="Mobility scooter">Mobility scooter</label>
+            <label class="sn-check-item"><input type="checkbox" name="Mobility Aids" value="Walker or rollator">Walker / rollator</label>
+            <label class="sn-check-item"><input type="checkbox" name="Mobility Aids" value="Cane">Cane</label>
+            <label class="sn-check-item"><input type="checkbox" name="Mobility Aids" value="None currently, but may need assistance">May need assistance</label>
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label>Bringing your own equipment or renting?</label>
+          <div class="sn-radios" role="radiogroup" aria-label="Equipment source">
+            <label class="sn-radio-item"><input type="radio" name="Equipment Source" value="Bringing my own">Bringing my own</label>
+            <label class="sn-radio-item"><input type="radio" name="Equipment Source" value="Need to rent">Need to rent for the trip</label>
+            <label class="sn-radio-item"><input type="radio" name="Equipment Source" value="Combination">Combination</label>
+            <label class="sn-radio-item"><input type="radio" name="Equipment Source" value="Not applicable">Not applicable</label>
+          </div>
+          <span class="sn-help">As an SNG Certified Accessible Travel Advocate®, I can arrange rentals delivered straight to your stateroom.</span>
+        </div>
+ 
+        <div class="sn-field">
+          <label>Oxygen or respiratory equipment</label>
+          <div class="sn-radios" role="radiogroup" aria-label="Oxygen needs">
+            <label class="sn-radio-item"><input type="radio" name="Oxygen Needs" value="None">None</label>
+            <label class="sn-radio-item"><input type="radio" name="Oxygen Needs" value="Continuous oxygen">Continuous oxygen</label>
+            <label class="sn-radio-item"><input type="radio" name="Oxygen Needs" value="As-needed oxygen">As-needed oxygen</label>
+            <label class="sn-radio-item"><input type="radio" name="Oxygen Needs" value="CPAP or BiPAP">CPAP or BiPAP</label>
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label>Other medical equipment needed <span class="sn-optional">(check all that apply)</span></label>
+          <div class="sn-checks" role="group" aria-label="Other medical equipment">
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Hospital bed">Hospital bed</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Specialty mattress">Specialty mattress</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Patient lift">Patient lift</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Shower chair">Shower chair</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Commode">Commode</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Raised toilet seat">Raised toilet seat</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Bedside rails">Bedside rails</label>
+            <label class="sn-check-item"><input type="checkbox" name="Other Equipment" value="Refrigerated medication storage">Refrigerated medication</label>
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label>Accessible stateroom</label>
+          <div class="sn-radios" role="radiogroup" aria-label="Accessible stateroom">
+            <label class="sn-radio-item"><input type="radio" name="Accessible Stateroom" value="Required">Required</label>
+            <label class="sn-radio-item"><input type="radio" name="Accessible Stateroom" value="Strongly preferred">Strongly preferred</label>
+            <label class="sn-radio-item"><input type="radio" name="Accessible Stateroom" value="Helpful but not required">Helpful, not required</label>
+            <label class="sn-radio-item"><input type="radio" name="Accessible Stateroom" value="Not needed">Not needed</label>
+          </div>
+          <span class="sn-help">Accessible staterooms offer wider doorways, roll-in showers, and more floor space — and sell out early.</span>
+        </div>
+      </fieldset>
+ 
+      <!-- ========== SECTION 4: OTHER CONSIDERATIONS ========== -->
+      <fieldset>
+        <legend><span class="sn-step">4</span>Other Considerations</legend>
+ 
+        <div class="sn-field">
+          <label>Sensory or cognitive considerations <span class="sn-optional">(check all that apply)</span></label>
+          <div class="sn-checks" role="group" aria-label="Sensory or cognitive considerations">
+            <label class="sn-check-item"><input type="checkbox" name="Sensory or Cognitive" value="Vision impairment">Vision impairment</label>
+            <label class="sn-check-item"><input type="checkbox" name="Sensory or Cognitive" value="Hearing impairment">Hearing impairment</label>
+            <label class="sn-check-item"><input type="checkbox" name="Sensory or Cognitive" value="Autism spectrum">Autism spectrum</label>
+            <label class="sn-check-item"><input type="checkbox" name="Sensory or Cognitive" value="Dementia or memory care">Dementia / memory care</label>
+            <label class="sn-check-item"><input type="checkbox" name="Sensory or Cognitive" value="Anxiety or sensory sensitivity">Anxiety / sensory sensitivity</label>
+            <label class="sn-check-item"><input type="checkbox" name="Sensory or Cognitive" value="Service animal traveling">Service animal</label>
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label for="dietary">Dietary restrictions or food allergies <span class="sn-optional">(optional)</span></label>
+          <input type="text" id="dietary" name="Dietary Needs" placeholder="e.g., gluten-free, peanut allergy, pureed diet">
+        </div>
+ 
+        <div class="sn-field">
+          <label>Shore excursion preference</label>
+          <div class="sn-radios" role="radiogroup" aria-label="Shore excursions">
+            <label class="sn-radio-item"><input type="radio" name="Shore Excursions" value="Accessible excursions only">Accessible excursions only</label>
+            <label class="sn-radio-item"><input type="radio" name="Shore Excursions" value="Limited walking preferred">Limited walking preferred</label>
+            <label class="sn-radio-item"><input type="radio" name="Shore Excursions" value="Standard is fine">Standard is fine</label>
+            <label class="sn-radio-item"><input type="radio" name="Shore Excursions" value="Prefer to stay on ship">Prefer to stay on ship</label>
+          </div>
+        </div>
+ 
+        <div class="sn-field">
+          <label for="notes">Anything else we should know? <span class="sn-optional">(optional)</span></label>
+          <textarea id="notes" name="Additional Notes" placeholder="Share anything that would help us plan — medical considerations, past cruise experiences, must-haves, things to avoid, celebrations, etc."></textarea>
+        </div>
+ 
+        <div class="sn-field">
+          <label for="heard_about">How did you hear about Craystar?</label>
+          <select id="heard_about" name="How Heard About Us">
+            <option value="">— Select —</option>
+            <option value="Google search">Google search</option>
+            <option value="Referral from a friend">Referral from a friend</option>
+            <option value="Social media">Social media (Facebook / Nextdoor / etc.)</option>
+            <option value="Host Agency Reviews">Host Agency Reviews</option>
+            <option value="Repeat client">I'm a repeat client</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </fieldset>
+ 
+      <!-- ========== SUBMIT ========== -->
+      <div class="sn-submit-row">
+        <div id="sn-result" role="status" aria-live="polite"></div>
+        <button type="submit" class="sn-submit" id="sn-submit-btn">Send My Request</button>
+        <p class="sn-privacy-note">
+          Your information is used only to plan your trip. Craystar never shares or sells client information. See our <a href="privacy.html">privacy policy</a>.
+        </p>
+      </div>
+ 
+    </form>
+  </div>
+ 
+</main>
+ 
+</section>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><img class="brand-logo" src="logo.png" alt="Craystar Travel Agency"></div>
+      <p class="tag">Your trusted travel advisor for Disney, Universal, cruises, and all-inclusive escapes.</p>
+    </div>
+    <div>
+      <h5>Destinations</h5>
+      <ul>
+        <li><a href="disney.html">Disney</a></li>
+        <li><a href="universal.html">Universal</a></li>
+        <li><a href="cruises.html">Cruises</a></li>
+        <li><a href="resorts.html">All-Inclusive</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul class="footer-contact">
+        <li class="contact-item">
+  <span class="contact-icon">✉</span>
+  <a href="mailto:eric.crayton@craystartravelagency.com">
+    eric.crayton@craystartravelagency.com
+  </a>
+</li>
+        <li class="contact-item">
+  <span class="contact-icon">📞</span>
+  <a href="tel:4177710910">
+    417-771-0910 (Call or Text)
+  </a>
+</li>
+       <li><span class="contact-icon">📍</span>Available Nationwide</li>
+       <li><span class="contact-icon">⏰</span>Mon-Fri: 9am - 6pm CST</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Follow</h5>
+      <ul>
+        <li><a href="https://www.instagram.com/craystartravel/">Instagram</a></li>
+        <li><a href="https://www.facebook.com/craystartravel">Facebook</a></li>
+      </ul>
+      </div>
+      <a href="https://specialneedsatsea.com/quote/?aid=268408"><img border="0" alt="Rent a Scooter for your Cruise Today!" src="images/SNG1.gif" /></a>
+    </div>
+  </div>
+  <div class="legal">
+    <span>© 2026 Craystar Travel Agency. Independent advisor with Riverdale Travel.</span>
+    <span>All cruise line names and logos are property of their respective owners.</span>
+  </div>
+</footer>
+-->
+ 
+<script>
+  (function() {
+    const form = document.getElementById('sn-form');
+    const result = document.getElementById('sn-result');
+    const btn = document.getElementById('sn-submit-btn');
+ 
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+ 
+      // Basic required-field check
+      if (!form.checkValidity()) {
+        result.className = 'sn-error-box';
+        result.textContent = 'Please fill in all required fields (marked with *).';
+        form.reportValidity();
+        return;
+      }
+ 
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      result.className = '';
+      result.textContent = '';
+ 
+      const formData = new FormData(form);
+ 
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+ 
+        if (data.success) {
+          result.className = 'sn-success-box';
+          result.innerHTML = '<strong>Thank you!</strong> Your request has been received. Eric will reach out within one business day to start planning your cruise.';
+          form.reset();
+          btn.textContent = 'Sent ✓';
+          // Scroll result into view
+          result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          result.className = 'sn-error-box';
+          result.textContent = data.message || 'Something went wrong. Please try again or email us directly.';
+          btn.disabled = false;
+          btn.textContent = 'Send My Request';
+        }
+      } catch (err) {
+        result.className = 'sn-error-box';
+        result.textContent = 'Network error. Please try again, or email us directly.';
+        btn.disabled = false;
+        btn.textContent = 'Send My Request';
+      }
+    });
+  })();
+</script>
+ 
+</body>
+</html>
