@@ -11,31 +11,31 @@
 
   <!-- Top-level pages -->
   <url>
-    <loc>https://craystartravelagency.com/disney.html</loc>
+    <loc>https://craystartravelagency.com/disney</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal.html</loc>
+    <loc>https://craystartravelagency.com/universal</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/resorts.html</loc>
+    <loc>https://craystartravelagency.com/resorts</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/cruises.html</loc>
+    <loc>https://craystartravelagency.com/cruises</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/privacy.html</loc>
+    <loc>https://craystartravelagency.com/privacy</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -43,37 +43,37 @@
 
   <!-- Universal Orlando sections -->
   <url>
-    <loc>https://craystartravelagency.com/universal/epic-universe.html</loc>
+    <loc>https://craystartravelagency.com/universal/epic</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/universal-studios-florida.html</loc>
+    <loc>https://craystartravelagency.com/universal/florida</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/volcano-bay.html</loc>
+    <loc>https://craystartravelagency.com/universal/volcano</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/on-site-hotels.html</loc>
+    <loc>https://craystartravelagency.com/universal/hotels</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/universal-hollywood.html</loc>
+    <loc>https://craystartravelagency.com/universal/hollywood</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -81,31 +81,31 @@
 
   <!-- Epic Universe lands -->
   <url>
-    <loc>https://craystartravelagency.com/universal/epic-universe/celestial-park.html</loc>
+    <loc>https://craystartravelagency.com/universal/epic/celestial</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/epic-universe/dark-universe.html</loc>
+    <loc>https://craystartravelagency.com/universal/epic/dark</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/epic-universe/how-to-train-your-dragon.html</loc>
+    <loc>https://craystartravelagency.com/universal/epic/dragon</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/epic-universe/ministry-of-magic.html</loc>
+    <loc>https://craystartravelagency.com/universal/epic/magic</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/epic-universe/super-nintendo-world.html</loc>
+    <loc>https://craystartravelagency.com/universal/epic/super</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -113,37 +113,37 @@
 
   <!-- Islands of Adventure areas -->
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure/hogsmeade.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa/hogsmeade</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure/jurassic-world.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa/jurassic </loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure/lost-continent.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa/lost</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure/marvel-super-hero-island.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa/marvel</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure/seuss-landing.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa/seuss</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/islands-of-adventure/toon-lagoon.html</loc>
+    <loc>https://craystartravelagency.com/universal/ioa/toon</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -151,13 +151,13 @@
 
   <!-- Universal on-site hotels -->
   <url>
-    <loc>https://craystartravelagency.com/universal/on-site-hotels/cabana-bay.html</loc>
+    <loc>https://craystartravelagency.com/universal/hotels/cabana</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://craystartravelagency.com/universal/on-site-hotels/endless-summer.html</loc>
+    <loc>https://craystartravelagency.com/universal/hotels/endless</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
