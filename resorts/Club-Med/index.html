@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Club Med Vacations | Beach &amp; Ski All-Inclusive — Craystar Travel Agency</title>
+  <meta name="description" content="Plan your Club Med all-inclusive vacation with Craystar Travel Agency. Beach resorts, ski destinations, Exclusive Collection luxury, villas &amp; chalets — Caribbean, France, Japan, Maldives &amp; more. Free planning service.">
+  <link rel="icon" type="image/webp" sizes="32x32" href="/images/favicon-32x32.webp">
+  <link rel="icon" type="image/webp" sizes="16x16" href="/images/favicon-16x16.webp">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-180x180.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0b1d3a;
+      --blue: #1a56db;
+      --club-blue: #0047AB;
+      --club-light: #e8f0fe;
+      --gold: #d4a843;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --gray-100: #f7f7f7;
+      --gray-200: #efefef;
+      --gray-400: #aaa;
+      --gray-600: #666;
+      --gray-800: #333;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 2px 16px rgba(0,0,0,.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+      --font-body: 'DM Sans', sans-serif;
+      --font-display: 'DM Serif Display', serif;
+      --max-w: 1200px;
+      --transition: .3s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--gray-800); line-height: 1.6; background: var(--white); }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Topbar ── */
+    .topbar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); }
+    .topbar-inner { max-width: var(--max-w); margin: 0 auto; padding: .75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .brand-logo { height: 40px; width: auto; }
+    .nav { display: flex; align-items: center; gap: 1.5rem; font-size: .95rem; font-weight: 500; }
+    .nav a:hover { color: var(--club-blue); }
+    .nav .cta { background: var(--club-blue); color: #fff; padding: .5rem 1.25rem; border-radius: 8px; font-weight: 600; }
+    .nav .cta:hover { background: #003d94; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      overflow: hidden;
+      background: linear-gradient(135deg, #0047AB 0%, #002f6c 60%, #001a3e 100%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('images/ski-hero.webp') center/cover no-repeat;
+      opacity: .25;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 3rem 1.5rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      padding: .4rem 1.25rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p {
+      font-size: 1.15rem;
+      opacity: .9;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: .85rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: #c49a35; }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.5); margin-left: .75rem; }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+
+    /* ── Destination Tags ── */
+    .dest-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .6rem;
+      margin-top: 2rem;
+    }
+    .dest-tags a {
+      font-size: .85rem;
+      font-weight: 600;
+      padding: .4rem 1rem;
+      border: 1.5px solid rgba(255,255,255,.4);
+      border-radius: 50px;
+      transition: var(--transition);
+    }
+    .dest-tags a:hover { background: rgba(255,255,255,.15); border-color: #fff; }
+
+    /* ── Section utility ── */
+    .section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: var(--max-w); margin: 0 auto; }
+    .section-label {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--club-blue);
+      margin-bottom: .5rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 640px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Legacy / About ── */
+    .legacy { background: var(--cream); }
+    .legacy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .legacy-img { border-radius: var(--radius-lg); overflow: hidden; }
+    .legacy-img img { width: 100%; height: 360px; object-fit: cover; }
+    .legacy blockquote {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--club-blue);
+      border-left: 4px solid var(--gold);
+      padding-left: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ── Services Grid ── */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+    }
+    .service-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .service-card h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: .5rem; color: var(--navy); }
+    .service-card p { color: var(--gray-600); font-size: .95rem; }
+
+    /* ── Destination Cards ── */
+    .dest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+    .dest-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .dest-card:hover img { transform: scale(1.05); }
+    .dest-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,20,60,.75) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      color: var(--white);
+    }
+    .dest-overlay h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: .25rem; }
+    .dest-overlay p { font-size: .9rem; opacity: .85; }
+
+    /* ── Resort List (for France, Caribbean, etc.) ── */
+    .resort-section { background: var(--club-blue); color: var(--white); }
+    .resort-section .section-label { color: rgba(255,255,255,.6); }
+    .resort-section .section-title { color: var(--white); }
+    .resort-section .section-subtitle { color: rgba(255,255,255,.7); }
+    .resort-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .resort-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255,255,255,.12);
+      border: 1.5px solid rgba(255,255,255,.25);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: .95rem;
+      transition: var(--transition);
+    }
+    .resort-pill:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.5); }
+
+    /* ── Exclusive Collection ── */
+    .exclusive { background: var(--navy); color: var(--white); }
+    .exclusive .section-label { color: var(--gold); }
+    .exclusive .section-title { color: var(--white); }
+    .exclusive .section-subtitle { color: rgba(255,255,255,.7); }
+    .exclusive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .exclusive-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      transition: var(--transition);
+    }
+    .exclusive-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .exclusive-card img { width: 100%; height: 220px; object-fit: cover; }
+    .exclusive-card-body { padding: 1.25rem; }
+    .exclusive-card h3 { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: .35rem; }
+    .exclusive-card p { font-size: .9rem; opacity: .7; }
+
+    /* ── Reviews ── */
+    .reviews { background: var(--cream); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .review-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .review-card .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: .75rem; }
+    .review-card blockquote { font-style: italic; color: var(--gray-600); margin-bottom: 1rem; line-height: 1.7; }
+    .review-card .reviewer { font-weight: 700; color: var(--navy); }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, #0047AB, #002f6c);
+      color: var(--white);
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+    .cta-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+    .cta-banner p { opacity: .85; max-width: 500px; margin: 0 auto 2rem; font-size: 1.05rem; }
+
+    /* ── Footer ── */
+    footer { background: var(--navy); color: rgba(255,255,255,.7); padding: 3rem 1.5rem 2rem; font-size: .9rem; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem; }
+    .footer-brand img { height: 36px; margin-bottom: .75rem; filter: brightness(0) invert(1); }
+    .footer-brand p { max-width: 260px; }
+    footer h5 { color: var(--white); font-size: .85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .75rem; }
+    footer ul { list-style: none; }
+    footer li { margin-bottom: .4rem; }
+    footer a:hover { color: var(--white); }
+    .footer-copy { max-width: var(--max-w); margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.1); text-align: center; font-size: .8rem; }
+
+    /* ── Hamburger ── */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: .25rem; }
+    .hamburger svg { width: 28px; height: 28px; stroke: var(--navy); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--white); padding: 1rem 1.5rem; border-bottom: 1px solid var(--gray-200); box-shadow: var(--shadow); }
+      .nav.open { display: flex; }
+      .nav .cta { text-align: center; }
+      .legacy-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .dest-grid { grid-template-columns: 1fr; }
+      .hero { min-height: 70vh; }
+      .btn-outline { margin-left: 0; margin-top: .5rem; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Craystar Travel Agency",
+    "description": "Club Med all-inclusive vacation planning — beach, ski, Exclusive Collection luxury resorts worldwide. Free service.",
+    "url": "https://craystartravelagency.com/resorts/clubmed/",
+    "telephone": "+1-417-771-0910",
+    "email": "eric.crayton@craystartravelagency.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Springfield",
+      "addressRegion": "MO",
+      "addressCountry": "US"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="brand"><img class="brand-logo" src="/logo.webp" alt="Craystar Travel Agency"></a>
+    <button class="hamburger" onclick="document.querySelector('.nav').classList.toggle('open')" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="/disney">Disney</a>
+      <a href="/universal">Universal</a>
+      <a href="/cruises">Cruises</a>
+      <a href="/resorts">Resorts</a>
+      <a class="cta" href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton">Book Now</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge">Club Med Specialist</span>
+    <h1>Exceptional vacation <em>experiences</em> await.</h1>
+    <p>From Caribbean beaches to alpine ski slopes — premium all-inclusive with kids' clubs, sports clinics, gourmet dining, and adults-only escapes worldwide.</p>
+    <div>
+      <a class="btn btn-gold" href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton">Book Your Adventure</a>
+      <a class="btn btn-outline" href="#destinations">Explore Destinations</a>
+    </div>
+    <div class="dest-tags">
+      <a href="#caribbean">Caribbean</a>
+      <a href="#north-america">North America</a>
+      <a href="#europe">European Magic</a>
+      <a href="#japan">Japan</a>
+      <a href="#maldives">Maldives &amp; Morocco</a>
+      <a href="#exclusive">Exclusive Collection</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Discover ClubMed's Legacy ── -->
+<section class="section legacy">
+  <div class="section-inner">
+    <div class="legacy-grid">
+      <div>
+        <p class="section-label">Since 1950</p>
+        <h2 class="section-title">Discover Club Med's Legacy</h2>
+        <p class="section-subtitle">At Club Med, a rich history of exceptional service and cultural experiences invites guests to explore diverse activities in stunning locations around the world.</p>
+        <blockquote>"Creating unforgettable experiences for our guests is at the heart of everything we do, ensuring joy, adventure, and lasting memories for every family."</blockquote>
+      </div>
+      <div class="legacy-img">
+        <img src="images/beach-activities.webp" alt="Club Med beach activities" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Our Exceptional Services ── -->
+<section class="section" id="services">
+  <div class="section-inner">
+    <p class="section-label">What's Included</p>
+    <h2 class="section-title">Our Exceptional Services</h2>
+    <p class="section-subtitle">Every Club Med stay is premium all-inclusive — meals, drinks, activities, entertainment, and kids' clubs are all part of the package.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🍽️</div>
+        <h3>Gourmet Dining</h3>
+        <p>Indulge in culinary delights crafted by world-class chefs. Multiple restaurants, themed buffets, and premium bar service included at every resort.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏄</div>
+        <h3>Adventure Activities</h3>
+        <p>Experience thrilling excursions and outdoor adventures for all ages — from water sports and trapeze to skiing and golf clinics with professional instructors.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛏️</div>
+        <h3>Luxury Accommodations</h3>
+        <p>Relax in spacious, beautifully designed rooms with stunning views. Upgrade options include swim-up suites, overwater bungalows, and private chalets.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👶</div>
+        <h3>Kids' Clubs</h3>
+        <p>Award-winning kids' clubs for ages 4 months to 17 years — with dedicated G.O.s (Gentle Organizers) leading age-appropriate activities all day.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💆</div>
+        <h3>Wellness &amp; Spa</h3>
+        <p>Unwind with spa treatments, yoga, and meditation in beautiful natural settings. Club Med Spa by CINQ MONDES offers signature rituals at select resorts.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎿</div>
+        <h3>Ski &amp; Snow</h3>
+        <p>Club Med is the world leader in all-inclusive ski holidays — with lift passes, group lessons, and après-ski all included in the price.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Destinations ── -->
+<section class="section" id="destinations" style="background: var(--cream);">
+  <div class="section-inner">
+    <p class="section-label">Where Will You Go?</p>
+    <h2 class="section-title">Explore Club Med Destinations</h2>
+    <p class="section-subtitle">Beach or mountain, tropical or alpine — Club Med has resorts across 5 continents. Choose your adventure.</p>
+    <div class="dest-grid">
+      <a class="dest-card" href="#caribbean" id="caribbean-card">
+        <img src="images/punta-cana.webp" alt="Caribbean beach" loading="lazy">
+        <div class="dest-overlay">
+          <h3>Caribbean</h3>
+          <p>Punta Cana · Cancún Yucatán · Michès Playa Esmeralda</p>
+        </div>
+      </a>
+      <a class="dest-card" href="#europe" id="europe-card">
+        <img src="images/les-arcs-winter.webp" alt="French Alps skiing" loading="lazy">
+        <div class="dest-overlay">
+          <h3>France</h3>
+          <p>Les Arcs · Valmorel · La Rosière · Tignes · Val d'Isère</p>
+        </div>
+      </a>
+      <a class="dest-card" href="#north-america" id="na-card">
+        <img src="images/charlevoix-summer.webp" alt="Quebec Charlevoix landscape" loading="lazy">
+        <div class="dest-overlay">
+          <h3>North America</h3>
+          <p>Quebec Charlevoix — Summer &amp; Winter</p>
+        </div>
+      </a>
+      <a class="dest-card" href="#maldives" id="maldives-card">
+        <img src="images/finolhu-villas.webp" alt="Maldives overwater villas" loading="lazy">
+        <div class="dest-overlay">
+          <h3>Maldives &amp; Morocco</h3>
+          <p>Finolhu Villas · Marrakech · Essaouira</p>
+        </div>
+      </a>
+      <a class="dest-card" href="#japan" id="japan-card">
+        <img src="images/valmorel-winter.webp" alt="Mountain ski resort" loading="lazy">
+        <div class="dest-overlay">
+          <h3>Japan</h3>
+          <p>Sahoro · Kiroro · Tomamu — Hokkaido ski &amp; summer</p>
+        </div>
+      </a>
+      <a class="dest-card" href="#exclusive" id="exclusive-card">
+        <img src="images/luxury-interior.webp" alt="Luxury resort villa" loading="lazy">
+        <div class="dest-overlay">
+          <h3>Exclusive Collection</h3>
+          <p>Luxury resorts, villas &amp; chalets worldwide</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Caribbean Resorts ── -->
+<section class="section resort-section" id="caribbean">
+  <div class="section-inner">
+    <p class="section-label">Beach Paradise</p>
+    <h2 class="section-title">Caribbean</h2>
+    <p class="section-subtitle">Sun-soaked all-inclusive resorts across the Dominican Republic and Mexico's Riviera Maya.</p>
+    <div class="resort-grid">
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_pcac.pdf" target="_blank">🌴 Punta Cana</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_canc.pdf" target="_blank">🏖️ Cancún Yucatán</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_mpec.pdf" target="_blank">🌊 Michès Playa Esmeralda</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── France Resorts ── -->
+<section class="section" id="europe">
+  <div class="section-inner">
+    <p class="section-label">Alpine Adventures</p>
+    <h2 class="section-title">France</h2>
+    <p class="section-subtitle">Club Med's legendary ski resorts in the French Alps — with summer mountain experiences too.</p>
+    <div class="resort-grid">
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_arpc_winter.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">⛷️ Les Arcs Panorama — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_arpc_summer.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">🌿 Les Arcs Panorama — Summer</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_vmoc_winter.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">⛷️ Valmorel — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_vmoc_summer.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">🌿 Valmorel — Summer</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_lroc_winter.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">⛷️ La Rosière — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_lroc_summer.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">🌿 La Rosière — Summer</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_tigc_winter.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">⛷️ Tignes — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_tigc_summer.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">🌿 Tignes — Summer</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_vdic_winter.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">⛷️ Val d'Isère — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_vdic_summer.pdf" target="_blank" style="background:var(--club-blue);color:#fff;border-color:var(--club-blue)">🌿 Val d'Isère — Summer</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── North America ── -->
+<section class="section resort-section" id="north-america">
+  <div class="section-inner">
+    <p class="section-label">Closer to Home</p>
+    <h2 class="section-title">North America — Canada</h2>
+    <p class="section-subtitle">Experience Club Med in Quebec's stunning Charlevoix region — ski in winter, hike and explore in summer.</p>
+    <div class="resort-grid">
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_qchc_winter.pdf" target="_blank">❄️ Quebec Charlevoix — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_qchc_summer.pdf" target="_blank">☀️ Quebec Charlevoix — Summer</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Exclusive Collection ── -->
+<section class="section exclusive" id="exclusive">
+  <div class="section-inner">
+    <p class="section-label">Exclusive Collection</p>
+    <h2 class="section-title">Luxury Resorts, Villas &amp; Chalets</h2>
+    <p class="section-subtitle">The pinnacle of Club Med — exquisite properties with unparalleled comfort, personalized service, and breathtaking locations across the globe.</p>
+
+    <h3 style="color: var(--gold); font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">Exclusive Resorts</h3>
+    <div class="resort-grid" style="margin-bottom: 3rem;">
+      <a class="resort-pill" href="https://factsheets.clubmed/en-gb/factsheet_safc.pdf" target="_blank">🇿🇦 South Africa</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_mpac.pdf" target="_blank">🇲🇦 Morocco</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_albc.pdf" target="_blank">🇲🇺 Mauritius</a>
+      <a class="resort-pill" href="#europe">🇫🇷 France</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_kipc_winter.pdf" target="_blank">🇯🇵 Japan</a>
+      <a class="resort-pill" href="#caribbean">🌴 Caribbean</a>
+      <a class="resort-pill" href="#north-america">🇺🇸 North America</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_rdpc.pdf" target="_blank">🇧🇷 Brazil</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_cfac.pdf" target="_blank">🇮🇹 Italy</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_kanc.pdf" target="_blank">🇲🇻 Maldives</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_seyc.pdf" target="_blank">🇸🇨 Seychelles</a>
+    </div>
+
+    <h3 style="color: var(--gold); font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">Elegant Villas &amp; Chalets</h3>
+    <div class="resort-grid">
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_vmov_winter.pdf" target="_blank">🏔️ The Valmorel Chalet — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_vmov_summer.pdf" target="_blank">🌿 The Valmorel Chalet — Summer</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_gmav_winter.pdf" target="_blank">🏔️ Grand Massif Samoëns Morillon — Winter</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_gmav_summer.pdf" target="_blank">🌿 Grand Massif Samoëns Morillon — Summer</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_albv.pdf" target="_blank">🏝️ The Albion Villas — Mauritius</a>
+      <a class="resort-pill" href="https://factsheets.clubmed/en-us/factsheet_kanv.pdf" target="_blank">🏝️ The Finolhu Villas — Maldives</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Exclusive Services ── -->
+<section class="section" id="exclusive-services">
+  <div class="section-inner">
+    <p class="section-label">Exclusive Collection</p>
+    <h2 class="section-title">Our Exclusive Services</h2>
+    <p class="section-subtitle">For travelers who seek the extraordinary — personalized itineraries, private villas, and luxury cruising.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏨</div>
+        <h3>Luxury Resorts</h3>
+        <p>Customized travel planning to suit your desires at Club Med's most prestigious properties worldwide.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏡</div>
+        <h3>Elegant Villas &amp; Chalets</h3>
+        <p>Stay in exclusive villas with stunning views — from Maldives overwater bungalows to French Alpine chalets.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚢</div>
+        <h3>Luxury Cruises</h3>
+        <p>Experience the ultimate in luxury cruising with Club Med 2 — the world's largest sailing yacht, with multiple dates and options.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Guest Reviews ── -->
+<section class="section reviews" id="reviews">
+  <div class="section-inner">
+    <p class="section-label">What Guests Say</p>
+    <h2 class="section-title">Guest Reviews</h2>
+    <div class="reviews-grid" style="margin-top: 2rem;">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Our stay was absolutely magical, every detail was perfect and memorable!"</blockquote>
+        <span class="reviewer">— Sarah</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The service and amenities exceeded our expectations, making it a truly incredible experience."</blockquote>
+        <span class="reviewer">— John</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Club Med is the best! We can't wait to return for more unforgettable memories."</blockquote>
+        <span class="reviewer">— Emily</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"We felt like royalty during our entire stay, truly an unforgettable experience."</blockquote>
+        <span class="reviewer">— James</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Banner ── -->
+<section class="cta-banner">
+  <h2>Ready for your Club Med adventure?</h2>
+  <p>Tell us your dates, group size, and what kind of trip you're dreaming of — beach, ski, or both. Our service is completely free.</p>
+  <a class="btn btn-gold" href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton">Book Your Adventure →</a>
+  <p style="margin-top: 1.5rem; font-size: .95rem;">Or call / text <a href="tel:4177710910" style="color: var(--gold); font-weight: 600;">417-771-0910</a> · Mon–Fri 9am–6pm CST</p>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/logo.webp" alt="Craystar Travel Agency">
+      <p>Your trusted travel advisor for Disney, Universal, cruises, and all-inclusive escapes.</p>
+    </div>
+    <div>
+      <h5>Destinations</h5>
+      <ul>
+        <li><a href="/disney">Disney</a></li>
+        <li><a href="/universal">Universal</a></li>
+        <li><a href="/cruises">Cruises</a></li>
+        <li><a href="/resorts">All-Inclusive</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <ul>
+        <li>✉ <a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a></li>
+        <li>📞 <a href="tel:4177710910">417-771-0910</a></li>
+        <li>📍 Available Nationwide</li>
+        <li>⏰ Mon-Fri: 9am-6pm CST</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Follow</h5>
+      <ul>
+        <li><a href="https://www.instagram.com/craystartravel/">Instagram</a></li>
+        <li><a href="https://www.facebook.com/craystartravel">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Craystar Travel Agency, LLC. Independent advisor with Genie Travel Company.<br>All resort brand names and logos are property of their respective owners.</div>
+</footer>
+
+</body>
+</html>
