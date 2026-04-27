@@ -557,7 +557,10 @@ section.block { padding: 72px 20px; }
   margin: 0.5rem 0 1.5rem;
   text-align: center;
 }
-.page-dates span { white-space: nowrap; }
+.page-dates span {
+  white-space: nowrap;
+  overflow-wrap: anywhere;
+}
 /* ---------- Animations ---------- */
 @keyframes rise {
   from { opacity: 0; transform: translateY(20px); }
