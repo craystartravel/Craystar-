@@ -14,126 +14,143 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TravelAgency",
-  "@id": "https://craystartravelagency.com/#agency",
-  "name": "Craystar Travel Agency",
-  "alternateName": "Craystar",
-  "description": "Full-service travel advisor for Disney, Universal, cruises & all-inclusive resorts. No planning fees. Serving all 50 states.",
-  "url": "https://craystartravelagency.com/",
-  "logo": "https://craystartravelagency.com/logo.webp",
-  "image": "https://craystartravelagency.com/logo.webp",
-  "telephone": "+1-417-771-0910",
-  "email": "eric.crayton@craystartravelagency.com",
-  "priceRange": "No planning fees — vacations from $ to $$$$",
-  "founder": { "@type": "Person", "name": "Eric Crayton" },
-  "parentOrganization": { "@type": "Organization", "name": "Riverdale Travel" },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Springfield",
-    "addressRegion": "MO",
-    "addressCountry": "US"
-  },
-  "areaServed": [
-    { "@type": "Country", "name": "United States" },
-    { "@type": "Place", "name": "Nationwide — all 50 states" }
-  ],
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    "opens": "09:00",
-    "closes": "18:00"
-  },
-  "knowsAbout": [
-    "Walt Disney World", "Disneyland", "Disney Cruise Line", "Aulani",
-    "Adventures by Disney", "National Geographic Expeditions",
-    "Universal Orlando Resort", "Epic Universe", "Islands of Adventure",
-    "Wizarding World of Harry Potter", "Universal Studios Hollywood",
-    "Royal Caribbean", "Carnival Cruise Line", "Norwegian Cruise Line",
-    "Celebrity Cruises", "Princess Cruises", "Viking Cruises",
-    "Sandals Resorts", "Beaches Resorts", "Hyatt Inclusive Collection",
-    "Riu Hotels", "Club Med",
-    "honeymoons", "destination weddings", "group travel", "family vacations"
-  ],
-  "makesOffer": [
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Disney Vacation Planning", "url": "https://craystartravelagency.com/disney" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Universal Vacation Planning", "url": "https://craystartravelagency.com/universal" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cruise Booking", "url": "https://craystartravelagency.com/cruises" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "All-Inclusive Resort Booking", "url": "https://craystartravelagency.com/resorts" } }
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+1-417-771-0910",
-    "contactType": "customer service",
-    "email": "eric.crayton@craystartravelagency.com",
-    "availableLanguage": "English",
-    "areaServed": "US",
-    "hoursAvailable": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",
-      "closes": "18:00"
-    }
-  },
-  "sameAs": [
-    "https://www.instagram.com/craystartravel/",
-    "https://www.facebook.com/craystartravel"
-  ]
+  "@graph": [
+    {
+      "@type": "TravelAgency",
+      "@id": "https://craystartravelagency.com/#organization",
+      "name": "Craystar Travel Agency",
+      "alternateName": "Craystar Travel",
+      "url": "https://craystartravelagency.com/",
+      "logo": "https://craystartravelagency.com/logo.webp",
+      "image": "https://craystartravelagency.com/logo.webp",
+      "description": "Full-service travel advisor specializing in Disney, Universal, cruises, and all-inclusive resorts. Free planning for travelers nationwide — suppliers pay us, never you.",
+      "telephone": "+1-417-771-0910",
+      "email": "eric.crayton@craystartravelagency.com",
+      "priceRange": "$$",
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-417-771-0910",
+        "contactType": "customer service",
+        "email": "eric.crayton@craystartravelagency.com",
+        "areaServed": "US",
+        "availableLanguage": "English",
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      },
+      "sameAs": [
+        "https://www.instagram.com/craystartravel/",
+        "https://www.facebook.com/craystartravel"
+      ],
+      "founder": { "@id": "https://craystartravelagency.com/about-us#eric-crayton" },
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Riverdale Travel"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://craystartravelagency.com/about-us#eric-crayton",
+      "name": "Eric Crayton",
+      "jobTitle": "Owner & Travel Advisor",
+      "worksFor": { "@id": "https://craystartravelagency.com/#organization" },
+      "url": "https://craystartravelagency.com/about-us",
+      "knowsAbout": [
+        "Walt Disney World vacation planning",
+        "Universal Orlando vacation planning",
+        "Royal Caribbean cruises",
+        "All-inclusive Caribbean resorts",
+        "Accessible travel planning"
+      ],
+      "hasCredential": [
+        "Disney College of Knowledge",
+        "Universal Travel Agent Academy",
+        "CLIA Certified",
+        "Royal Caribbean Specialist",
+        "Royal Caribbean Wedding Professional",
+        "Celebrity Cruises Specialist",
+        "Sandals Elite Advisor",
+        "Club Med Specialist",
+        "United Parks and Resorts Specialist",
+        "SNG Certified Accessible Travel Advocate"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://craystartravelagency.com/#website",
+      "url": "https://craystartravelagency.com/",
+      "name": "Craystar Travel Agency",
+      "publisher": { "@id": "https://craystartravelagency.com/#organization" },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://craystartravelagency.com/#webpage",
+      "url": "https://craystartravelagency.com/",
+      "name": "Craystar Travel | Disney, Universal & Cruise Planning — Free",
+      "isPartOf": { "@id": "https://craystartravelagency.com/#website" },
+      "about": { "@id": "https://craystartravelagency.com/#organization" },
+      "author": { "@id": "https://craystartravelagency.com/about-us#eric-crayton" },
+      "datePublished": "2026-01-15",
+      "dateModified": "2026-04-27",
+      "inLanguage": "en-US",
+      "primaryImageOfPage": "https://craystartravelagency.com/logo.webp"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://craystartravelagency.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does Craystar charge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nothing. Our service is complimentary — suppliers pay us, never you. You get expert planning and exclusive perks at no extra cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you only serve Missouri?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No — Craystar is available nationwide. We work with travelers in all 50 states by phone, text, and email."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do you specialize in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Disney (Walt Disney World, Disneyland, DCL, Aulani, Adventures by Disney), Universal (Orlando and Hollywood), cruises (Royal Caribbean featured, plus Carnival, Norwegian, Celebrity, Princess, Viking), and all-inclusive resorts (Sandals, Beaches, Hyatt Inclusive, Riu, Club Med)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Request a quote on this page, or call/text 417-771-0910. Share your destination, dates, group size, and budget — we'll follow up with a personalized plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you a real, accredited agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Craystar Travel Agency is an independent advisor with Riverdale Travel, an established host agency."
+          }
+        }
+        {
+  "@type": "SpeakableSpecification",
+  "cssSelector": ["[itemprop='speakable']"]
 }
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How much does Craystar Travel Agency charge?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Nothing. Craystar charges no planning fees — our service is complimentary. We're paid directly by travel suppliers like Disney, Royal Caribbean, and Sandals, so you get expert planning and exclusive perks at no extra cost, typically at the same price or less than booking yourself."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does Craystar only serve clients in Missouri?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Craystar is based in Springfield, Missouri but is available nationwide. We work with travelers in all 50 states by phone, text (417-771-0910), and email."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What does Craystar specialize in?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Four areas: Disney (Walt Disney World, Disneyland, Disney Cruise Line, Aulani, Adventures by Disney, Nat Geo Expeditions), Universal (Orlando including Epic Universe, plus Hollywood), cruises (Royal Caribbean featured, plus Carnival, Norwegian, Celebrity, Princess, and Viking), and all-inclusive resorts (Sandals, Beaches, Hyatt Inclusive Collection, Riu, Club Med)."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I contact Craystar?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Call or text 417-771-0910, email eric.crayton@craystartravelagency.com, or request a quote at craystartravelagency.com. Hours are Monday through Friday, 9am to 6pm Central."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why use Craystar instead of booking a trip online myself?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Because Craystar is paid by suppliers, you get the same or better pricing plus expert advice, exclusive perks (onboard credits, room upgrades, dining packages), and real human support before, during, and after your trip — all with no planning fee."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is Craystar a real, accredited travel agency?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Craystar Travel Agency is owned by Eric Crayton and operates as an independent advisor with Riverdale Travel, an established host agency."
-      }
-    }
-  ]
 }
 </script>
 </script>
@@ -177,7 +194,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </header>
-
+ 
 <section class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.428), rgba(0, 0, 0, 0.5)), url('images/mainphoto.webp'); background-size: cover; background-position: center;">
   <div class="hero-inner">
     <span style="color: #e9c6b2;" class="eyebrow">Where Magic Begins</span>
@@ -187,6 +204,7 @@
       <a class="btn btn-primary" href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton">Start Your Quote →</a>
       <a class="btn btn-ghost" href="#explore">Explore Destinations</a>
     </div>
+  
   </div>
 </section>
 
@@ -252,7 +270,26 @@
     </div>
   </div>
 </section>
-
+<section class="why-stats" aria-labelledby="why-stats-heading">
+  <h2 id="why-stats-heading">Why travelers choose Craystar</h2>
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">industry certifications, including CLIA, Disney College of Knowledge, and SNG Accessible Travel Advocate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">$0</div>
+      <div class="stat-label">in planning fees — suppliers pay us, never you</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">50</div>
+      <div class="stat-label">states served — we book travel nationwide by phone, text, and email</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">15+</div>
+      <div class="stat-label">cruise lines and resort brands in our supplier network</div>
+    </div>
+  </div>
 <section class="cta-block">
   <div class="cta-inner">
     <h2>Tell us where you want to <em>go</em>.</h2>
@@ -266,28 +303,47 @@
 
   <details>
     <summary><strong>How much does Craystar charge?</strong></summary>
-    <p>Nothing. Our service is complimentary — suppliers pay us, never you. You get expert planning and exclusive perks at no extra cost.</p>
-  </details>
+   <p>
+  <span itemprop="speakable">
+    Nothing. Our service is complimentary — suppliers pay us, never you. You get expert planning and exclusive perks at no extra cost.
+  </span>
+</p>
 
   <details>
     <summary><strong>Do you only serve Missouri?</strong></summary>
-    <p>No — Craystar is available nationwide. We work with travelers in all 50 states by phone, text, and email.</p>
-  </details>
+    <p>
+    <span itemprop="speakable"></span>
+      No — Craystar is available nationwide. We work with travelers in all 50 states by phone, text, and email.</p>
+    </span>
+    </p>
+    </details>
 
   <details>
     <summary><strong>What do you specialize in?</strong></summary>
-    <p>Disney (Walt Disney World, Disneyland, DCL, Aulani, Adventures by Disney), Universal (Orlando and Hollywood), cruises (Royal Caribbean featured, plus Carnival, Norwegian, Celebrity, Princess, Viking), and all-inclusive resorts (Sandals, Beaches, Hyatt Inclusive, Riu, Club Med).</p>
-  </details>
+    <p>
+       <span itemprop="speakable">
+       Disney (Walt Disney World, Disneyland, DCL, Aulani, Adventures by Disney), Universal (Orlando and Hollywood), cruises (Royal Caribbean featured, plus Carnival, Norwegian, Celebrity, Princess, Viking), and all-inclusive resorts (Sandals, Beaches, Hyatt Inclusive, Riu, Club Med).</p>
+       </span>
+     </p>
+      </details>
 
   <details>
     <summary><strong>How do I start?</strong></summary>
-    <p>Request a quote on this page, or call/text <a href="tel:4177710910">417-771-0910</a>. Share your destination, dates, group size, and budget — we'll follow up with a personalized plan.</p>
-  </details>
+    <p>
+      <span itemprop="speakable">
+      Request a quote on this page, or call/text <a href="tel:4177710910">417-771-0910</a>. Share your destination, dates, group size, and budget — we'll follow up with a personalized plan.</p>
+     </span>
+    </p>
+    </details>
 
   <details>
     <summary><strong>Are you a real, accredited agency?</strong></summary>
-    <p>Yes. Craystar Travel Agency is an independent advisor with Riverdale Travel, an established host agency.</p>
-  </details>
+    <p>
+      <span itemprop="speakable">
+          Yes. Craystar Travel Agency is an independent advisor with Riverdale Travel, an established host agency.
+      </span> 
+  </p>
+    </details>
 </section>
 <section id="leave-review" style="padding:4rem 1.5rem;text-align:center;background:rgba(212,175,55,0.05);">
   <div style="max-width:720px;margin:0 auto;">
@@ -326,6 +382,7 @@
         <li><a href="/universal">Universal</a></li>
         <li><a href="/cruises">Cruises</a></li>
         <li><a href="/resorts">All-Inclusive</a></li>
+        <li><a href="/about-us">About</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -345,7 +402,12 @@
 </li>
        <li><span class="contact-icon">📍</span>Available Nationwide</li>
        <li><span class="contact-icon">⏰</span>Mon-Fri: 9am - 6pm CST</li>
+           <h5>Company</h5>
+    <li><a href="/about-us">About Eric &amp; Craystar</a></li>
+    <li><a href="/review">Reviews</a></li>
+    <li><a href="/privacy">Privacy Policy</a></li>
       </ul>
+  
     </div>
     <div>
       <h5>Follow</h5>
@@ -358,6 +420,15 @@
   <div class="legal">
     <span>© 2026 Craystar Travel Agency | All rights reserved.|Independent advisor with Riverdale Travel | Powered by Jesus Christ.<a href="/privacy">Privacy Policy</a></p></div>
   </div>
+   <p class="page-dates">
+  <span>Published <time datetime="2026-01-15">January 15, 2026</time></span>
+  <span aria-hidden="true"> · </span>
+  <span>Updated <time datetime="2026-04-26">April 26, 2026</time></span>
+</p>
+<p class="byline">
+  Planned by <a href="/about-us#eric-crayton">Eric Crayton</a>,
+  Owner &amp; Travel Advisor · CLIA Certified · SNG Accessible Travel Advocate
+</p>
 </footer>
 </div>
 
