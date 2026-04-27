@@ -582,7 +582,7 @@ section.block { padding: 72px 20px; }
   --hero-to: #2d3556;
 }
 .page-dates {
-  font-size: 0.85rem;
+  font-size: 0.5rem;
   color: #777;
   margin: 0.5rem 0 1.5rem;
   text-align: center;
