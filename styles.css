@@ -606,7 +606,82 @@ section.block { padding: 72px 20px; }
   border-bottom: 1px solid currentColor;
 }
 .byline a:hover {
-  color: #0a3a5c;         
+  color: #0a3a5c;    
+   .craystar-breadcrumb {
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 0.875rem 1.25rem;
+  margin: 0 auto 1.5rem;
+  max-width: 1200px;
+  color: #5a6470;
+  letter-spacing: 0.01em;
+}
+
+.craystar-breadcrumb ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+}
+
+.craystar-breadcrumb li {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.craystar-breadcrumb a {
+  color: #0d2647;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 160ms ease, color 160ms ease;
+  padding: 0.125rem 0;
+}
+
+.craystar-breadcrumb a:hover,
+.craystar-breadcrumb a:focus-visible {
+  color: #c9a961;
+  border-bottom-color: #c9a961;
+  outline: none;
+}
+
+.craystar-breadcrumb [aria-current="page"] {
+  color: #0d2647;
+  font-weight: 600;
+  /* Truncate very long current-page titles on small screens */
+  max-width: 60vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.craystar-breadcrumb-sep {
+  margin: 0 0.625rem;
+  color: #c9a961;
+  font-weight: 300;
+  user-select: none;
+}
+
+/* Mobile tweaks — your audience is mobile-heavy */
+@media (max-width: 600px) {
+  .craystar-breadcrumb {
+    font-size: 0.8125rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .craystar-breadcrumb-sep {
+    margin: 0 0.4375rem;
+  }
+  .craystar-breadcrumb [aria-current="page"] {
+    max-width: 50vw;
+  }
+}
+
 /* ---------- Animations ---------- */
 @keyframes rise {
   from { opacity: 0; transform: translateY(20px); }
