@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Eric & Craystar Travel Agency | Disney, Universal & Cruise Specialist</title>
+  <meta name="description" content="Meet Eric Crayton, owner of Craystar Travel Agency. Disney, Universal, cruise, and accessible travel specialist with 10+ industry certifications. Free planning for travelers nationwide." />
+  <link rel="canonical" href="https://craystartravelagency.com/about-us" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="About Eric & Craystar Travel Agency" />
+  <meta property="og:description" content="Owner-operated, certified travel advisor specializing in Disney, Universal, cruises, and accessible travel. Free planning, nationwide." />
+  <meta property="og:url" content="https://craystartravelagency.com/about-us" />
+  <meta property="og:image" content="https://craystartravelagency.com/logo.webp" />
+  <meta property="og:site_name" content="Craystar Travel Agency" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About Eric & Craystar Travel Agency" />
+  <meta name="twitter:description" content="Meet the certified advisor behind your next vacation. Free planning, nationwide reach." />
+  <meta name="twitter:image" content="https://craystartravelagency.com/logo.webp" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Page-specific styles -->
+  <style>
+    :root {
+      --about-navy: #0a3a5c;
+      --about-gold: #c9a961;
+      --about-teal: #2d8b8b;
+      --about-cream: #f8f5ee;
+      --about-ink: #1a1a1a;
+      --about-muted: #5a5a5a;
+      --about-border: #e6e1d6;
+    }
+
+    .about-page {
+      color: var(--about-ink);
+      line-height: 1.6;
+    }
+
+    /* Hero */
+    .about-hero {
+      background: linear-gradient(180deg, var(--about-cream) 0%, #fff 100%);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--about-border);
+    }
+    .about-hero .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--about-gold);
+      margin-bottom: 1.25rem;
+    }
+    .about-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 400;
+      color: var(--about-navy);
+      margin: 0 auto 1rem;
+      max-width: 22ch;
+      line-height: 1.15;
+    }
+    .about-hero h1 em {
+      font-style: italic;
+      color: var(--about-teal);
+    }
+    .about-hero .lede {
+      max-width: 56ch;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: var(--about-muted);
+    }
+
+    /* Profile section */
+    .profile {
+      padding: 4rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .profile {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 3rem 1.5rem;
+      }
+    }
+
+    .profile-photo {
+      position: sticky;
+      top: 2rem;
+    }
+    @media (max-width: 760px) {
+      .profile-photo { position: static; max-width: 240px; margin: 0 auto; }
+    }
+    .profile-photo .photo-frame {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--about-navy) 0%, var(--about-teal) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--about-cream);
+      font-family: Georgia, serif;
+      font-size: 4.5rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      box-shadow: 0 12px 40px rgba(10, 58, 92, 0.18);
+      overflow: hidden;
+    }
+    .profile-photo .photo-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .profile-photo .credentials-line {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--about-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .profile-content h2 {
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--about-navy);
+      margin: 0 0 0.5rem;
+    }
+    .profile-content .role {
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--about-gold);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .profile-content p {
+      margin: 0 0 1.25rem;
+      font-size: 1.05rem;
+    }
+    .profile-content .pull-quote {
+      border-left: 3px solid var(--about-gold);
+      padding: 0.5rem 0 0.5rem 1.25rem;
+      margin: 2rem 0;
+      font-family: Georgia, serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--about-navy);
+      line-height: 1.4;
+    }
+
+    /* Certifications */
+    .certs {
+      background: var(--about-cream);
+      padding: 4rem 1.5rem;
+      border-top: 1px solid var(--about-border);
+      border-bottom: 1px solid var(--about-border);
+    }
+    .certs-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .certs-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .certs-header .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--about-gold);
+      margin-bottom: 0.75rem;
+    }
+    .certs-header h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 400;
+      color: var(--about-navy);
+      margin: 0 auto;
+      max-width: 28ch;
+    }
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .cert {
+      background: #fff;
+      padding: 1.25rem 1.25rem 1.25rem 3.25rem;
+      border-radius: 4px;
+      border: 1px solid var(--about-border);
+      position: relative;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cert:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(10, 58, 92, 0.08);
+    }
+    .cert::before {
+      content: "✓";
+      position: absolute;
+      left: 1rem;
+      top: 1.1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: var(--about-teal);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .cert strong {
+      display: block;
+      color: var(--about-navy);
+      margin-bottom: 0.15rem;
+    }
+    .cert span {
+      color: var(--about-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Beliefs */
+    .beliefs {
+      padding: 4rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .beliefs-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .beliefs-header .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--about-gold);
+      margin-bottom: 0.75rem;
+    }
+    .beliefs-header h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 400;
+      color: var(--about-navy);
+      margin: 0;
+    }
+    .beliefs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .belief {
+      padding: 1.5rem 0;
+      border-top: 2px solid var(--about-navy);
+    }
+    .belief .num {
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      color: var(--about-gold);
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .belief h3 {
+      font-family: Georgia, serif;
+      font-size: 1.2rem;
+      color: var(--about-navy);
+      margin: 0 0 0.6rem;
+      font-weight: 500;
+    }
+    .belief p {
+      font-size: 0.95rem;
+      color: var(--about-muted);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Riverdale strip */
+    .riverdale {
+      background: var(--about-navy);
+      color: var(--about-cream);
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+    }
+    .riverdale-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .riverdale .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--about-gold);
+      margin-bottom: 1rem;
+    }
+    .riverdale h2 {
+      font-family: Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: #fff;
+      margin: 0 0 1rem;
+    }
+    .riverdale p {
+      font-size: 1.05rem;
+      color: rgba(248, 245, 238, 0.85);
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    /* CTA */
+    .about-cta {
+      padding: 5rem 1.5rem;
+      text-align: center;
+      background: linear-gradient(180deg, #fff 0%, var(--about-cream) 100%);
+    }
+    .about-cta h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 400;
+      color: var(--about-navy);
+      margin: 0 0 1rem;
+    }
+    .about-cta h2 em { font-style: italic; color: var(--about-teal); }
+    .about-cta p {
+      max-width: 50ch;
+      margin: 0 auto 2rem;
+      font-size: 1.05rem;
+      color: var(--about-muted);
+    }
+    .about-cta .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--about-navy);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border-radius: 2px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .about-cta .btn:hover {
+      background: var(--about-teal);
+      transform: translateY(-1px);
+    }
+    .about-cta .alt-contact {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--about-muted);
+    }
+    .about-cta .alt-contact a {
+      color: var(--about-navy);
+      font-weight: 600;
+      text-decoration: none;
+    }
+  </style>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://craystartravelagency.com/about-us#webpage",
+        "url": "https://craystartravelagency.com/about-us",
+        "name": "About Eric & Craystar Travel Agency",
+        "description": "Meet Eric Crayton, owner of Craystar Travel Agency, and learn about our specializations, certifications, and approach to vacation planning.",
+        "isPartOf": { "@id": "https://craystartravelagency.com/#website" },
+        "about": { "@id": "https://craystartravelagency.com/about-us#eric-crayton" },
+        "datePublished": "2026-04-26",
+        "dateModified": "2026-04-26",
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://craystartravelagency.com/about-us#eric-crayton",
+        "name": "Eric Crayton",
+        "jobTitle": "Owner & Travel Advisor",
+        "worksFor": { "@id": "https://craystartravelagency.com/#organization" },
+        "url": "https://craystartravelagency.com/about-us",
+        "telephone": "+1-417-771-0910",
+        "email": "eric.crayton@craystartravelagency.com",
+        "knowsAbout": [
+          "Walt Disney World vacation planning",
+          "Disneyland vacation planning",
+          "Disney Cruise Line",
+          "Universal Orlando vacation planning",
+          "Royal Caribbean cruises",
+          "Carnival Cruise Line",
+          "Norwegian Cruise Line",
+          "Celebrity Cruises",
+          "All-inclusive Caribbean resorts",
+          "Sandals Resorts",
+          "Club Med",
+          "Accessible travel planning"
+        ],
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Disney College of Knowledge"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Universal Travel Agent Academy"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "CLIA Certified (Cruise Lines International Association)"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Royal Caribbean Specialist"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Royal Caribbean Wedding Professional"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Celebrity Cruises Specialist"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Sandals Elite Advisor"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "Club Med Specialist"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "United Parks and Resorts Specialist"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "certification",
+            "name": "SNG Certified Accessible Travel Advocate"
+          }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/craystartravel/",
+          "https://www.facebook.com/craystartravel"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://craystartravelagency.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About Us",
+            "item": "https://craystartravelagency.com/about-us"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="about-page">
+
+  <!-- Header (match your homepage nav structure) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/logo.webp" alt="Craystar Travel Agency" />
+      </a>
+      <nav class="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="/disney">Disney</a></li>
+          <li><a href="/universal">Universal</a></li>
+          <li><a href="/cruises">Cruises</a></li>
+          <li><a href="/resorts">Resorts</a></li>
+          <li><a href="/about-us" aria-current="page">About</a></li>
+          <li><a href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton" class="nav-cta">Book Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="about-hero">
+      <p class="eyebrow">About Craystar</p>
+      <h1>Vacation planning, the way it <em>should</em> be done.</h1>
+      <p class="lede">Craystar Travel Agency is owner-operated, certification-backed, and built around one idea: real human planning that costs you nothing and saves you everything.</p>
+    </section>
+
+    <!-- Profile / Bio -->
+    <section class="profile" id="eric-crayton">
+      <div class="profile-photo">
+        <div class="photo-frame">
+          <!-- Replace with: <img src="/images/eric-headshot.jpg" alt="Eric Crayton, Owner of Craystar Travel Agency" /> -->
+          EC
+        </div>
+        <div class="credentials-line">CLIA · Disney · Universal · SNG</div>
+      </div>
+
+      <article class="profile-content">
+        <p class="role">Meet the Advisor</p>
+        <h2>Eric Crayton</h2>
+        <p><strong>Owner of Craystar Travel Agency</strong>, based in Springfield, Missouri and serving travelers across all 50 states. Eric founded Craystar with a clear mission: take the overwhelm out of vacation planning by giving every traveler access to a real, certified advisor — at no cost.</p>
+
+        <p>Eric's specializations are Walt Disney World, Universal Orlando, and Royal Caribbean cruises, but Craystar plans every kind of trip — Disneyland, Disney Cruise Line, Aulani, Adventures by Disney, Universal Hollywood, every major cruise line, and the top all-inclusive resort brands across the Caribbean and Mexico.</p>
+
+        <p>In 2024, Eric earned the <strong>SNG Certified Accessible Travel Advocate®</strong> designation, expanding Craystar's mission to include travelers who need accessible planning — from mobility accommodations to sensory-friendly itineraries to medical-equipment logistics. Accessible travel is a category that's chronically underserved by the industry, and Craystar is committed to making it part of every conversation.</p>
+
+        <blockquote class="pull-quote">
+          "Every family deserves a vacation planned by someone who actually knows the destination. That's what I'm here for — and you never pay a planning fee, ever."
+        </blockquote>
+
+        <p>Craystar is an independent advisor with <strong>Riverdale Travel</strong>, an established host agency that provides industry credentials, supplier relationships, and back-office support. That partnership is what lets a one-person agency like Craystar deliver perks and pricing typically reserved for major travel networks.</p>
+
+        <p>Reach Eric directly by call or text at <a href="tel:4177710910"><strong>417-771-0910</strong></a>, or email <a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a>. Hours are Monday–Friday, 9am–6pm CST.</p>
+      </article>
+    </section>
+
+    <!-- Certifications -->
+    <section class="certs">
+      <div class="certs-inner">
+        <div class="certs-header">
+          <p class="eyebrow">Credentials</p>
+          <h2>Ten certifications. One reason: knowing your destination cold.</h2>
+        </div>
+        <div class="certs-grid">
+          <div class="cert">
+            <strong>Disney College of Knowledge</strong>
+            <span>Walt Disney World, Disneyland, DCL, Aulani</span>
+          </div>
+          <div class="cert">
+            <strong>Universal Travel Agent Academy</strong>
+            <span>Universal Orlando &amp; Hollywood</span>
+          </div>
+          <div class="cert">
+            <strong>CLIA Certified</strong>
+            <span>Cruise Lines International Association</span>
+          </div>
+          <div class="cert">
+            <strong>Royal Caribbean Specialist</strong>
+            <span>Featured cruise partner</span>
+          </div>
+          <div class="cert">
+            <strong>Royal Caribbean Wedding Professional</strong>
+            <span>Destination weddings &amp; vow renewals</span>
+          </div>
+          <div class="cert">
+            <strong>Celebrity Cruises Specialist</strong>
+            <span>Premium cruise experiences</span>
+          </div>
+          <div class="cert">
+            <strong>Sandals Elite Advisor</strong>
+            <span>Sandals &amp; Beaches Resorts</span>
+          </div>
+          <div class="cert">
+            <strong>Club Med Specialist</strong>
+            <span>All-inclusive global resorts</span>
+          </div>
+          <div class="cert">
+            <strong>United Parks &amp; Resorts Specialist</strong>
+            <span>SeaWorld, Busch Gardens, Discovery Cove</span>
+          </div>
+          <div class="cert">
+            <strong>SNG Certified Accessible Travel Advocate®</strong>
+            <span>Accessible &amp; inclusive travel planning</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What we believe -->
+    <section class="beliefs">
+      <div class="beliefs-header">
+        <p class="eyebrow">How we work</p>
+        <h2>What Craystar believes about your vacation.</h2>
+      </div>
+      <div class="beliefs-grid">
+        <div class="belief">
+          <div class="num">01 / Free, always</div>
+          <h3>Suppliers pay us, never you.</h3>
+          <p>Our planning service is genuinely free. There are no hidden fees, no markup, and no upcharge. Cruise lines, resorts, and parks pay our commission — your pricing is the same as booking direct, and often better.</p>
+        </div>
+        <div class="belief">
+          <div class="num">02 / Personal</div>
+          <h3>Built for your party, not a template.</h3>
+          <p>Every quote is custom. Group size, accessibility needs, dining preferences, dietary restrictions, anniversary surprises — we plan around the way your family actually travels.</p>
+        </div>
+        <div class="belief">
+          <div class="num">03 / Connected</div>
+          <h3>Perks the public can't access.</h3>
+          <p>Onboard credits, room upgrades, dining packages, exclusive promotions — supplier-only perks come standard when available. That's the value of working with a credentialed advisor.</p>
+        </div>
+        <div class="belief">
+          <div class="num">04 / Reachable</div>
+          <h3>A real human, before, during, and after.</h3>
+          <p>Booking is one phone call. So is help when a flight cancels, a port skips, or a Disney reservation needs adjusting. Eric answers — by call, text, or email.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Riverdale Travel partnership -->
+    <section class="riverdale">
+      <div class="riverdale-inner">
+        <p class="eyebrow">Our Host Agency</p>
+        <h2>Independent advisor with Riverdale Travel.</h2>
+        <p>Craystar Travel Agency, LLC is an independent advisor partnered with Riverdale Travel, an accredited host agency. This relationship provides the supplier credentials, ARC/IATA accreditation, and back-office infrastructure that lets us deliver major-agency pricing with one-on-one personal service.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta">
+      <h2>Ready to plan your <em>next</em> trip?</h2>
+      <p>Two minutes to share your idea. We'll come back with a personalized plan and pricing — at no cost to you, ever.</p>
+      <a href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton" class="btn">Request Your Quote →</a>
+      <p class="alt-contact">
+        Or call / text <a href="tel:4177710910">417-771-0910</a> · Mon–Fri 9am–6pm CST
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Footer (match your homepage footer structure) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="/logo.webp" alt="Craystar Travel Agency" />
+        <p>Your trusted travel advisor for Disney, Universal, cruises, and all-inclusive escapes.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Destinations</h5>
+        <ul>
+          <li><a href="/disney">Disney</a></li>
+          <li><a href="/universal">Universal</a></li>
+          <li><a href="/cruises">Cruises</a></li>
+          <li><a href="/resorts">All-Inclusive</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about-us">About Eric &amp; Craystar</a></li>
+          <li><a href="/review">Reviews</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li>✉ <a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a></li>
+          <li>📞 <a href="tel:4177710910">417-771-0910 (Call or Text)</a></li>
+          <li>📍 Available Nationwide</li>
+          <li>⏰ Mon–Fri: 9am – 6pm CST</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Follow</h5>
+        <ul>
+          <li><a href="https://www.instagram.com/craystartravel/">Instagram</a></li>
+          <li><a href="https://www.facebook.com/craystartravel">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Craystar Travel Agency | All rights reserved. | Independent advisor with Riverdale Travel | Powered by Jesus Christ.
+    </div>
+  </footer>
+
+</body>
+</html>
