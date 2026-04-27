@@ -591,6 +591,22 @@ section.block { padding: 72px 20px; }
   white-space: nowrap;
   overflow-wrap: anywhere;
 }
+/* ===== Byline ===== */
+.byline {
+  font-size: 0.5rem;       
+  color: #777;
+  text-align: center;
+  margin: 1rem 0;
+  letter-spacing: 0.02em;
+}
+.byline a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.byline a:hover {
+  color: #0a3a5c;         
 /* ---------- Animations ---------- */
 @keyframes rise {
   from { opacity: 0; transform: translateY(20px); }
