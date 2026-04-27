@@ -414,7 +414,13 @@ section.block { padding: 96px 28px; }
   --hero-from: #14182a;
   --hero-to: #2d3556;
 }
-
+.page-dates {
+  font-size: 0.85rem;
+  color: #777;
+  margin: 0.5rem 0 1.5rem;
+  text-align: center;
+}
+.page-dates span { white-space: nowrap; }
 /* ---------- Animations ---------- */
 @keyframes rise {
   from { opacity: 0; transform: translateY(20px); }
