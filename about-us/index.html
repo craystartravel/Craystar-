@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -26,7 +26,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <!-- Site styles -->
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="../styles.css" />
 
   <!-- Page-specific styles -->
   <style>
@@ -294,39 +294,6 @@
       line-height: 1.55;
     }
 
-    /* Riverdale strip */
-    .riverdale {
-      background: var(--about-navy);
-      color: var(--about-cream);
-      padding: 3.5rem 1.5rem;
-      text-align: center;
-    }
-    .riverdale-inner {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    .riverdale .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--about-gold);
-      margin-bottom: 1rem;
-    }
-    .riverdale h2 {
-      font-family: Georgia, serif;
-      font-size: 1.75rem;
-      font-weight: 400;
-      color: #fff;
-      margin: 0 0 1rem;
-    }
-    .riverdale p {
-      font-size: 1.05rem;
-      color: rgba(248, 245, 238, 0.85);
-      margin: 0;
-      line-height: 1.65;
-    }
-
     /* CTA */
     .about-cta {
       padding: 5rem 1.5rem;
@@ -497,13 +464,13 @@
   <!-- Header (match your homepage nav structure) -->
  <header class="topbar">
   <div class="topbar-inner">
-    <a href="/" class="brand"><img class="brand-logo" src="/logo.webp" alt="Craystar Travel Agency"></a>
+    <a href="/" class="brand"><img class="brand-logo" src="../logo.webp" alt="Craystar Travel Agency"></a>
     <nav class="nav">
       <a href="/disney">Disney</a>
       <a href="/universal">Universal</a>
       <a href="/cruises">Cruises</a>
       <a href="/resorts">Resorts</a>
-      <a class="cta" href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton">Book Now</a>
+      <a class="cta" href="/intake/">Book Now</a>
     </nav>
     </div>
   </header>
@@ -521,7 +488,7 @@
     <section class="profile" id="eric-crayton">
       <div class="profile-photo">
         <div class="photo-frame">
-          <img src="/about-us/images/headshot.webp" alt="Eric Crayton, Owner of Craystar Travel Agency" />
+          <img src="images/headshot.webp" alt="Eric Crayton, Owner of Craystar Travel Agency" />
         </div>
         <div class="credentials-line">CLIA · Disney · Universal · SNG</div>
       </div>
@@ -529,17 +496,17 @@
       <article class="profile-content">
         <p class="role">Meet the Advisor</p>
         <h2>Eric Crayton</h2>
-        <p><strong>Owner of Craystar Travel Agency</strong>, based in Springfield, Missouri and serving travelers across all 50 states. Eric founded Craystar with a clear mission: take the overwhelm out of vacation planning by giving every traveler access to a real, certified advisor — at no cost.</p>
+        <p><strong>Owner of Craystar Travel Agency</strong>, based in Springfield, Missouri and serving travelers across all 50 states. Eric founded Craystar with a clear mission: take the overwhelm out of vacation planning by giving every traveler access to a real, certified advisor, at no extra cost.</p>
 
         <p>Eric's specializations are Walt Disney World, Universal Orlando, and Royal Caribbean cruises, but Craystar plans every kind of trip — Disneyland, Disney Cruise Line, Aulani, Adventures by Disney, Universal Hollywood, every major cruise line, and the top all-inclusive resort brands across the Caribbean and Mexico.</p>
 
         <p>In 2026, Eric earned the <strong>SNG Certified Accessible Travel Advocate®</strong> designation, expanding Craystar's mission to include travelers who need accessible planning — from mobility accommodations to sensory-friendly itineraries to medical-equipment logistics. Accessible travel is a category that's chronically underserved by the industry, and Craystar is committed to making it part of every conversation.</p>
 
         <blockquote class="pull-quote">
-          "Every family deserves a vacation planned by someone who actually knows the destination. That's what I'm here for — and you never pay a planning fee, ever."
+          "Every family deserves a vacation planned by someone who actually knows the destination. That's what I'm here for and you never pay a planning fee, ever."
         </blockquote>
 
-        <p>Craystar is an independent advisor with <strong>Riverdale Travel</strong>, an established host agency that provides industry credentials, supplier relationships, and back-office support. That partnership is what lets a one-person agency like Craystar deliver perks and pricing typically reserved for major travel networks.</p>
+        <p>Craystar is an independent contractor hosted by <strong>Boardwalk Travel</strong>, an established host agency that provides industry credentials, supplier relationships, and back-office support. That relationship is what lets a one-person agency like Craystar deliver perks and pricing typically reserved for major travel networks.</p>
 
         <p>Reach Eric directly by call or text at <a href="tel:4177710910"><strong>417-771-0910</strong></a>, or email <a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a>. Hours are Monday–Friday, 9am–6pm CST.</p>
       </article>
@@ -627,20 +594,11 @@
       </div>
     </section>
 
-    <!-- Riverdale Travel partnership -->
-    <section class="riverdale">
-      <div class="riverdale-inner">
-        <p class="eyebrow">Our Host Agency</p>
-        <h2>Independent advisor with Riverdale Travel.</h2>
-        <p>Craystar Travel Agency, LLC is an independent advisor partnered with Riverdale Travel, an accredited host agency. This relationship provides the supplier credentials, ARC/IATA accreditation, and back-office infrastructure that lets us deliver major-agency pricing with one-on-one personal service.</p>
-      </div>
-    </section>
-
     <!-- CTA -->
     <section class="about-cta">
       <h2>Ready to plan your <em>next</em> trip?</h2>
       <p>Two minutes to share your idea. We'll come back with a personalized plan and pricing — at no cost to you, ever.</p>
-      <a href="https://www.cognitoforms.com/RiverdaleTravel/VacationFormForEricCrayton" class="btn">Request Your Quote →</a>
+      <a href="/intake/" class="btn">Request Your Quote →</a>
       <p class="alt-contact">
         Or call / text <a href="tel:4177710910">417-771-0910</a> · Mon–Fri 9am–6pm CST
       </p>
@@ -697,7 +655,7 @@
     </div>
   </div>
   <div class="legal">
-    <span>© 2026 Craystar Travel Agency | All rights reserved.|Independent advisor with Riverdale Travel | Powered by Jesus Christ.<a href="/privacy">Privacy Policy</a></p></div>
+    <span>© 2026 Craystar Travel Agency | All rights reserved. | Independent contractor hosted by Boardwalk Travel | Powered by Jesus Christ.<a href="/privacy">Privacy Policy</a></p></div>
   </div>
    <p class="page-dates">
   <span>Published <time datetime="2026-01-15">January 15, 2026</time></span>
