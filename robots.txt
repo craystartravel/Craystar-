@@ -44,4 +44,8 @@ Allow: /
 User-agent: Meta-ExternalAgent
 Allow: /
 
+# Block agent portal from search engines
+User-agent: *
+Disallow: /portal/
+
 Sitemap: https://craystartravelagency.com/sitemap.xml
