@@ -843,6 +843,53 @@
     }
   });
 </script>
-
+<script>
+(function() {
+  // === CONFIG ===
+  // Paste your Apps Script Web App URL here:
+  const CRM_SYNC_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+ 
+  // The form selector. Change if your form has a different id.
+  const FORM_SELECTOR = '#intakeForm';
+ 
+  // === DON'T EDIT BELOW ===
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector(FORM_SELECTOR);
+    if (!form) return;
+ 
+    form.addEventListener('submit', function() {
+      try {
+        const fd = new FormData(form);
+        const payload = {};
+        fd.forEach((value, key) => {
+          // If the form has multiple values for the same key (e.g., checkboxes),
+          // join them with a comma.
+          payload[key] = payload[key] ? payload[key] + ', ' + value : value;
+        });
+        payload.source = 'craystartravelagency.com';
+        payload.submittedAt = new Date().toISOString();
+ 
+        // Fire-and-forget POST to the CRM sync URL.
+        // Using fetch with keepalive so it survives page navigation.
+        if (CRM_SYNC_URL && CRM_SYNC_URL.indexOf('YOUR_APPS_SCRIPT_URL_HERE') === -1) {
+          fetch(CRM_SYNC_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            keepalive: true,
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          }).catch(function(err) {
+            // Silent fail — don't block the user's submission
+            console.warn('CRM sync failed (non-blocking):', err);
+          });
+        }
+      } catch (err) {
+        console.warn('CRM sync error (non-blocking):', err);
+      }
+      // We DON'T preventDefault — the original Web3Forms submission still happens
+    });
+  });
+})();
+</script>
 </body>
 </html>
