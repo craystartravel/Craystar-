@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/webp" href="logo.webp">
 <style>
   :root {
     --navy: #0A2540;
@@ -23,11 +24,11 @@
     --shadow: 0 4px 24px rgba(10, 37, 64, 0.08);
     --radius: 4px;
   }
-
+ 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   html { scroll-behavior: smooth; }
-
+ 
   body {
     font-family: 'Inter', -apple-system, sans-serif;
     background: var(--cream);
@@ -36,7 +37,7 @@
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
   }
-
+ 
   /* Hero */
   .hero {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
@@ -46,7 +47,7 @@
     position: relative;
     overflow: hidden;
   }
-
+ 
   .hero::before {
     content: '';
     position: absolute;
@@ -56,9 +57,9 @@
       radial-gradient(circle at 80% 70%, rgba(42, 111, 107, 0.12) 0%, transparent 50%);
     pointer-events: none;
   }
-
+ 
   .hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
-
+ 
   .hero-logo {
     display: block;
     max-width: 180px;
@@ -67,11 +68,11 @@
     margin: 0 auto 1.5rem;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
   }
-
+ 
   @media (min-width: 600px) {
     .hero-logo { max-width: 220px; }
   }
-
+ 
   .eyebrow {
     font-size: 0.75rem;
     letter-spacing: 0.25em;
@@ -80,7 +81,7 @@
     margin-bottom: 1rem;
     font-weight: 500;
   }
-
+ 
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: clamp(2rem, 6vw, 3.25rem);
@@ -89,16 +90,16 @@
     letter-spacing: -0.01em;
     margin-bottom: 1rem;
   }
-
+ 
   h1 em { color: var(--gold); font-style: italic; }
-
+ 
   .hero p {
     font-size: 1.0625rem;
     color: rgba(250, 247, 240, 0.85);
     max-width: 540px;
     margin: 0 auto;
   }
-
+ 
   .badges {
     display: flex;
     justify-content: center;
@@ -108,10 +109,10 @@
     font-size: 0.8125rem;
     color: var(--gold-soft);
   }
-
+ 
   .badges span { display: flex; align-items: center; gap: 0.4rem; }
   .badges svg { width: 14px; height: 14px; stroke: var(--gold); }
-
+ 
   /* Form container */
   .form-wrap {
     max-width: 720px;
@@ -119,7 +120,7 @@
     padding: 0 1rem;
     position: relative;
   }
-
+ 
   form {
     background: #fff;
     border-radius: var(--radius);
@@ -127,10 +128,10 @@
     border-top: 3px solid var(--gold);
     padding: 2.5rem 1.75rem;
   }
-
+ 
   .section { margin-bottom: 2.25rem; }
   .section:last-of-type { margin-bottom: 1rem; }
-
+ 
   .section-title {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 1.5rem;
@@ -141,7 +142,7 @@
     align-items: baseline;
     gap: 0.6rem;
   }
-
+ 
   .section-title::before {
     content: counter(section, decimal-leading-zero);
     counter-increment: section;
@@ -151,15 +152,15 @@
     letter-spacing: 0.1em;
     font-weight: 500;
   }
-
+ 
   form { counter-reset: section; }
-
+ 
   .section-sub {
     font-size: 0.875rem;
     color: var(--muted);
     margin-bottom: 1.25rem;
   }
-
+ 
   /* Inputs */
   .field { margin-bottom: 1.125rem; }
   .field-row {
@@ -172,7 +173,7 @@
     .field-row.two { grid-template-columns: 1fr 1fr; }
     .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
   }
-
+ 
   label {
     display: block;
     font-size: 0.8125rem;
@@ -181,9 +182,9 @@
     margin-bottom: 0.4rem;
     letter-spacing: 0.01em;
   }
-
+ 
   label .req { color: #b8390a; margin-left: 2px; }
-
+ 
   input[type="text"], input[type="email"], input[type="tel"], input[type="date"],
   input[type="number"], select, textarea {
     width: 100%;
@@ -196,16 +197,16 @@
     color: var(--ink);
     transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
   }
-
+ 
   input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--gold);
     background: #fff;
     box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.15);
   }
-
+ 
   textarea { resize: vertical; min-height: 100px; font-family: inherit; }
-
+ 
   /* Trip type chips */
   .chips {
     display: grid;
@@ -213,7 +214,7 @@
     gap: 0.625rem;
   }
   @media (min-width: 600px) { .chips { grid-template-columns: repeat(3, 1fr); } }
-
+ 
   .chip {
     position: relative;
     cursor: pointer;
@@ -227,20 +228,20 @@
     color: var(--navy);
     transition: all 0.15s;
   }
-
+ 
   .chip:hover { border-color: var(--gold); background: #fff; }
-
+ 
   .chip input { position: absolute; opacity: 0; pointer-events: none; }
-
+ 
   .chip:has(input:checked) {
     border-color: var(--navy);
     background: var(--navy);
     color: var(--cream);
     box-shadow: 0 2px 8px rgba(10, 37, 64, 0.18);
   }
-
+ 
   .chip-icon { display: block; font-size: 1.25rem; margin-bottom: 0.25rem; }
-
+ 
   /* Date mode toggle */
   .date-toggle {
     display: flex;
@@ -251,7 +252,7 @@
     overflow: hidden;
     background: var(--cream);
   }
-
+ 
   .date-tab {
     flex: 1;
     padding: 0.75rem 0.5rem;
@@ -264,26 +265,26 @@
     cursor: pointer;
     transition: all 0.15s;
   }
-
+ 
   .date-tab:hover { color: var(--navy); }
-
+ 
   .date-tab.active {
     background: var(--navy);
     color: var(--cream);
   }
-
+ 
   .date-pane { display: none; animation: fadeIn 0.25s ease-out; }
   .date-pane.active { display: block; }
-
+ 
   /* Conditional sections */
   .conditional { display: none; padding-top: 1rem; border-top: 1px dashed var(--line); margin-top: 1rem; }
   .conditional.active { display: block; animation: fadeIn 0.3s ease-out; }
-
+ 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
+ 
   /* Checkbox grid */
   .check-grid {
     display: grid;
@@ -291,7 +292,7 @@
     gap: 0.5rem;
   }
   @media (min-width: 600px) { .check-grid { grid-template-columns: 1fr 1fr; } }
-
+ 
   .check-item {
     display: flex;
     align-items: center;
@@ -304,25 +305,25 @@
     background: var(--cream);
     transition: all 0.15s;
   }
-
+ 
   .check-item:hover { border-color: var(--gold); }
-
+ 
   .check-item input { width: 16px; height: 16px; accent-color: var(--navy); }
-
+ 
   .check-item:has(input:checked) {
     background: #fff;
     border-color: var(--navy);
     color: var(--navy);
     font-weight: 500;
   }
-
+ 
   /* Submit */
   .submit-row {
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid var(--line);
   }
-
+ 
   button[type="submit"] {
     width: 100%;
     padding: 1.125rem 1.5rem;
@@ -339,32 +340,32 @@
     transition: all 0.2s;
     position: relative;
   }
-
+ 
   button[type="submit"]:hover:not(:disabled) {
     background: var(--navy-dark);
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(10, 37, 64, 0.2);
   }
-
+ 
   button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
-
+ 
   .fine-print {
     font-size: 0.75rem;
     color: var(--muted);
     text-align: center;
     margin-top: 1rem;
   }
-
+ 
   /* Success state */
   .success-state {
     display: none;
     text-align: center;
     padding: 3rem 1.5rem;
   }
-
+ 
   .success-state.show { display: block; animation: fadeIn 0.4s ease-out; }
   .form-content.hide { display: none; }
-
+ 
   .success-icon {
     width: 64px;
     height: 64px;
@@ -377,16 +378,16 @@
     color: #fff;
     font-size: 2rem;
   }
-
+ 
   .success-state h2 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 2rem;
     color: var(--navy);
     margin-bottom: 0.75rem;
   }
-
+ 
   .success-state p { color: var(--muted); max-width: 420px; margin: 0 auto 1.5rem; }
-
+ 
   /* Footer */
   footer {
     text-align: center;
@@ -396,10 +397,19 @@
     border-top: 1px solid var(--line);
     background: var(--cream-warm);
   }
-
+ 
   footer a { color: var(--navy); text-decoration: none; font-weight: 500; }
   footer a:hover { color: var(--gold); }
-
+ 
+  .agent-link {
+    margin-top: 1.25rem;
+    font-size: 0.7rem;
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+  .agent-link:hover { opacity: 1; }
+  .agent-link a { color: var(--muted); font-weight: 400; }
+ 
   .error-msg {
     background: #fdf2ef;
     border: 1px solid #f4c4b8;
@@ -414,7 +424,7 @@
 </style>
 </head>
 <body>
-
+ 
 <section class="hero">
   <div class="hero-inner">
     <img src="logo.webp" alt="Craystar Travel Agency" class="hero-logo" onerror="this.style.display='none'">
@@ -428,16 +438,16 @@
     </div>
   </div>
 </section>
-
+ 
 <div class="form-wrap">
   <form id="intakeForm" novalidate>
     <div class="form-content" id="formContent">
-
+ 
       <!-- SECTION 1: CONTACT -->
       <div class="section">
         <h2 class="section-title">Let's connect</h2>
         <p class="section-sub">So we can send you trip ideas and pricing.</p>
-
+ 
         <div class="field-row two">
           <div class="field">
             <label for="firstName">First name <span class="req">*</span></label>
@@ -448,7 +458,7 @@
             <input type="text" id="lastName" name="lastName" required autocomplete="family-name">
           </div>
         </div>
-
+ 
         <div class="field-row two">
           <div class="field">
             <label for="email">Email <span class="req">*</span></label>
@@ -459,18 +469,18 @@
             <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(417) 555-0123">
           </div>
         </div>
-
+ 
         <div class="field">
           <label for="city">City & State</label>
           <input type="text" id="city" name="city" placeholder="Springfield, MO">
         </div>
       </div>
-
+ 
       <!-- SECTION 2: TRIP TYPE -->
       <div class="section">
         <h2 class="section-title">What kind of trip?</h2>
         <p class="section-sub">Pick the closest match — we book it all.</p>
-
+ 
         <div class="chips" role="radiogroup">
           <label class="chip"><input type="radio" name="tripType" value="Disney" required><span class="chip-icon">🏰</span>Disney</label>
           <label class="chip"><input type="radio" name="tripType" value="Universal"><span class="chip-icon">🎢</span>Universal</label>
@@ -479,7 +489,7 @@
           <label class="chip"><input type="radio" name="tripType" value="Other"><span class="chip-icon">✈️</span>Other / Not Sure</label>
           <label class="chip"><input type="radio" name="tripType" value="Multi-destination"><span class="chip-icon">🌍</span>Multi-stop</label>
         </div>
-
+ 
         <!-- Cruise-specific -->
         <div class="conditional" data-show="Cruise">
           <div class="field-row two">
@@ -513,7 +523,7 @@
             </div>
           </div>
         </div>
-
+ 
         <!-- Resort-specific -->
         <div class="conditional" data-show="All-Inclusive Resort">
           <div class="field">
@@ -529,24 +539,24 @@
             </select>
           </div>
         </div>
-
+ 
         <!-- Disney/Universal/Other destination text -->
         <div class="field" style="margin-top: 1rem;">
           <label for="destination">Destination or specific resort (if known)</label>
           <input type="text" id="destination" name="destination" placeholder="e.g. Walt Disney World, Royal Caribbean Bahamas, or 'open to ideas'">
         </div>
       </div>
-
+ 
       <!-- SECTION 3: WHEN & WHO -->
       <div class="section">
         <h2 class="section-title">When & who's traveling</h2>
         <p class="section-sub">Approximate is fine — we'll firm it up later.</p>
-
+ 
         <div class="date-toggle" role="tablist">
           <button type="button" class="date-tab active" data-mode="approximate" role="tab">Approximate / flexible</button>
           <button type="button" class="date-tab" data-mode="specific" role="tab">I have specific dates</button>
         </div>
-
+ 
         <!-- Approximate mode -->
         <div class="date-pane active" data-pane="approximate">
           <div class="field-row two">
@@ -567,7 +577,7 @@
             </div>
           </div>
         </div>
-
+ 
         <!-- Specific mode -->
         <div class="date-pane" data-pane="specific">
           <div class="field-row two">
@@ -581,7 +591,7 @@
             </div>
           </div>
         </div>
-
+ 
         <div class="field">
           <label for="duration">Trip length</label>
           <select id="duration" name="duration">
@@ -593,7 +603,7 @@
             <option>Not sure yet</option>
           </select>
         </div>
-
+ 
         <div class="field-row three">
           <div class="field">
             <label for="adults">Adults</label>
@@ -608,18 +618,18 @@
             <input type="number" id="rooms" name="rooms" min="1" max="10" value="1">
           </div>
         </div>
-
+ 
         <div class="field">
           <label for="childAges">Children's ages (if applicable)</label>
           <input type="text" id="childAges" name="childAges" placeholder="e.g. 8, 12">
         </div>
       </div>
-
+ 
       <!-- SECTION 4: BUDGET & STYLE -->
       <div class="section">
         <h2 class="section-title">Budget & style</h2>
         <p class="section-sub">Helps us shape options that actually fit. All amounts in USD, total trip.</p>
-
+ 
         <div class="field">
           <label for="budget">Approximate budget</label>
           <select id="budget" name="budget">
@@ -633,7 +643,7 @@
             <option>Not sure — show me options</option>
           </select>
         </div>
-
+ 
         <div class="field">
           <label>What matters most? (check all that apply)</label>
           <div class="check-grid">
@@ -648,17 +658,17 @@
           </div>
         </div>
       </div>
-
+ 
       <!-- SECTION 5: NOTES & SOURCE -->
       <div class="section">
         <h2 class="section-title">Anything else?</h2>
         <p class="section-sub">Special occasions, dietary needs, accessibility requirements, must-haves, deal-breakers.</p>
-
+ 
         <div class="field">
           <label for="notes">Tell us more (optional)</label>
           <textarea id="notes" name="notes" placeholder="e.g. Celebrating 25th anniversary, wheelchair accessible cabin needed, must have direct flight from STL..."></textarea>
         </div>
-
+ 
         <div class="field">
           <label for="source">How did you hear about Craystar?</label>
           <select id="source" name="source">
@@ -672,7 +682,7 @@
           </select>
         </div>
       </div>
-
+ 
       <!-- SUBMIT -->
       <div class="submit-row">
         <button type="submit" id="submitBtn">Request my free trip plan</button>
@@ -680,7 +690,7 @@
         <div class="error-msg" id="errorMsg">Something went wrong. Please try again or call us at 417-771-0910.</div>
       </div>
     </div>
-
+ 
     <!-- SUCCESS STATE -->
     <div class="success-state" id="successState">
       <div class="success-icon">✓</div>
@@ -690,7 +700,7 @@
     </div>
   </form>
 </div>
-
+ 
 <footer>
   <p><strong>Craystar Travel Agency, LLC</strong></p>
   <p style="margin-top: 0.5rem;">
@@ -698,34 +708,37 @@
     <a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a> ·
     M–F 9am–6pm CST
   </p>
+  <p class="agent-link">
+    <a href="/portal/">Agent Login</a>
+  </p>
 </footer>
-
+ 
 <script>
   // ============================================================
   // CRAYSTAR INTAKE FORM
-  // Submits to: (1) Web3Forms (live now → email to Eric)
-  //             (2) HubSpot (commented out — see SETUP.md)
+  // Submits to: (1) Web3Forms — emails Eric instantly
+  //             (2) Google Sheets via Apps Script — feeds the CRM
   // ============================================================
-
+ 
   // ---- CONFIG ----
   const WEB3FORMS_KEY = '49234a63-f917-4fd7-9abf-fe428e19ce34';
-
-  // HubSpot — fill these in after creating your free HubSpot account
-  // and a form. See SETUP.md for the 5-minute walkthrough.
-  const HUBSPOT_PORTAL_ID = '';   // e.g. '12345678'
-  const HUBSPOT_FORM_GUID = '';   // e.g. 'abc12345-...'
+ 
+  // Paste your Apps Script Web App URL here once you've deployed the
+  // CRM bridge (see SETUP-README.md). Leave the placeholder in place
+  // until you've deployed — the form will still email you via Web3Forms.
+  const CRM_SYNC_URL = 'https://script.google.com/macros/s/AKfycbwAVnt4Qpa6219e5ebolGUz_XopwY61IG3uhuVwAF5Km_bcc7eUVtvqFrFQRHpdhCiQVw/exec';
   // ----------------
-
+ 
   const form = document.getElementById('intakeForm');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const formContent = document.getElementById('formContent');
   const successState = document.getElementById('successState');
-
+ 
   // Conditional sections based on trip type
   const tripRadios = document.querySelectorAll('input[name="tripType"]');
   const conditionals = document.querySelectorAll('.conditional');
-
+ 
   tripRadios.forEach(r => {
     r.addEventListener('change', () => {
       conditionals.forEach(c => {
@@ -733,12 +746,12 @@
       });
     });
   });
-
+ 
   // Date mode toggle (specific vs approximate)
   const dateTabs = document.querySelectorAll('.date-tab');
   const datePanes = document.querySelectorAll('.date-pane');
   let dateMode = 'approximate';
-
+ 
   dateTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       dateMode = tab.dataset.mode;
@@ -746,20 +759,20 @@
       datePanes.forEach(p => p.classList.toggle('active', p.dataset.pane === dateMode));
     });
   });
-
+ 
   // Handle submit
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorMsg.classList.remove('show');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
-
+ 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
+ 
     // Multi-select priorities (checkboxes share name)
     data.priorities = formData.getAll('priorities').join(', ');
-
+ 
     // Build a clean "travel_dates" summary based on which mode was used
     if (dateMode === 'specific') {
       data.dateMode = 'Specific dates';
@@ -775,13 +788,13 @@
       data.startDate = '';
       data.endDate = '';
     }
-
+ 
     // Build a clean subject + summary for the email
     data.subject = `New Trip Request: ${data.firstName} ${data.lastName} — ${data.tripType || 'Unspecified'}`;
     data.from_name = 'Craystar Intake Form';
-
+ 
     try {
-      // ---- 1. Submit to Web3Forms (live) ----
+      // ---- 1. Submit to Web3Forms (live — emails Eric) ----
       const w3Res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -789,52 +802,51 @@
       });
       const w3Json = await w3Res.json();
       if (!w3Json.success) throw new Error('Web3Forms submission failed');
-
-      // ---- 2. Submit to HubSpot (only if configured) ----
-      if (HUBSPOT_PORTAL_ID && HUBSPOT_FORM_GUID) {
-        const hubspotPayload = {
-          fields: [
-            { name: 'firstname', value: data.firstName || '' },
-            { name: 'lastname',  value: data.lastName  || '' },
-            { name: 'email',     value: data.email     || '' },
-            { name: 'phone',     value: data.phone     || '' },
-            { name: 'city',      value: data.city      || '' },
-            { name: 'trip_type', value: data.tripType  || '' },
-            { name: 'destination', value: data.destination || '' },
-            { name: 'date_mode', value: data.dateMode || '' },
-            { name: 'travel_dates', value: data.travelDatesSummary || '' },
-            { name: 'travel_month', value: data.travelMonth || '' },
-            { name: 'date_flexibility', value: data.dateFlex || '' },
-            { name: 'start_date', value: data.startDate || '' },
-            { name: 'end_date',   value: data.endDate   || '' },
-            { name: 'trip_duration', value: data.duration || '' },
-            { name: 'adults',   value: data.adults   || '' },
-            { name: 'children', value: data.children || '' },
-            { name: 'budget',   value: data.budget   || '' },
-            { name: 'priorities', value: data.priorities || '' },
-            { name: 'message',  value: data.notes    || '' },
-            { name: 'lead_source', value: data.source || 'Website' }
-          ],
-          context: { pageUri: window.location.href, pageName: document.title }
+ 
+      // ---- 2. Send to CRM via Google Sheets (only if URL is configured) ----
+      if (CRM_SYNC_URL && CRM_SYNC_URL.indexOf('https://script.google.com/macros/s/AKfycbwAVnt4Qpa6219e5ebolGUz_XopwY61IG3uhuVwAF5Km_bcc7eUVtvqFrFQRHpdhCiQVw/exec') === -1) {
+        const crmPayload = {
+          firstName: data.firstName || '',
+          lastName: data.lastName || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          city: data.city || '',
+          tripType: data.tripType || '',
+          destination: data.destination || '',
+          travelDates: data.travelDatesSummary || '',
+          duration: data.duration || '',
+          adults: data.adults || '',
+          children: data.children || '',
+          childAges: data.childAges || '',
+          rooms: data.rooms || '',
+          budget: data.budget || '',
+          priorities: data.priorities || '',
+          notes: data.notes || '',
+          cruiseLine: data.cruiseLine || '',
+          cruiseRegion: data.cruiseRegion || '',
+          resortBrand: data.resortBrand || '',
+          source: data.source || 'Website',
+          submittedFrom: 'craystartravelagency.com'
         };
-
         try {
-          await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
+          // Fire-and-forget — don't fail the user's submission if the CRM is down
+          fetch(CRM_SYNC_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(hubspotPayload)
-          });
-          // We don't fail the whole submission if HubSpot is down — the email already went through.
-        } catch (hsErr) {
-          console.warn('HubSpot push failed (lead still captured via email):', hsErr);
+            mode: 'no-cors',
+            keepalive: true,
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(crmPayload)
+          }).catch(err => console.warn('CRM sync failed (lead still captured via email):', err));
+        } catch (crmErr) {
+          console.warn('CRM sync error (non-blocking):', crmErr);
         }
       }
-
+ 
       // Success
       formContent.classList.add('hide');
       successState.classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
+ 
     } catch (err) {
       console.error(err);
       errorMsg.classList.add('show');
@@ -843,53 +855,6 @@
     }
   });
 </script>
-<script>
-(function() {
-  // === CONFIG ===
-  // Paste your Apps Script Web App URL here:
-  const CRM_SYNC_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
- 
-  // The form selector. Change if your form has a different id.
-  const FORM_SELECTOR = '#intakeForm';
- 
-  // === DON'T EDIT BELOW ===
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector(FORM_SELECTOR);
-    if (!form) return;
- 
-    form.addEventListener('submit', function() {
-      try {
-        const fd = new FormData(form);
-        const payload = {};
-        fd.forEach((value, key) => {
-          // If the form has multiple values for the same key (e.g., checkboxes),
-          // join them with a comma.
-          payload[key] = payload[key] ? payload[key] + ', ' + value : value;
-        });
-        payload.source = 'craystartravelagency.com';
-        payload.submittedAt = new Date().toISOString();
- 
-        // Fire-and-forget POST to the CRM sync URL.
-        // Using fetch with keepalive so it survives page navigation.
-        if (CRM_SYNC_URL && CRM_SYNC_URL.indexOf('YOUR_APPS_SCRIPT_URL_HERE') === -1) {
-          fetch(CRM_SYNC_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            keepalive: true,
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload)
-          }).catch(function(err) {
-            // Silent fail — don't block the user's submission
-            console.warn('CRM sync failed (non-blocking):', err);
-          });
-        }
-      } catch (err) {
-        console.warn('CRM sync error (non-blocking):', err);
-      }
-      // We DON'T preventDefault — the original Web3Forms submission still happens
-    });
-  });
-})();
-</script>
 </body>
 </html>
+ 
