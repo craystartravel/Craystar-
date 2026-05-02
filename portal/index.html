@@ -124,16 +124,25 @@
     </div>
     <div class="card card-pad" style="background:rgba(255,255,255,.96); backdrop-filter:blur(10px);">
       <form id="authForm" class="space-y-4">
-        <div id="setupNotice" class="hidden text-xs p-3 rounded-lg" style="background:#fef3c7; color:#92400e;"><strong>First-time setup.</strong> Use your <strong>@craystartravelagency.com</strong> email and choose a password. Hashed and stored locally on this device.</div>
+        <button type="button" onclick="signInWithGoogle()" class="btn w-full" style="background:#fff; color:var(--navy); border:1px solid rgba(10,35,66,.18);">
+          <svg width="18" height="18" viewBox="0 0 18 18" style="margin-right:.25rem;"><path d="M9 7.36v3.45h4.78c-.21 1.11-.85 2.05-1.81 2.69v2.22h2.93C16.61 14.16 17.5 11.79 17.5 9c0-.65-.06-1.27-.17-1.86H9z" fill="#4285F4"/><path d="M9 17.5c2.43 0 4.47-.81 5.96-2.18l-2.93-2.22c-.81.54-1.85.86-3.03.86-2.34 0-4.32-1.58-5.03-3.71H.94v2.29C2.42 15.49 5.5 17.5 9 17.5z" fill="#34A853"/><path d="M3.97 10.27c-.18-.54-.28-1.12-.28-1.72s.1-1.18.28-1.72V4.54H.94C.34 5.74 0 7.09 0 8.55s.34 2.81.94 4.01l3.03-2.29z" fill="#FBBC05"/><path d="M9 3.41c1.32 0 2.51.45 3.44 1.34l2.59-2.59C13.46 1.04 11.43.5 9 .5 5.5.5 2.42 2.51.94 5.46l3.03 2.29c.71-2.13 2.69-3.71 5.03-3.71z" fill="#EA4335"/></svg>
+          Sign in with Google
+        </button>
+        <div class="flex items-center gap-3 text-xs" style="color:var(--muted);">
+          <span style="flex:1; height:1px; background:rgba(10,35,66,.12);"></span>
+          <span>or with email</span>
+          <span style="flex:1; height:1px; background:rgba(10,35,66,.12);"></span>
+        </div>
+        <div id="setupNotice" class="hidden text-xs p-3 rounded-lg" style="background:#fef3c7; color:#92400e;"><strong>First sign-in?</strong> Enter a new password — it'll create your account, restricted to <strong>@craystartravelagency.com</strong> emails.</div>
         <div><label class="label">Email Address</label><input id="authUser" type="email" class="input" autocomplete="username" placeholder="you@craystartravelagency.com" required></div>
         <div><label class="label">Password</label><input id="authPass" type="password" class="input" autocomplete="current-password" required minlength="6"></div>
-        <div id="confirmPassWrap" class="hidden"><label class="label">Confirm Password</label><input id="authPass2" type="password" class="input" minlength="6"></div>
+        <div class="text-right"><a href="#" onclick="forgotPassword(); return false;" class="text-xs underline" style="color:var(--muted);">Forgot password?</a></div>
         <div id="authError" class="hidden text-sm p-3 rounded-lg" style="background:#fee2e2; color:#991b1b;"></div>
-        <button type="submit" class="btn btn-gold w-full" id="authSubmit">Sign In</button>
-        <button type="button" id="resetCRM" class="text-xs underline w-full text-center mt-2" style="color:var(--muted); display:none;">Reset CRM (wipe all data on this device)</button>
+        <div id="authInfo" class="hidden text-sm p-3 rounded-lg" style="background:#dbeafe; color:#1e40af;"></div>
+        <button type="submit" class="btn btn-gold w-full" id="authSubmit">Sign in / Sign up</button>
       </form>
     </div>
-    <p class="text-center text-xs mt-6" style="color:rgba(250,246,240,.4);">Card data handled by Stripe via Cognito. CRM stores no card numbers.</p>
+    <p class="text-center text-xs mt-6" style="color:rgba(250,246,240,.4);">Multi-device sync via Firebase. Card data handled by Stripe via Cognito.</p>
   </div>
 </div>
 
@@ -169,7 +178,7 @@
         <div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate" id="userNameSidebar">Eric</p><p class="text-xs opacity-60">Owner</p></div>
         <button onclick="logout()" class="btn-icon hover:bg-white/10 rounded-lg" title="Sign out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
       </div>
-      <p class="text-[10px] opacity-40">v1.6 · My Cut tracking</p>
+      <p class="text-[10px] opacity-40">v1.7 · Cloud sync</p>
     </div>
   </aside>
 
@@ -434,13 +443,11 @@
           </div>
 
           <div class="card card-pad">
-            <h3 class="display text-xl mb-1">Change password</h3>
-            <p class="text-sm mb-2" style="color:var(--muted);">Updates the local password hash on this device.</p>
+            <h3 class="display text-xl mb-1">Password &amp; sign-in</h3>
+            <p class="text-sm mb-3" style="color:var(--muted);">Firebase handles password resets via secure email link.</p>
             <p class="text-xs mb-4 p-2 rounded" id="emailUpgradeNotice" style="background:#fef3c7; color:#92400e; display:none;"></p>
-            <label class="label">Current password</label><input id="curPass" type="password" class="input mb-3">
-            <label class="label">New password</label><input id="newPass" type="password" class="input mb-3" minlength="6">
-            <label class="label">Confirm new password</label><input id="newPass2" type="password" class="input mb-3" minlength="6">
-            <button onclick="changePassword()" class="btn btn-primary">Update password</button>
+            <p class="text-xs mb-3" style="color:var(--muted);">If you signed in with Google, you don't have a password — just keep using "Sign in with Google" on the login screen.</p>
+            <button onclick="changePassword()" class="btn btn-primary">Email me a password reset link</button>
             <div id="pwStatus" class="text-sm mt-2"></div>
           </div>
 
@@ -455,12 +462,12 @@
 
           <div class="card card-pad md:col-span-2" style="border-color:rgba(185,28,28,.2);">
             <h3 class="display text-xl mb-1" style="color:var(--danger);">Danger zone</h3>
-            <p class="text-sm mb-4" style="color:var(--muted);">Wipes all CRM data on this device. Cannot be undone.</p>
-            <button onclick="wipeData()" class="btn btn-danger">Erase all CRM data</button>
+            <p class="text-sm mb-4" style="color:var(--muted);">Clears the local cache on this device only. Cloud data in Firebase is unaffected and will re-sync. To delete actual cloud data, delete clients individually.</p>
+            <button onclick="wipeData()" class="btn btn-danger">Clear local cache</button>
           </div>
         </div>
         <div class="card card-pad mt-4" style="background:#fef9c3; border-color:#facc15;">
-          <p class="text-xs leading-relaxed" style="color:#713f12;"><strong>Security note:</strong> The CRM uses client-side authentication and browser localStorage. Card data is handled by Stripe (PCI Level 1) via Cognito — the CRM never sees, transmits, or stores card numbers. Intake form sync uses your private Google Sheet as a buffer.</p>
+          <p class="text-xs leading-relaxed" style="color:#713f12;"><strong>Security note:</strong> Authentication is handled by Firebase (Google) — emails are restricted to @craystartravelagency.com via Firestore security rules. Data syncs across all your devices in real-time via Firestore. Card data is handled by Stripe (PCI Level 1) via Cognito — the CRM never sees, transmits, or stores card numbers.</p>
         </div>
       </section>
     </div>
@@ -702,6 +709,78 @@
   </div>
 </div>
 
+<!-- ============================================================ -->
+<!-- FIREBASE INTEGRATION — uses module imports                  -->
+<!-- ============================================================ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc, writeBatch, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// =====================================================
+// FIREBASE CONFIG — paste your firebaseConfig object here
+// (You get these values from Firebase Console after creating
+//  your project. See firebase-setup-guide.md Step 3.)
+// =====================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyCdkhjx6KX-RdasZxdRhQgAnfjOsS9sB80",
+  authDomain: "craystar-crm-1a987.firebaseapp.com",
+  projectId: "craystar-crm-1a987",
+  storageBucket: "craystar-crm-1a987.firebasestorage.app",
+  messagingSenderId: "60714144052",
+  appId: "1:60714144052:web:5e92f53adaaf952a9cd561",
+  measurementId: "G-F1XGR3SC62"
+};
+// =====================================================
+
+const ALLOWED_DOMAIN = '@craystartravelagency.com';
+const AGENCY_ID = 'craystar';
+
+// Detect placeholder config — show helpful warning instead of crashing
+const FIREBASE_CONFIGURED = firebaseConfig.apiKey && firebaseConfig.apiKey !== 'PASTE_YOUR_API_KEY_HERE';
+
+let fbApp, fbAuth, fbDb;
+if (FIREBASE_CONFIGURED) {
+  try {
+    fbApp = initializeApp(firebaseConfig);
+    fbAuth = getAuth(fbApp);
+    fbDb = getFirestore(fbApp);
+  } catch (e) {
+    console.error('Firebase init failed:', e);
+  }
+}
+
+// Expose to the rest of the (non-module) inline script via window
+window.__fb = {
+  configured: FIREBASE_CONFIGURED,
+  app: fbApp, auth: fbAuth, db: fbDb,
+  ALLOWED_DOMAIN, AGENCY_ID,
+  doc, setDoc, getDoc, onSnapshot, collection, deleteDoc, writeBatch, serverTimestamp,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+  sendPasswordResetEmail
+};
+
+// Once the inline script registers its callback, hook it up
+window.addEventListener('DOMContentLoaded', () => {
+  if (!FIREBASE_CONFIGURED) {
+    if (typeof window.showFirebaseNotConfigured === 'function') {
+      window.showFirebaseNotConfigured();
+    }
+    return;
+  }
+  if (typeof window.firebaseReady === 'function') {
+    window.firebaseReady();
+  }
+});
+</script>
+
 <script>
 const STORE_KEY = 'craystar_crm_v1';
 const AUTH_KEY = 'craystar_crm_auth_v1';
@@ -732,24 +811,49 @@ function randomSalt() {
   return Array.from(a).map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
-// AUTH
+// AUTH (Firebase-backed)
+let currentUser = null;
+let firestoreUnsubs = []; // listeners we need to detach on sign-out
+
 async function initAuth() {
-  const auth = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
   const titleEl = document.getElementById('authSubtitle');
   const setupNotice = document.getElementById('setupNotice');
-  const confirmWrap = document.getElementById('confirmPassWrap');
-  const submit = document.getElementById('authSubmit');
-  const reset = document.getElementById('resetCRM');
-  if (!auth) {
-    titleEl.textContent = 'Create your CRM account on this device';
-    setupNotice.classList.remove('hidden');
-    confirmWrap.classList.remove('hidden');
-    submit.textContent = 'Create Account';
-  } else {
-    titleEl.textContent = 'Sign in to your client management portal';
-    reset.style.display = 'block';
+  if (titleEl) titleEl.textContent = 'Sign in to your client management portal';
+  if (setupNotice) setupNotice.classList.remove('hidden'); // Always show — first-time signup is allowed via password creation
+}
+window.firebaseReady = function() {
+  // Hook up Firebase auth state listener once SDK is loaded
+  window.__fb.onAuthStateChanged(window.__fb.auth, async (user) => {
+    if (user && user.email && user.email.toLowerCase().endsWith(window.__fb.ALLOWED_DOMAIN)) {
+      currentUser = user;
+      await showApp();
+    } else if (user) {
+      // Wrong domain — sign them out and show error
+      try { await window.__fb.signOut(window.__fb.auth); } catch(e) {}
+      const errEl = document.getElementById('authError');
+      errEl.textContent = `Access restricted to ${window.__fb.ALLOWED_DOMAIN} emails. ${user.email} is not authorized.`;
+      errEl.classList.remove('hidden');
+    } else {
+      // Not signed in — show login
+      currentUser = null;
+      document.getElementById('authScreen').classList.remove('hidden');
+      document.getElementById('app').classList.add('hidden');
+      detachFirestoreListeners();
+    }
+  });
+};
+window.showFirebaseNotConfigured = function() {
+  const errEl = document.getElementById('authError');
+  if (errEl) {
+    errEl.innerHTML = '<strong>Firebase not configured.</strong> The site administrator needs to paste Firebase config values into crm.html (Step 8 of firebase-setup-guide.md).';
+    errEl.classList.remove('hidden');
   }
-  if (sessionStorage.getItem(SESSION_KEY) === 'ok' && auth) showApp();
+  document.querySelectorAll('#authForm button, #authForm input').forEach(el => el.disabled = true);
+};
+
+function detachFirestoreListeners() {
+  firestoreUnsubs.forEach(u => { try { u(); } catch(e){} });
+  firestoreUnsubs = [];
 }
 // Domain restriction — only @craystartravelagency.com emails can create new accounts.
 // Existing accounts (created before this restriction) are grandfathered in and can still log in.
@@ -762,87 +866,226 @@ function isAllowedEmail(email) {
 document.getElementById('authForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const userRaw = document.getElementById('authUser').value.trim();
-  const user = userRaw.toLowerCase(); // normalize emails for case-insensitive match
+  const user = userRaw.toLowerCase();
   const pass = document.getElementById('authPass').value;
   const errEl = document.getElementById('authError');
+  const infoEl = document.getElementById('authInfo');
   errEl.classList.add('hidden');
-  const stored = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
+  if (infoEl) infoEl.classList.add('hidden');
 
-  if (!stored) {
-    // ===== First-time setup — enforce domain restriction =====
-    if (!isAllowedEmail(user)) {
-      errEl.textContent = 'Access restricted to Craystar Travel Agency staff. Email must end in @craystartravelagency.com.';
-      errEl.classList.remove('hidden');
-      return;
-    }
-    const pass2 = document.getElementById('authPass2').value;
-    if (pass !== pass2) { errEl.textContent='Passwords do not match.'; errEl.classList.remove('hidden'); return; }
-    if (pass.length < 6) { errEl.textContent='Password must be at least 6 characters.'; errEl.classList.remove('hidden'); return; }
-    const salt = randomSalt();
-    const hash = await sha256(salt + pass);
-    localStorage.setItem(AUTH_KEY, JSON.stringify({ user, salt, hash }));
-    sessionStorage.setItem(SESSION_KEY, 'ok');
-    if (!localStorage.getItem(PROFILE_KEY)) localStorage.setItem(PROFILE_KEY, JSON.stringify({ name: user, role: 'Owner' }));
-    showApp();
-  } else {
-    // ===== Login — match against stored credentials =====
-    // Existing accounts that pre-date the restriction are grandfathered: if the stored username
-    // is not a craystar email, allow login as long as it matches stored credentials. New accounts
-    // (created after the upgrade) will always have craystar emails.
-    const storedUserLower = (stored.user || '').toLowerCase();
-    const isStoredCraystar = isAllowedEmail(storedUserLower);
+  if (!isAllowedEmail(user)) {
+    errEl.textContent = `Email must end in @craystartravelagency.com.`;
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if (pass.length < 6) {
+    errEl.textContent = 'Password must be at least 6 characters.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if (!window.__fb || !window.__fb.configured) {
+    errEl.textContent = 'Firebase not configured — see firebase-setup-guide.md.';
+    errEl.classList.remove('hidden');
+    return;
+  }
 
-    if (isStoredCraystar) {
-      // New-style account — must enter craystar email matching stored
-      if (!isAllowedEmail(user) || user !== storedUserLower) {
-        errEl.textContent = 'Invalid email or password.';
+  const submit = document.getElementById('authSubmit');
+  submit.disabled = true;
+  submit.textContent = 'Working…';
+  try {
+    // Try to sign in. If account doesn't exist, create it.
+    try {
+      await window.__fb.signInWithEmailAndPassword(window.__fb.auth, user, pass);
+    } catch (signInErr) {
+      if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/invalid-credential' || signInErr.code === 'auth/invalid-login-credentials') {
+        // Try to create account (this is allowed for craystar emails)
+        try {
+          await window.__fb.createUserWithEmailAndPassword(window.__fb.auth, user, pass);
+        } catch (createErr) {
+          if (createErr.code === 'auth/email-already-in-use' || createErr.code === 'auth/wrong-password') {
+            errEl.textContent = 'Wrong password. Try again or click "Forgot password?" below.';
+            errEl.classList.remove('hidden');
+          } else {
+            errEl.textContent = 'Sign-up failed: ' + (createErr.message || createErr);
+            errEl.classList.remove('hidden');
+          }
+        }
+      } else {
+        errEl.textContent = 'Sign-in failed: ' + (signInErr.message || signInErr);
         errEl.classList.remove('hidden');
-        return;
-      }
-    } else {
-      // Grandfathered account — match exactly what they originally typed (could be any string)
-      if (userRaw !== stored.user && user !== storedUserLower) {
-        errEl.textContent = 'Invalid email or password.';
-        errEl.classList.remove('hidden');
-        return;
       }
     }
-    const hash = await sha256(stored.salt + pass);
-    if (hash !== stored.hash) {
-      errEl.textContent = 'Invalid email or password.';
-      errEl.classList.remove('hidden');
-      return;
-    }
-    sessionStorage.setItem(SESSION_KEY, 'ok');
-    showApp();
+  } finally {
+    submit.disabled = false;
+    submit.textContent = 'Sign in / Sign up';
   }
 });
-document.getElementById('resetCRM').addEventListener('click', () => {
-  if (confirm('This will erase ALL CRM data and credentials on this device. Continue?')) {
-    [AUTH_KEY, STORE_KEY, PROFILE_KEY, COGNITO_KEY, SYNC_KEY, SYNC_STATE_KEY, SEEN_LEADS_KEY].forEach(k => localStorage.removeItem(k));
-    sessionStorage.removeItem(SESSION_KEY);
-    location.reload();
+
+window.signInWithGoogle = async function() {
+  const errEl = document.getElementById('authError');
+  errEl.classList.add('hidden');
+  if (!window.__fb || !window.__fb.configured) {
+    errEl.textContent = 'Firebase not configured — see firebase-setup-guide.md.';
+    errEl.classList.remove('hidden');
+    return;
   }
-});
-function logout() { sessionStorage.removeItem(SESSION_KEY); location.reload(); }
-function showApp() {
+  try {
+    await window.__fb.signInWithPopup(window.__fb.auth, new window.__fb.GoogleAuthProvider());
+  } catch (e) {
+    errEl.textContent = 'Google sign-in failed: ' + (e.message || e);
+    errEl.classList.remove('hidden');
+  }
+};
+
+window.forgotPassword = async function() {
+  const email = document.getElementById('authUser').value.trim().toLowerCase();
+  const errEl = document.getElementById('authError');
+  const infoEl = document.getElementById('authInfo');
+  errEl.classList.add('hidden');
+  infoEl.classList.add('hidden');
+  if (!isAllowedEmail(email)) {
+    errEl.textContent = 'Enter your @craystartravelagency.com email above first, then tap "Forgot password?".';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if (!window.__fb || !window.__fb.configured) {
+    errEl.textContent = 'Firebase not configured.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  try {
+    await window.__fb.sendPasswordResetEmail(window.__fb.auth, email);
+    infoEl.textContent = `Password reset email sent to ${email}. Check your inbox (and spam folder) for a link to set a new password.`;
+    infoEl.classList.remove('hidden');
+  } catch (e) {
+    errEl.textContent = 'Could not send reset email: ' + (e.message || e);
+    errEl.classList.remove('hidden');
+  }
+};
+async function logout() {
+  if (window.__fb && window.__fb.auth) {
+    try { await window.__fb.signOut(window.__fb.auth); } catch(e) {}
+  }
+  // Clear local cache too so the next user on this device starts fresh
+  [STORE_KEY, PROFILE_KEY, COGNITO_KEY, SYNC_KEY, SYNC_STATE_KEY, SEEN_LEADS_KEY].forEach(k => localStorage.removeItem(k));
+  location.reload();
+}
+async function showApp() {
   document.getElementById('authScreen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
+
+  // First, paint from cached localStorage so the UI is responsive immediately
   loadState(); loadProfile(); loadCognitoConfig(); loadSyncConfig();
-  showEmailMigrationNoticeIfNeeded();
   switchView('dashboard');
-  // Auto-sync on app load
+
+  // Then attach live Firestore listeners — these will overwrite local cache as remote data arrives
+  await attachFirestoreListeners();
+
+  // Auto-sync intake form leads + start interval
   setTimeout(() => syncNow(true), 1500);
   startSyncTimer();
 }
-function showEmailMigrationNoticeIfNeeded() {
-  const stored = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
-  const noticeEl = document.getElementById('emailUpgradeNotice');
-  if (!stored || !noticeEl) return;
-  if (!isAllowedEmail(stored.user)) {
-    noticeEl.style.display = 'block';
-    noticeEl.innerHTML = '<strong>Account upgrade recommended.</strong> Your username (<code>' + escapeHtml(stored.user) + '</code>) was created before email-domain restrictions were added. Your existing login still works, but for cleaner agent management, consider clicking "Reset CRM" on the login screen and recreating your account with your @craystartravelagency.com email. (Be sure to <strong>export a backup first</strong>.)';
+
+async function attachFirestoreListeners() {
+  if (!currentUser || !window.__fb) return;
+  const { db, doc, onSnapshot, collection, AGENCY_ID } = window.__fb;
+
+  // Detach any existing listeners
+  detachFirestoreListeners();
+
+  // 1. Subscribe to per-user profile (private to this user)
+  firestoreUnsubs.push(
+    onSnapshot(doc(db, 'users', currentUser.uid, 'meta', 'profile'), (snap) => {
+      if (snap.exists()) {
+        const p = snap.data();
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+        loadProfile();
+        render();
+      } else {
+        // No profile yet — create a default one
+        const defaultProfile = { name: currentUser.email.split('@')[0], role: 'Owner', splitPct: 70 };
+        window.__fb.setDoc(doc(db, 'users', currentUser.uid, 'meta', 'profile'), defaultProfile).catch(console.error);
+      }
+    }, console.error)
+  );
+
+  // 2. Subscribe to shared agency settings (cognito + sync)
+  firestoreUnsubs.push(
+    onSnapshot(doc(db, 'agency', AGENCY_ID, 'settings', 'cognito'), (snap) => {
+      if (snap.exists()) {
+        localStorage.setItem(COGNITO_KEY, JSON.stringify(snap.data()));
+        loadCognitoConfig();
+      }
+    }, console.error)
+  );
+  firestoreUnsubs.push(
+    onSnapshot(doc(db, 'agency', AGENCY_ID, 'settings', 'sync'), (snap) => {
+      if (snap.exists()) {
+        localStorage.setItem(SYNC_KEY, JSON.stringify(snap.data()));
+        loadSyncConfig();
+      }
+    }, console.error)
+  );
+
+  // 3. Subscribe to client collection — this is the big one
+  firestoreUnsubs.push(
+    onSnapshot(collection(db, 'agency', AGENCY_ID, 'clients'), (snap) => {
+      const clients = [];
+      snap.forEach(d => clients.push(d.data()));
+      // Migrate-in-place: ensure every client has the expected arrays
+      clients.forEach(c => {
+        if (!Array.isArray(c.payments)) c.payments = [];
+        if (!Array.isArray(c.bookings)) c.bookings = [];
+        if (!Array.isArray(c.timeline)) c.timeline = [];
+        if (!c.ccAuth) c.ccAuth = { sent:null, completed:null };
+      });
+      state.clients = clients;
+      localStorage.setItem(STORE_KEY, JSON.stringify(clients));
+      render();
+      updateSyncIndicator();
+    }, (err) => {
+      console.error('Client snapshot error:', err);
+      // Common cause: rules not published or wrong domain
+      flash('Sync error — check Firestore rules are published');
+    })
+  );
+
+  // 4. Subscribe to seen-leads ID list (shared, so multi-device doesn't re-import)
+  firestoreUnsubs.push(
+    onSnapshot(doc(db, 'agency', AGENCY_ID, 'settings', 'seenLeads'), (snap) => {
+      if (snap.exists()) {
+        const ids = snap.data().ids || [];
+        localStorage.setItem(SEEN_LEADS_KEY, JSON.stringify(ids));
+      }
+    }, console.error)
+  );
+}
+
+// Persist a single client to Firestore (used by saveState wrapper)
+async function persistClientToFirebase(client) {
+  if (!window.__fb || !window.__fb.configured || !currentUser) return;
+  try {
+    await window.__fb.setDoc(
+      window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'clients', client.id),
+      client
+    );
+  } catch (e) {
+    console.error('Failed to save client to Firebase:', e);
+    flash('Cloud save failed — data saved locally only');
   }
+}
+async function deleteClientFromFirebase(clientId) {
+  if (!window.__fb || !window.__fb.configured || !currentUser) return;
+  try {
+    await window.__fb.deleteDoc(
+      window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'clients', clientId)
+    );
+  } catch (e) {
+    console.error('Failed to delete client from Firebase:', e);
+  }
+}
+function showEmailMigrationNoticeIfNeeded() {
+  // No-op in v1.7 — Firebase handles all auth, no legacy state to migrate
 }
 
 // PERSISTENCE
@@ -856,7 +1099,17 @@ function loadState() {
     if (!Array.isArray(c.timeline)) c.timeline = [];
   });
 }
-function saveState() { localStorage.setItem(STORE_KEY, JSON.stringify(state.clients)); }
+function saveState(changedClientIds) {
+  // Always update local cache immediately for snappy UI
+  localStorage.setItem(STORE_KEY, JSON.stringify(state.clients));
+  if (!window.__fb || !window.__fb.configured || !currentUser) return;
+  // Persist to Firestore. If specific client IDs were passed, save just those (efficient).
+  // Otherwise save all (used by bulk operations).
+  const toSave = changedClientIds
+    ? state.clients.filter(c => changedClientIds.includes(c.id))
+    : state.clients;
+  toSave.forEach(c => persistClientToFirebase(c));
+}
 
 function loadProfile() {
   const p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
@@ -868,14 +1121,23 @@ function loadProfile() {
   const splitEl = document.getElementById('settingSplitPct');
   if (splitEl) splitEl.value = p.splitPct != null ? p.splitPct : 70;
 }
-function saveProfile() {
+async function saveProfile() {
   const name = document.getElementById('settingDisplayName').value.trim() || 'You';
   const role = document.getElementById('settingRole').value.trim() || 'Owner';
   let splitPct = parseFloat(document.getElementById('settingSplitPct').value);
   if (isNaN(splitPct) || splitPct < 0 || splitPct > 100) splitPct = 70;
-  localStorage.setItem(PROFILE_KEY, JSON.stringify({ name, role, splitPct }));
+  const profile = { name, role, splitPct };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
   loadProfile();
-  render(); // recalculate everything that displays My Cut
+  render();
+  // Persist to Firestore (per-user)
+  if (window.__fb && window.__fb.configured && currentUser) {
+    try {
+      await window.__fb.setDoc(window.__fb.doc(window.__fb.db, 'users', currentUser.uid, 'meta', 'profile'), profile);
+    } catch (e) {
+      console.error('Failed to save profile to Firebase:', e);
+    }
+  }
   flash('Settings saved');
 }
 // Helper: get the configured split percentage (defaults to 70%)
@@ -900,7 +1162,7 @@ function loadCognitoConfig() {
   link.href = c.formUrl;
   link.textContent = c.formUrl;
 }
-function saveCognitoConfig() {
+async function saveCognitoConfig() {
   const c = {
     formUrl: document.getElementById('ccFormUrl').value.trim() || DEFAULT_COGNITO.formUrl,
     nameField: document.getElementById('ccNameField').value.trim() || 'Name',
@@ -911,6 +1173,11 @@ function saveCognitoConfig() {
   };
   localStorage.setItem(COGNITO_KEY, JSON.stringify(c));
   loadCognitoConfig();
+  if (window.__fb && window.__fb.configured && currentUser) {
+    try {
+      await window.__fb.setDoc(window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'settings', 'cognito'), c);
+    } catch (e) { console.error('Failed to save cognito config:', e); }
+  }
   flash('CC form settings saved');
 }
 function getCognitoConfig() { return { ...DEFAULT_COGNITO, ...JSON.parse(localStorage.getItem(COGNITO_KEY) || '{}') }; }
@@ -924,12 +1191,17 @@ function loadSyncConfig() {
   document.getElementById('lastSyncTime').value = stateInfo.lastSync ? new Date(stateInfo.lastSync).toLocaleString() : 'Never';
   updateSyncIndicator();
 }
-function saveSyncConfig() {
+async function saveSyncConfig() {
   const cfg = {
     url: document.getElementById('syncUrl').value.trim(),
     interval: parseInt(document.getElementById('syncInterval').value) || 0,
   };
   localStorage.setItem(SYNC_KEY, JSON.stringify(cfg));
+  if (window.__fb && window.__fb.configured && currentUser) {
+    try {
+      await window.__fb.setDoc(window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'settings', 'sync'), cfg);
+    } catch (e) { console.error('Failed to save sync config:', e); }
+  }
   flash('Sync settings saved');
   startSyncTimer();
   updateSyncIndicator();
@@ -1029,6 +1301,15 @@ async function syncNow(silent) {
 
     localStorage.setItem(SEEN_LEADS_KEY, JSON.stringify([...seen]));
     saveState();
+    // Also persist seen-leads to Firestore so multi-device doesn't re-import
+    if (window.__fb && window.__fb.configured && currentUser) {
+      try {
+        await window.__fb.setDoc(
+          window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'settings', 'seenLeads'),
+          { ids: [...seen] }
+        );
+      } catch (e) { console.error('Failed to sync seenLeads to Firebase:', e); }
+    }
     const newSyncTime = new Date().toISOString();
     localStorage.setItem(SYNC_STATE_KEY, JSON.stringify({ lastSync: newSyncTime, lastError: null }));
     document.getElementById('lastSyncTime').value = new Date(newSyncTime).toLocaleString();
@@ -2136,10 +2417,15 @@ function changeStatus(id, status) {
   c.timeline.push({ date: new Date().toISOString(), text: `Status: ${statusLabel(old)} → ${statusLabel(status)}` });
   saveState(); render(); openClient(id); flash('Status updated');
 }
-function deleteClient(id) {
+async function deleteClient(id) {
   if (!confirm('Delete this client and all their records?')) return;
   state.clients = state.clients.filter(c => c.id !== id);
-  saveState(); closeModal('clientDetailModal'); render(); flash('Client deleted');
+  // Update local cache + delete from Firestore
+  localStorage.setItem(STORE_KEY, JSON.stringify(state.clients));
+  await deleteClientFromFirebase(id);
+  closeModal('clientDetailModal');
+  render();
+  flash('Client deleted');
 }
 function saveNote() {
   const text = document.getElementById('noteText').value.trim();
@@ -2327,21 +2613,21 @@ attachBookingFormListeners();
 
 // SETTINGS
 async function changePassword() {
-  const cur = document.getElementById('curPass').value;
-  const np = document.getElementById('newPass').value;
-  const np2 = document.getElementById('newPass2').value;
+  // Firebase manages password resets via email link — direct change-in-app requires re-authentication.
+  // Simplest UX: tell the user to use the password reset flow.
   const status = document.getElementById('pwStatus');
   status.innerHTML = '';
-  const stored = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
-  if (!stored) return;
-  const curHash = await sha256(stored.salt + cur);
-  if (curHash !== stored.hash) { status.innerHTML = '<span style="color:var(--danger);">Current password is incorrect.</span>'; return; }
-  if (np.length < 6 || np !== np2) { status.innerHTML = '<span style="color:var(--danger);">New passwords don\'t match or are too short.</span>'; return; }
-  const salt = randomSalt();
-  const hash = await sha256(salt + np);
-  localStorage.setItem(AUTH_KEY, JSON.stringify({ user: stored.user, salt, hash }));
-  status.innerHTML = '<span style="color:var(--success);">Password updated.</span>';
-  document.getElementById('curPass').value = ''; document.getElementById('newPass').value = ''; document.getElementById('newPass2').value = '';
+  if (!currentUser || !window.__fb) {
+    status.innerHTML = '<span style="color:var(--danger);">Not signed in.</span>';
+    return;
+  }
+  if (!confirm('We will email you a password reset link. Continue?')) return;
+  try {
+    await window.__fb.sendPasswordResetEmail(window.__fb.auth, currentUser.email);
+    status.innerHTML = '<span style="color:var(--success);">Reset email sent to ' + escapeHtml(currentUser.email) + '. Check your inbox.</span>';
+  } catch (e) {
+    status.innerHTML = '<span style="color:var(--danger);">Failed: ' + escapeHtml(e.message || String(e)) + '</span>';
+  }
 }
 function exportData() {
   const data = {
@@ -2381,14 +2667,16 @@ document.getElementById('restoreFile').addEventListener('change', async (e) => {
   e.target.value = '';
 });
 function wipeData() {
-  if (!confirm('Erase ALL CRM data on this device?')) return;
-  if (!confirm('Are you absolutely sure?')) return;
+  if (!confirm('Clear local cache on this device? (Cloud data is NOT affected — re-syncs on next open.)')) return;
+  if (!confirm('Are you sure?')) return;
+  // Detach Firestore listeners briefly so we don't immediately re-populate
+  detachFirestoreListeners();
   state.clients = [];
-  localStorage.removeItem(SEEN_LEADS_KEY);
-  localStorage.removeItem(SYNC_STATE_KEY);
-  saveState();
+  [STORE_KEY, SEEN_LEADS_KEY, SYNC_STATE_KEY].forEach(k => localStorage.removeItem(k));
   render();
-  flash('All data erased');
+  flash('Local cache cleared — re-syncing from cloud…');
+  // Re-attach listeners to pull fresh data from Firestore
+  setTimeout(() => attachFirestoreListeners(), 500);
 }
 
 // Periodic sync indicator refresh

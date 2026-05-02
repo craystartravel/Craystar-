@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Craystar CRM — Migration to Firebase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0a2342; --navy-2:#15355e; --gold:#c9a961; --gold-2:#b89548; --teal:#2c7a7b; --cream:#faf6f0; --cream-2:#f0e9dc; --ink:#1a1d2e; --muted:#6b7a8f; --danger:#b91c1c; --success:#15803d; --warn:#b45309; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Manrope',sans-serif; background:radial-gradient(circle at 20% 0%,#15355e 0%,#0a2342 55%,#061629 100%); color:var(--cream); min-height:100vh; padding:2rem 1rem; }
+  .container { max-width:680px; margin:0 auto; }
+  .card { background:#fff; color:var(--ink); border-radius:1rem; padding:2rem 1.75rem; box-shadow:0 24px 60px rgba(0,0,0,0.3); }
+  .display { font-family:'Fraunces',Georgia,serif; letter-spacing:-0.02em; }
+  h1 { font-size:1.75rem; font-weight:500; margin-bottom:.5rem; }
+  h1 em { color:var(--gold); font-style:italic; }
+  .crest { font-family:'Fraunces',serif; font-weight:600; letter-spacing:.18em; font-size:.7rem; color:var(--gold); }
+  .lead { color:var(--muted); font-size:.95rem; margin-bottom:1.25rem; line-height:1.55; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.85rem 1.25rem; border-radius:.65rem; font-weight:600; font-size:.95rem; cursor:pointer; border:1px solid transparent; transition:all .15s; }
+  .btn-primary { background:var(--navy); color:var(--cream); }
+  .btn-primary:hover:not(:disabled) { background:var(--navy-2); }
+  .btn-gold { background:var(--gold); color:var(--navy); }
+  .btn-gold:hover:not(:disabled) { background:var(--gold-2); }
+  .btn-google { background:#fff; color:var(--navy); border-color:rgba(10,35,66,.18); }
+  .btn-google:hover:not(:disabled) { background:rgba(10,35,66,.04); }
+  .btn:disabled { opacity:.5; cursor:not-allowed; }
+  .input { width:100%; padding:.7rem .85rem; border-radius:.65rem; border:1px solid rgba(10,35,66,.18); background:#fff; font-size:1rem; font-family:inherit; }
+  .input:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,169,97,.18); }
+  .label { font-size:.78rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem; display:block; }
+  .step { margin-bottom:1rem; padding:1rem; border-radius:.65rem; border:1px solid rgba(10,35,66,.08); background:var(--cream); }
+  .step.active { border-color:var(--gold); background:#fffbf0; }
+  .step.complete { border-color:var(--success); background:#f0fdf4; }
+  .step-num { display:inline-block; width:24px; height:24px; border-radius:50%; background:var(--cream-2); color:var(--navy); text-align:center; line-height:24px; font-size:.8rem; font-weight:700; margin-right:.5rem; }
+  .step.complete .step-num { background:var(--success); color:white; }
+  .step.active .step-num { background:var(--gold); color:var(--navy); }
+  .row { display:flex; align-items:center; gap:.5rem; }
+  .or { display:flex; align-items:center; gap:.75rem; color:var(--muted); font-size:.75rem; margin:1rem 0; }
+  .or::before, .or::after { content:''; flex:1; height:1px; background:rgba(10,35,66,.12); }
+  .stat-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.75rem; margin-top:1rem; }
+  .stat { padding:.65rem .85rem; border-radius:.5rem; background:var(--cream); border:1px solid rgba(10,35,66,.06); }
+  .stat .num { display:block; font-family:'Fraunces',serif; font-size:1.5rem; font-weight:500; color:var(--navy); }
+  .stat .lab { font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+  .msg { padding:.75rem 1rem; border-radius:.65rem; font-size:.85rem; margin-top:1rem; }
+  .msg-error { background:#fee2e2; color:#991b1b; }
+  .msg-success { background:#dcfce7; color:#166534; }
+  .msg-warn { background:#fef3c7; color:#92400e; }
+  .progress { height:6px; background:var(--cream-2); border-radius:3px; overflow:hidden; margin-top:.75rem; display:none; }
+  .progress.show { display:block; }
+  .progress-bar { height:100%; background:var(--gold); transition:width .3s; }
+  .small { font-size:.8rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div style="text-align:center; margin-bottom:1.5rem;">
+    <p class="crest">CRAYSTAR · MIGRATION TOOL</p>
+    <h1 class="display" style="margin-top:.5rem; color:var(--cream);">Move your CRM to <em>the cloud</em></h1>
+    <p style="color:rgba(250,246,240,.7); font-size:.9rem; margin-top:.4rem;">One-time upload. Run on the device that has your existing data.</p>
+  </div>
+
+  <div class="card">
+
+    <!-- STEP 1: Sign in -->
+    <div class="step" id="step1">
+      <h2 class="display" style="font-size:1.2rem; margin-bottom:.4rem;"><span class="step-num">1</span>Sign in to Firebase</h2>
+      <p class="small" style="margin-bottom:1rem;">Use your <strong>@craystartravelagency.com</strong> email. Either Google sign-in (one-tap) or set a password.</p>
+
+      <div id="signInForm">
+        <button class="btn btn-google" style="width:100%;" onclick="signInGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 7.36v3.45h4.78c-.21 1.11-.85 2.05-1.81 2.69v2.22h2.93C16.61 14.16 17.5 11.79 17.5 9c0-.65-.06-1.27-.17-1.86H9z" fill="#4285F4"/><path d="M9 17.5c2.43 0 4.47-.81 5.96-2.18l-2.93-2.22c-.81.54-1.85.86-3.03.86-2.34 0-4.32-1.58-5.03-3.71H.94v2.29C2.42 15.49 5.5 17.5 9 17.5z" fill="#34A853"/><path d="M3.97 10.27c-.18-.54-.28-1.12-.28-1.72s.1-1.18.28-1.72V4.54H.94C.34 5.74 0 7.09 0 8.55s.34 2.81.94 4.01l3.03-2.29z" fill="#FBBC05"/><path d="M9 3.41c1.32 0 2.51.45 3.44 1.34l2.59-2.59C13.46 1.04 11.43.5 9 .5 5.5.5 2.42 2.51.94 5.46l3.03 2.29c.71-2.13 2.69-3.71 5.03-3.71z" fill="#EA4335"/></svg>
+          Sign in with Google
+        </button>
+        <div class="or">or</div>
+        <label class="label">Email</label>
+        <input type="email" id="email" class="input" placeholder="you@craystartravelagency.com" autocomplete="email">
+        <label class="label" style="margin-top:.75rem;">Password</label>
+        <input type="password" id="password" class="input" placeholder="your password (or set a new one)" minlength="6">
+        <p class="small" style="margin-top:.5rem;">First time? Just type a new password — it'll create your account.</p>
+        <button class="btn btn-primary" style="width:100%; margin-top:.75rem;" onclick="signInEmail()" id="emailSigninBtn">Sign in / Sign up</button>
+      </div>
+
+      <div id="signedInPanel" style="display:none;">
+        <div class="msg msg-success">
+          ✓ Signed in as <strong id="signedInEmail">—</strong>
+        </div>
+        <button class="btn btn-google" style="width:100%; margin-top:.75rem;" onclick="signOutFB()">Sign out</button>
+      </div>
+
+      <div id="step1Error"></div>
+    </div>
+
+    <!-- STEP 2: Scan localStorage -->
+    <div class="step" id="step2">
+      <h2 class="display" style="font-size:1.2rem; margin-bottom:.4rem;"><span class="step-num">2</span>Scan your existing data</h2>
+      <p class="small" style="margin-bottom:.75rem;">We check what's stored locally on this device.</p>
+      <button class="btn btn-primary" onclick="scanLocalStorage()" id="scanBtn" disabled>Scan localStorage</button>
+      <div id="scanResults" style="display:none;">
+        <div class="stat-grid">
+          <div class="stat"><span class="num" id="scanClients">0</span><span class="lab">Clients</span></div>
+          <div class="stat"><span class="num" id="scanBookings">0</span><span class="lab">Bookings</span></div>
+          <div class="stat"><span class="num" id="scanPayments">0</span><span class="lab">Payments logged</span></div>
+          <div class="stat"><span class="num" id="scanTimeline">0</span><span class="lab">Timeline events</span></div>
+        </div>
+        <p class="small" style="margin-top:.75rem;" id="scanExtras"></p>
+      </div>
+      <div id="step2Error"></div>
+    </div>
+
+    <!-- STEP 3: Migrate -->
+    <div class="step" id="step3">
+      <h2 class="display" style="font-size:1.2rem; margin-bottom:.4rem;"><span class="step-num">3</span>Upload to Firebase</h2>
+      <p class="small" style="margin-bottom:.75rem;">Your data uploads to your private Firestore database. <strong>Existing localStorage data is NOT deleted</strong> — kept as a local backup.</p>
+      <button class="btn btn-gold" onclick="migrateToFirebase()" id="migrateBtn" disabled>Migrate to Firebase</button>
+      <div class="progress" id="migrateProgress"><div class="progress-bar" id="migrateBar" style="width:0%"></div></div>
+      <div id="migrateStatus"></div>
+    </div>
+
+    <!-- STEP 4: Done -->
+    <div class="step" id="step4">
+      <h2 class="display" style="font-size:1.2rem; margin-bottom:.4rem;"><span class="step-num">4</span>Open your CRM</h2>
+      <p class="small" style="margin-bottom:.75rem;">Once migration completes, sign in to the CRM with the same credentials. Data syncs in real-time.</p>
+      <a href="index.html" class="btn btn-primary" id="openCrmBtn" style="text-decoration:none; pointer-events:none; opacity:.5;">Open CRM →</a>
+    </div>
+
+    <p class="small" style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(10,35,66,.06);"><strong>Heads up:</strong> Run this tool on the device where your CRM data currently lives (where you've been using it). After migration, you can sign in from any device — phone, tablet, other computers — and you'll see the same data everywhere.</p>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, writeBatch, collection
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// =====================================================
+// FIREBASE CONFIG — paste your firebaseConfig object here
+// (Same values you'll paste into crm.html)
+// =====================================================
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
+  projectId: "PASTE_YOUR_PROJECT_ID_HERE",
+  storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
+  appId: "PASTE_YOUR_APP_ID_HERE"
+};
+// =====================================================
+
+const ALLOWED_DOMAIN = '@craystartravelagency.com';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// localStorage keys (must match what crm.html uses)
+const KEYS = {
+  STORE: 'craystar_crm_v1',
+  PROFILE: 'craystar_profile_v1',
+  COGNITO: 'craystar_cognito_v1',
+  SYNC: 'craystar_sync_v1',
+  SYNC_STATE: 'craystar_sync_state_v1',
+  SEEN_LEADS: 'craystar_seen_leads_v1',
+};
+
+let scannedData = null;
+
+// ===== UI helpers =====
+function showError(stepId, msg) {
+  const el = document.getElementById(stepId + 'Error');
+  el.innerHTML = `<div class="msg msg-error">${msg}</div>`;
+}
+function clearError(stepId) {
+  const el = document.getElementById(stepId + 'Error');
+  if (el) el.innerHTML = '';
+}
+function setStepActive(n) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('step' + i);
+    el.classList.remove('active', 'complete');
+    if (i < n) el.classList.add('complete');
+    if (i === n) el.classList.add('active');
+  }
+}
+function setStepComplete(n) {
+  document.getElementById('step' + n).classList.remove('active');
+  document.getElementById('step' + n).classList.add('complete');
+}
+
+// ===== Auth =====
+window.signInGoogle = async function() {
+  clearError('step1');
+  try {
+    const result = await signInWithPopup(auth, new GoogleAuthProvider());
+    if (!result.user.email || !result.user.email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
+      await signOut(auth);
+      showError('step1', `Access restricted to ${ALLOWED_DOMAIN} emails. You signed in with ${result.user.email}.`);
+    }
+  } catch (e) {
+    showError('step1', 'Google sign-in failed: ' + (e.message || e));
+  }
+};
+
+window.signInEmail = async function() {
+  clearError('step1');
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const pass = document.getElementById('password').value;
+  if (!email.endsWith(ALLOWED_DOMAIN)) { showError('step1', `Email must end in ${ALLOWED_DOMAIN}`); return; }
+  if (pass.length < 6) { showError('step1', 'Password must be at least 6 characters.'); return; }
+  document.getElementById('emailSigninBtn').disabled = true;
+  document.getElementById('emailSigninBtn').textContent = 'Working…';
+  try {
+    // Try sign-in first; fall back to create-account
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+    } catch (signInErr) {
+      if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/invalid-credential') {
+        await createUserWithEmailAndPassword(auth, email, pass);
+      } else {
+        throw signInErr;
+      }
+    }
+  } catch (e) {
+    showError('step1', 'Sign-in failed: ' + (e.message || e));
+  } finally {
+    document.getElementById('emailSigninBtn').disabled = false;
+    document.getElementById('emailSigninBtn').textContent = 'Sign in / Sign up';
+  }
+};
+
+window.signOutFB = async function() {
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, (user) => {
+  if (user && user.email && user.email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
+    document.getElementById('signInForm').style.display = 'none';
+    document.getElementById('signedInPanel').style.display = 'block';
+    document.getElementById('signedInEmail').textContent = user.email;
+    document.getElementById('scanBtn').disabled = false;
+    setStepComplete(1);
+    setStepActive(2);
+  } else {
+    document.getElementById('signInForm').style.display = 'block';
+    document.getElementById('signedInPanel').style.display = 'none';
+    document.getElementById('scanBtn').disabled = true;
+    document.getElementById('migrateBtn').disabled = true;
+    setStepActive(1);
+  }
+});
+
+// ===== Scan =====
+window.scanLocalStorage = function() {
+  clearError('step2');
+  try {
+    const raw = localStorage.getItem(KEYS.STORE);
+    const clients = raw ? JSON.parse(raw) : [];
+    let bookings = 0, payments = 0, timeline = 0;
+    clients.forEach(c => {
+      bookings += (c.bookings || []).length;
+      payments += (c.payments || []).length;
+      timeline += (c.timeline || []).length;
+    });
+    const profile = JSON.parse(localStorage.getItem(KEYS.PROFILE) || 'null');
+    const cognito = JSON.parse(localStorage.getItem(KEYS.COGNITO) || 'null');
+    const sync = JSON.parse(localStorage.getItem(KEYS.SYNC) || 'null');
+    const seen = JSON.parse(localStorage.getItem(KEYS.SEEN_LEADS) || 'null');
+
+    scannedData = { clients, profile, cognito, sync, seen };
+
+    document.getElementById('scanClients').textContent = clients.length;
+    document.getElementById('scanBookings').textContent = bookings;
+    document.getElementById('scanPayments').textContent = payments;
+    document.getElementById('scanTimeline').textContent = timeline;
+    const extras = [];
+    if (profile) extras.push('profile (commission split, name)');
+    if (cognito) extras.push('Cognito CC form URL');
+    if (sync) extras.push('Apps Script sync URL');
+    if (seen && seen.length) extras.push(`${seen.length} previously-imported leads`);
+    document.getElementById('scanExtras').textContent = extras.length ? 'Plus settings: ' + extras.join(', ') + '.' : '';
+
+    document.getElementById('scanResults').style.display = 'block';
+    document.getElementById('migrateBtn').disabled = clients.length === 0 && !profile;
+    setStepComplete(2);
+    setStepActive(3);
+
+    if (clients.length === 0 && !profile) {
+      showError('step2', 'No CRM data found in localStorage on this device. Run this tool on the device where you have been using the CRM.');
+    }
+  } catch (e) {
+    showError('step2', 'Scan failed: ' + e.message);
+  }
+};
+
+// ===== Migrate =====
+window.migrateToFirebase = async function() {
+  clearError('step2'); // clear any previous notes
+  if (!scannedData) { showError('step2', 'Run scan first.'); return; }
+  const user = auth.currentUser;
+  if (!user) { showError('step1', 'Sign in first.'); return; }
+
+  const btn = document.getElementById('migrateBtn');
+  btn.disabled = true;
+  btn.textContent = 'Migrating…';
+  document.getElementById('migrateProgress').classList.add('show');
+  document.getElementById('migrateStatus').innerHTML = '';
+
+  try {
+    const agencyId = 'craystar';
+
+    // 1. Profile (per-user — only this user gets it)
+    if (scannedData.profile) {
+      await setDoc(doc(db, 'users', user.uid, 'meta', 'profile'), scannedData.profile);
+    }
+    document.getElementById('migrateBar').style.width = '15%';
+
+    // 2. Shared agency settings (Cognito + Sync) — accessible to all staff
+    if (scannedData.cognito) {
+      await setDoc(doc(db, 'agency', agencyId, 'settings', 'cognito'), scannedData.cognito);
+    }
+    if (scannedData.sync) {
+      await setDoc(doc(db, 'agency', agencyId, 'settings', 'sync'), scannedData.sync);
+    }
+    if (scannedData.seen && scannedData.seen.length) {
+      await setDoc(doc(db, 'agency', agencyId, 'settings', 'seenLeads'), { ids: scannedData.seen });
+    }
+    document.getElementById('migrateBar').style.width = '30%';
+
+    // 3. Clients in batches (Firestore allows up to 500 ops per batch)
+    const total = scannedData.clients.length;
+    if (total > 0) {
+      const BATCH_SIZE = 400;
+      let i = 0;
+      while (i < total) {
+        const batch = writeBatch(db);
+        const end = Math.min(i + BATCH_SIZE, total);
+        for (let j = i; j < end; j++) {
+          const c = scannedData.clients[j];
+          const ref = doc(db, 'agency', agencyId, 'clients', c.id);
+          // Migrate the client document, plus a stamp of who migrated it
+          batch.set(ref, { ...c, _migratedBy: user.email, _migratedAt: new Date().toISOString() });
+        }
+        await batch.commit();
+        i = end;
+        const pct = 30 + Math.round((i / total) * 65);
+        document.getElementById('migrateBar').style.width = pct + '%';
+      }
+    }
+    document.getElementById('migrateBar').style.width = '100%';
+
+    // Also flag that this user has completed the migration so the CRM doesn't re-prompt
+    await setDoc(doc(db, 'users', user.uid, 'meta', 'migration'), {
+      completedAt: new Date().toISOString(),
+      clientsMigrated: total,
+    });
+
+    document.getElementById('migrateStatus').innerHTML = `<div class="msg msg-success">
+      ✓ Migration complete. Uploaded ${total} client${total !== 1 ? 's' : ''} and all related data to Firebase.
+    </div>`;
+    setStepComplete(3);
+    setStepActive(4);
+    const openBtn = document.getElementById('openCrmBtn');
+    openBtn.style.pointerEvents = 'auto';
+    openBtn.style.opacity = '1';
+  } catch (e) {
+    console.error(e);
+    document.getElementById('migrateStatus').innerHTML = `<div class="msg msg-error">
+      Migration failed: ${e.message}<br><br>
+      <strong>Common causes:</strong>
+      <ul style="margin-top:.5rem; padding-left:1.25rem;">
+        <li>Firestore rules not yet published (Step 5 of setup guide)</li>
+        <li>Email isn't ${ALLOWED_DOMAIN}</li>
+        <li>firebaseConfig values are placeholders (Step 8 of setup guide)</li>
+      </ul>
+    </div>`;
+    btn.disabled = false;
+    btn.textContent = 'Try again';
+  }
+};
+
+// Initial state
+setStepActive(1);
+
+// Show config-not-set warning if values are still placeholder
+if (firebaseConfig.apiKey === "PASTE_YOUR_API_KEY_HERE") {
+  document.querySelector('.card').insertAdjacentHTML('afterbegin',
+    '<div class="msg msg-warn" style="margin-bottom:1rem;"><strong>Not configured yet.</strong> Edit this file (migration.html) and paste your Firebase config values into the firebaseConfig object near the top of the &lt;script&gt; tag. See firebase-setup-guide.md Step 8.</div>'
+  );
+}
+</script>
+</body>
+</html>
