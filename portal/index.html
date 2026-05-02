@@ -745,7 +745,7 @@ const ALLOWED_DOMAIN = '@craystartravelagency.com';
 const AGENCY_ID = 'craystar';
 
 // Detect placeholder config — show helpful warning instead of crashing
-const FIREBASE_CONFIGURED = firebaseConfig.apiKey && firebaseConfig.apiKey !== 'AIzaSyCdkhjx6KX-RdasZxdRhQgAnfjOsS9sB80';
+const FIREBASE_CONFIGURED = firebaseConfig.apiKey && firebaseConfig.apiKey.startsWith('AIzaSy');;
 
 let fbApp, fbAuth, fbDb;
 if (FIREBASE_CONFIGURED) {
