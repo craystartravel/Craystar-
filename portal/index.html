@@ -51,6 +51,50 @@
   @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
   .kanban-col { min-width:280px; max-width:320px; }
   .stripe-badge { display:inline-flex; align-items:center; gap:.35rem; background:linear-gradient(135deg,#635bff 0%,#4f46e5 100%); color:white; padding:.2rem .55rem; border-radius:6px; font-size:.65rem; font-weight:700; letter-spacing:.05em; }
+
+  /* Calendar grid */
+  .cal-grid { display:grid; grid-template-columns: repeat(7, 1fr); }
+  .cal-head { background:var(--cream-2); padding:.5rem; text-align:center; font-size:.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; border-bottom:1px solid rgba(10,35,66,.08); }
+  .cal-cell { min-height:90px; padding:.4rem; border-right:1px solid rgba(10,35,66,.06); border-bottom:1px solid rgba(10,35,66,.06); background:#fff; position:relative; }
+  .cal-cell:nth-child(7n) { border-right:none; }
+  .cal-cell.dimmed { background:#fafafa; color:var(--muted); }
+  .cal-cell.today { background:#fef9c3; }
+  .cal-num { font-size:.78rem; font-weight:600; color:var(--navy); }
+  .cal-cell.dimmed .cal-num { color:#cbd5e1; }
+  .cal-cell.today .cal-num { color:var(--warn); }
+  .cal-event { font-size:.65rem; padding:.15rem .35rem; margin-top:.2rem; border-radius:3px; cursor:pointer; line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; transition:transform .1s; }
+  .cal-event:hover { transform:translateX(2px); }
+  .cal-evt-in { background:#dbeafe; color:#1d4ed8; }
+  .cal-evt-out { background:#dcfce7; color:#166534; }
+  .cal-evt-due { background:#fed7aa; color:#9a3412; }
+  @media (max-width: 640px) {
+    .cal-cell { min-height:60px; padding:.25rem; }
+    .cal-event { font-size:.55rem; padding:.1rem .25rem; }
+    .cal-num { font-size:.7rem; }
+  }
+
+  /* Print styles - itinerary */
+  @media print {
+    body * { visibility: hidden; }
+    #printArea, #printArea * { visibility: visible; }
+    #printArea { position: absolute; left: 0; top: 0; width: 100%; padding: 0; }
+    .grain { display:none !important; }
+    @page { margin: 0.6in; size: letter; }
+  }
+
+  #printArea { display:none; }
+
+  /* Itinerary preview modal styles */
+  .itinerary-doc { font-family: 'Manrope', sans-serif; color:#1a1d2e; line-height:1.5; max-width:7.5in; }
+  .itinerary-doc h1 { font-family:'Fraunces', serif; font-size:1.8rem; font-weight:500; letter-spacing:-0.02em; }
+  .itinerary-doc h2 { font-family:'Fraunces', serif; font-size:1.2rem; font-weight:500; margin:.6rem 0; }
+  .itinerary-doc table { width:100%; border-collapse:collapse; }
+  .itinerary-doc th, .itinerary-doc td { padding:.5rem .25rem; text-align:left; vertical-align:top; font-size:.85rem; }
+  .itinerary-doc th { color:#6b7a8f; font-weight:600; font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; border-bottom:1px solid #e5dfd0; }
+  .itinerary-doc td { border-bottom:1px solid #f0e9dc; }
+  .iti-section { background:#faf6f0; border-radius:.5rem; padding:.9rem 1rem; margin:.6rem 0; border-left:3px solid #c9a961; }
+  .iti-supplier { font-weight:700; font-size:1rem; color:#0a2342; }
+  .iti-meta { font-size:.78rem; color:#6b7a8f; margin-top:.15rem; }
   .sync-dot { width:8px; height:8px; border-radius:50%; background:var(--success); display:inline-block; animation:pulse 2s ease-in-out infinite; }
   .sync-dot.idle { background:var(--muted); animation:none; }
   .sync-dot.error { background:var(--danger); animation:none; }
@@ -80,8 +124,8 @@
     </div>
     <div class="card card-pad" style="background:rgba(255,255,255,.96); backdrop-filter:blur(10px);">
       <form id="authForm" class="space-y-4">
-        <div id="setupNotice" class="hidden text-xs p-3 rounded-lg" style="background:#fef3c7; color:#92400e;"><strong>First-time setup.</strong> Choose a username and password — hashed and stored locally on this device.</div>
-        <div><label class="label">Username</label><input id="authUser" class="input" autocomplete="username" required></div>
+        <div id="setupNotice" class="hidden text-xs p-3 rounded-lg" style="background:#fef3c7; color:#92400e;"><strong>First-time setup.</strong> Use your <strong>@craystartravelagency.com</strong> email and choose a password. Hashed and stored locally on this device.</div>
+        <div><label class="label">Email Address</label><input id="authUser" type="email" class="input" autocomplete="username" placeholder="you@craystartravelagency.com" required></div>
         <div><label class="label">Password</label><input id="authPass" type="password" class="input" autocomplete="current-password" required minlength="6"></div>
         <div id="confirmPassWrap" class="hidden"><label class="label">Confirm Password</label><input id="authPass2" type="password" class="input" minlength="6"></div>
         <div id="authError" class="hidden text-sm p-3 rounded-lg" style="background:#fee2e2; color:#991b1b;"></div>
@@ -106,7 +150,10 @@
       <div class="nav-item active" data-view="dashboard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</div>
       <div class="nav-item" data-view="clients"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Clients</div>
       <div class="nav-item" data-view="pipeline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Pipeline</div>
+      <div class="nav-item" data-view="bookings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Bookings</div>
       <div class="nav-item" data-view="payments"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Payments</div>
+      <div class="nav-item" data-view="commissions"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Commissions</div>
+      <div class="nav-item" data-view="calendar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Travel Calendar</div>
       <div class="nav-item" data-view="settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
     </nav>
     <div class="p-3 border-t" style="border-color:rgba(201,169,97,.15);">
@@ -122,7 +169,7 @@
         <div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate" id="userNameSidebar">Eric</p><p class="text-xs opacity-60">Owner</p></div>
         <button onclick="logout()" class="btn-icon hover:bg-white/10 rounded-lg" title="Sign out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
       </div>
-      <p class="text-[10px] opacity-40">v1.2 · Auto-sync</p>
+      <p class="text-[10px] opacity-40">v1.5 · Staff Email Auth</p>
     </div>
   </aside>
 
@@ -156,6 +203,12 @@
           <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Booked</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--success);" id="stat-booked">0</p><p class="text-xs mt-1" style="color:var(--muted);">Confirmed</p></div>
           <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Total Collected</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--navy);" id="stat-revenue">$0</p><p class="text-xs mt-1" style="color:var(--muted);">All payments</p></div>
           <div class="card card-pad col-span-2 lg:col-span-1"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Pending CC Auth</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-pending-cc">0</p><p class="text-xs mt-1" style="color:var(--muted);">Awaiting signature</p></div>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+          <div class="card card-pad" style="background:linear-gradient(135deg,#fef9c3 0%,#ffffff 100%);"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Commissions Pending</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-comm-pending">$0</p><p class="text-xs mt-1" style="color:var(--muted);">Owed to you</p></div>
+          <div class="card card-pad" style="background:linear-gradient(135deg,#dcfce7 0%,#ffffff 100%);"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Commissions Paid</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--success);" id="stat-comm-paid">$0</p><p class="text-xs mt-1" style="color:var(--muted);">Year to date</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Active Bookings</p><p class="display text-3xl md:text-4xl mt-1 font-medium" id="stat-active-bookings">0</p><p class="text-xs mt-1" style="color:var(--muted);">Booked + Final paid</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Final Payment Due</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-final-due">0</p><p class="text-xs mt-1" style="color:var(--muted);">In next 30 days</p></div>
         </div>
         <div class="grid lg:grid-cols-3 gap-4 md:gap-6">
           <div class="lg:col-span-2 card">
@@ -223,6 +276,81 @@
         </div>
       </section>
 
+      <!-- BOOKINGS -->
+      <section id="view-bookings" class="view-section hidden fadein">
+        <div class="card mb-4">
+          <div class="p-4 flex flex-col md:flex-row gap-3">
+            <div class="flex-1 relative">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="absolute left-3 top-1/2 -translate-y-1/2" style="color:var(--muted);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="bookingSearchInput" class="input pl-9" placeholder="Search by client, supplier, confirmation #...">
+            </div>
+            <select id="filterBookingStatus" class="select md:w-48"><option value="">All statuses</option><option value="Quoted">Quoted</option><option value="Booked">Booked</option><option value="Final Paid">Final Paid</option><option value="Traveled">Traveled</option><option value="Cancelled">Cancelled</option></select>
+            <select id="filterBookingSupplier" class="select md:w-48"><option value="">All suppliers</option></select>
+          </div>
+        </div>
+        <div id="bookingsList" class="space-y-2"></div>
+      </section>
+
+      <!-- COMMISSIONS -->
+      <section id="view-commissions" class="view-section hidden fadein">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Total Pending</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--warn);" id="comm-pending">$0</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Paid YTD</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--success);" id="comm-paid-ytd">$0</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Paid This Month</p><p class="display text-2xl md:text-3xl mt-1 font-medium" id="comm-paid-month">$0</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Adjusted</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--muted);" id="comm-adjusted">$0</p></div>
+        </div>
+
+        <div class="card card-pad mb-4" style="background:linear-gradient(135deg,#fef9c3 0%,#ffffff 100%);">
+          <p class="text-sm" style="color:var(--muted);"><strong>How this works:</strong> Commissions are tracked per booking. Set a rate when you create a booking, mark it Paid when the supplier pays you (typically 30–45 days after travel), or Adjusted if a cancellation reduced it.</p>
+        </div>
+
+        <div class="card mb-4">
+          <div class="px-5 py-4 border-b" style="border-color:rgba(10,35,66,.06);"><h3 class="display text-lg" style="color:var(--warn);">Pending — owed to you</h3></div>
+          <div id="commPendingList" class="divide-y" style="border-color:rgba(10,35,66,.05);"></div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="px-5 py-4 border-b" style="border-color:rgba(10,35,66,.06);"><h3 class="display text-lg" style="color:var(--success);">Paid</h3></div>
+          <div id="commPaidList" class="divide-y" style="border-color:rgba(10,35,66,.05);"></div>
+        </div>
+
+        <div class="card">
+          <div class="px-5 py-4 border-b" style="border-color:rgba(10,35,66,.06);"><h3 class="display text-lg">By supplier</h3><p class="text-xs" style="color:var(--muted);">Total commissions earned per supplier</p></div>
+          <div id="commBySupplier" class="divide-y" style="border-color:rgba(10,35,66,.05);"></div>
+        </div>
+      </section>
+
+      <!-- TRAVEL CALENDAR -->
+      <section id="view-calendar" class="view-section hidden fadein">
+        <div class="card mb-4">
+          <div class="p-4 flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-2">
+              <button onclick="calendarPrevMonth()" class="btn btn-ghost btn-icon" title="Previous month"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <h3 class="display text-xl" id="calendarMonthLabel">—</h3>
+              <button onclick="calendarNextMonth()" class="btn btn-ghost btn-icon" title="Next month"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+            <button onclick="calendarToday()" class="btn btn-gold text-xs">Today</button>
+          </div>
+        </div>
+
+        <div class="card mb-4 card-pad" style="background:var(--cream); border:1px solid rgba(10,35,66,.06);">
+          <div class="flex flex-wrap gap-3 text-xs">
+            <span class="flex items-center gap-1.5"><span style="width:10px; height:10px; border-radius:50%; background:#1d4ed8; display:inline-block;"></span>Check-in / Departure</span>
+            <span class="flex items-center gap-1.5"><span style="width:10px; height:10px; border-radius:50%; background:#15803d; display:inline-block;"></span>Check-out / Return</span>
+            <span class="flex items-center gap-1.5"><span style="width:10px; height:10px; border-radius:50%; background:#b45309; display:inline-block;"></span>Final Payment Due</span>
+          </div>
+        </div>
+
+        <div class="card overflow-hidden">
+          <div id="calendarGrid"></div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="px-5 py-4 border-b" style="border-color:rgba(10,35,66,.06);"><h3 class="display text-lg">Upcoming events this month</h3></div>
+          <div id="calendarUpcomingList" class="divide-y" style="border-color:rgba(10,35,66,.05);"></div>
+        </div>
+      </section>
+
       <!-- SETTINGS -->
       <section id="view-settings" class="view-section hidden fadein">
         <div class="grid md:grid-cols-2 gap-4">
@@ -231,7 +359,7 @@
             <h3 class="display text-xl mb-1 flex items-center gap-2">Intake Form Sync <span class="text-xs px-2 py-0.5 rounded-full" style="background:#dcfce7; color:#166534;">AUTO</span></h3>
             <p class="text-sm mb-4" style="color:var(--muted);">Pulls new submissions from your craystartravelagency.com intake form via Google Sheets.</p>
             <label class="label">Google Apps Script Web App URL</label>
-            <input id="syncUrl" class="input mb-3" placeholder="https://script.google.com/macros/s/AKfycbwAVnt4Qpa6219e5ebolGUz_XopwY61IG3uhuVwAF5Km_bcc7eUVtvqFrFQRHpdhCiQVw/exec">
+            <input id="syncUrl" class="input mb-3" placeholder="https://script.google.com/macros/s/.../exec">
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="label">Auto-sync every</label>
@@ -294,7 +422,8 @@
 
           <div class="card card-pad">
             <h3 class="display text-xl mb-1">Change password</h3>
-            <p class="text-sm mb-4" style="color:var(--muted);">Updates the local password hash on this device.</p>
+            <p class="text-sm mb-2" style="color:var(--muted);">Updates the local password hash on this device.</p>
+            <p class="text-xs mb-4 p-2 rounded" id="emailUpgradeNotice" style="background:#fef3c7; color:#92400e; display:none;"></p>
             <label class="label">Current password</label><input id="curPass" type="password" class="input mb-3">
             <label class="label">New password</label><input id="newPass" type="password" class="input mb-3" minlength="6">
             <label class="label">Confirm new password</label><input id="newPass2" type="password" class="input mb-3" minlength="6">
@@ -327,9 +456,9 @@
   <nav class="bottom-nav fixed bottom-0 left-0 right-0 navy-bg z-30 px-2 py-2 justify-around" style="color:var(--cream); box-shadow:0 -4px 20px rgba(0,0,0,.12);">
     <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg active" data-view="dashboard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span class="text-[10px]">Home</span></button>
     <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg" data-view="clients"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="text-[10px]">Clients</span></button>
-    <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg" data-view="pipeline"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-[10px]">Pipeline</span></button>
+    <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg" data-view="bookings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span class="text-[10px]">Bookings</span></button>
     <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg" data-view="payments"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="text-[10px]">Payments</span></button>
-    <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg" data-view="settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="text-[10px]">Settings</span></button>
+    <button class="bnav flex-1 flex flex-col items-center gap-1 py-2 rounded-lg" data-view="calendar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="text-[10px]">Calendar</span></button>
   </nav>
 </div>
 
@@ -350,7 +479,7 @@
       </div>
       <div><label class="label">Destination</label><input id="cDestination" class="input" placeholder="e.g. Walt Disney World"></div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="label">Travel Dates</label><input id="cDates" class="input" placeholder="e.g. June 12–19, 2026"></div><div><label class="label">Party Size</label><input id="cParty" class="input" placeholder="e.g. 2 adults, 1 child"></div></div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="label">Budget / Trip Total</label><input id="cBudget" class="input" placeholder="e.g. $5,000"></div><div><label class="label">Follow-up Date</label><input id="cFollowup" type="date" class="input"></div></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="label">Budget</label><input id="cBudget" class="input" placeholder="e.g. $5,000 (intake estimate)"></div><div><label class="label">Follow-up Date</label><input id="cFollowup" type="date" class="input"></div></div>
       <div><label class="label">Notes</label><textarea id="cNotes" class="textarea" rows="3" placeholder="Special requests, accessibility needs, preferences..."></textarea></div>
       <div class="flex gap-2 pt-2"><button type="button" onclick="closeModal('addClientModal')" class="btn btn-ghost flex-1">Cancel</button><button type="submit" class="btn btn-gold flex-1">Save Client</button></div>
     </form>
@@ -419,10 +548,139 @@
         <div><label class="label">Type</label><select id="payType" class="select"><option>Deposit</option><option>Mid Payment</option><option>Final Payment</option><option>Other</option><option>Refund</option></select></div>
         <div><label class="label">Method</label><select id="payMethod" class="select"><option>Credit Card (Stripe)</option><option>Other</option></select></div>
       </div>
+      <div><label class="label">Apply to Booking (optional)</label><select id="payBookingId" class="select"><option value="">General — not linked to a specific booking</option></select></div>
       <div><label class="label">Stripe Transaction ID (optional)</label><input id="payTxnId" class="input" placeholder="ch_... or pi_..."></div>
       <div><label class="label">Notes</label><input id="payNotes" class="input" placeholder="Optional reference"></div>
       <div class="flex gap-2"><button onclick="closeModal('paymentModal')" class="btn btn-ghost flex-1">Cancel</button><button onclick="savePayment()" class="btn btn-gold flex-1">Save payment</button></div>
     </div>
+  </div>
+</div>
+
+<!-- ITINERARY PREVIEW MODAL -->
+<div id="itineraryModal" class="modal hidden fixed inset-0 z-50 items-start md:items-center justify-center p-0 md:p-4" style="background:rgba(10,35,66,.55); backdrop-filter:blur(6px);">
+  <div class="card w-full max-w-3xl md:max-h-[92vh] h-full md:h-auto overflow-y-auto fadein rounded-none md:rounded-2xl">
+    <div class="flex items-center justify-between p-5 border-b sticky top-0 bg-white z-10" style="border-color:rgba(10,35,66,.08);">
+      <div>
+        <h3 class="display text-2xl">Trip Itinerary</h3>
+        <p class="text-xs" style="color:var(--muted);">Preview before printing — opens browser print dialog</p>
+      </div>
+      <button onclick="closeModal('itineraryModal')" class="btn-icon hover:bg-gray-100 rounded-lg"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div class="card-pad rounded-lg" style="background:var(--cream); border:1px solid rgba(10,35,66,.08);">
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="checkbox" id="itiShowCommission" style="width:16px; height:16px; accent-color:var(--navy);">
+          <span>Include commission details (internal version — do not give to client)</span>
+        </label>
+      </div>
+      <div id="itineraryPreview" style="background:#fff; border:1px solid rgba(10,35,66,.1); border-radius:.5rem; padding:1.25rem;"></div>
+      <div class="flex gap-2">
+        <button onclick="closeModal('itineraryModal')" class="btn btn-ghost flex-1">Close</button>
+        <button onclick="printItinerary()" class="btn btn-gold flex-1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / Save as PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HIDDEN PRINT AREA -->
+<div id="printArea"></div>
+
+<!-- BOOKING MODAL -->
+<div id="bookingModal" class="modal hidden fixed inset-0 z-50 items-start md:items-center justify-center p-0 md:p-4" style="background:rgba(10,35,66,.55); backdrop-filter:blur(6px);">
+  <div class="card w-full max-w-2xl md:max-h-[92vh] h-full md:h-auto overflow-y-auto fadein rounded-none md:rounded-2xl">
+    <div class="flex items-center justify-between p-5 border-b sticky top-0 bg-white z-10" style="border-color:rgba(10,35,66,.08);">
+      <div><h3 class="display text-2xl" id="bookingModalTitle">New Booking</h3><p class="text-xs" style="color:var(--muted);" id="bookingModalSub">Add a supplier booking for this client</p></div>
+      <button onclick="closeModal('bookingModal')" class="btn-icon hover:bg-gray-100 rounded-lg"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form id="bookingForm" class="p-5 space-y-4">
+      <input type="hidden" id="bookingClientId">
+      <input type="hidden" id="bookingId">
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="label">Booking Type *</label>
+          <select id="bkType" class="select" required>
+            <option value="">— Select —</option>
+            <option>Cruise</option><option>Resort</option><option>Theme Park</option>
+            <option>Flight</option><option>Hotel</option><option>Transfer</option>
+            <option>Insurance</option><option>Tour / Excursion</option><option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Status</label>
+          <select id="bkStatus" class="select">
+            <option>Quoted</option><option>Booked</option><option>Final Paid</option>
+            <option>Traveled</option><option>Cancelled</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="label">Supplier *</label>
+        <input id="bkSupplier" class="input" required placeholder="e.g. Royal Caribbean, Disney, Sandals, Southwest" list="supplierList">
+        <datalist id="supplierList">
+          <option value="Royal Caribbean"><option value="Carnival"><option value="Norwegian"><option value="Celebrity">
+          <option value="Princess"><option value="Disney Cruise Line"><option value="Viking"><option value="MSC">
+          <option value="Walt Disney World"><option value="Disneyland"><option value="Universal Orlando"><option value="Universal Studios Hollywood">
+          <option value="Sandals"><option value="Beaches"><option value="Hyatt Inclusive Collection"><option value="Riu"><option value="Club Med">
+          <option value="Southwest"><option value="Delta"><option value="American"><option value="United">
+          <option value="Allianz"><option value="Travelex"><option value="MEARS Connect">
+        </datalist>
+      </div>
+
+      <div>
+        <label class="label">Confirmation / Booking #</label>
+        <input id="bkConfNum" class="input" placeholder="e.g. DIS-12345, 8675309">
+      </div>
+
+      <div class="card-pad rounded-lg" style="background:var(--cream); border:1px solid rgba(10,35,66,.06);">
+        <p class="label mb-2">Travel Dates</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div><label class="label">Check-in / Departure</label><input id="bkCheckIn" type="date" class="input"></div>
+          <div><label class="label">Check-out / Return</label><input id="bkCheckOut" type="date" class="input"></div>
+        </div>
+        <p class="text-xs mt-2" style="color:var(--muted);" id="bkDuration"></p>
+      </div>
+
+      <div class="card-pad rounded-lg" style="background:var(--cream); border:1px solid rgba(10,35,66,.06);">
+        <p class="label mb-2">Money</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div><label class="label">Booking Total *</label><input id="bkTotal" type="number" step="0.01" class="input" required></div>
+          <div><label class="label">Deposit Paid</label><input id="bkDeposit" type="number" step="0.01" class="input"></div>
+          <div><label class="label">Final Payment Due Date</label><input id="bkFinalDueDate" type="date" class="input"></div>
+          <div><label class="label">Final Payment Date</label><input id="bkFinalPaidDate" type="date" class="input"></div>
+        </div>
+      </div>
+
+      <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#fef9c3 0%,#faf6f0 100%); border:1px solid rgba(201,169,97,.2);">
+        <p class="label mb-2">Commission</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div><label class="label">Commission Rate (%)</label><input id="bkCommRate" type="number" step="0.01" class="input" placeholder="e.g. 10"></div>
+          <div><label class="label">Commission Amount ($)</label><input id="bkCommAmount" type="number" step="0.01" class="input" placeholder="auto"></div>
+          <div><label class="label">Commission Status</label><select id="bkCommStatus" class="select"><option>Pending</option><option>Paid</option><option>Adjusted</option></select></div>
+          <div><label class="label">Expected Payout Date</label><input id="bkCommExpected" type="date" class="input"></div>
+          <div><label class="label">Actual Payout Date</label><input id="bkCommPaidDate" type="date" class="input"></div>
+        </div>
+        <div class="mt-3" id="bkAdjustmentWrap" style="display:none;">
+          <label class="label">Adjustment Reason</label>
+          <input id="bkAdjustReason" class="input" placeholder="e.g. Client cancelled, supplier reduced rate">
+        </div>
+      </div>
+
+      <div>
+        <label class="label">Internal Notes</label>
+        <textarea id="bkNotes" class="textarea" rows="2" placeholder="Cabin assignment, room category, special requests..."></textarea>
+      </div>
+
+      <div class="flex gap-2 pt-2">
+        <button type="button" onclick="deleteBookingPrompt()" class="btn btn-danger" id="bkDeleteBtn" style="display:none;">Delete</button>
+        <button type="button" onclick="closeModal('bookingModal')" class="btn btn-ghost flex-1">Cancel</button>
+        <button type="submit" class="btn btn-gold flex-1">Save Booking</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -475,14 +733,30 @@ async function initAuth() {
   }
   if (sessionStorage.getItem(SESSION_KEY) === 'ok' && auth) showApp();
 }
+// Domain restriction — only @craystartravelagency.com emails can create new accounts.
+// Existing accounts (created before this restriction) are grandfathered in and can still log in.
+const ALLOWED_EMAIL_DOMAIN = '@craystartravelagency.com';
+function isAllowedEmail(email) {
+  if (!email) return false;
+  return email.toLowerCase().endsWith(ALLOWED_EMAIL_DOMAIN);
+}
+
 document.getElementById('authForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const user = document.getElementById('authUser').value.trim();
+  const userRaw = document.getElementById('authUser').value.trim();
+  const user = userRaw.toLowerCase(); // normalize emails for case-insensitive match
   const pass = document.getElementById('authPass').value;
   const errEl = document.getElementById('authError');
   errEl.classList.add('hidden');
   const stored = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
+
   if (!stored) {
+    // ===== First-time setup — enforce domain restriction =====
+    if (!isAllowedEmail(user)) {
+      errEl.textContent = 'Access restricted to Craystar Travel Agency staff. Email must end in @craystartravelagency.com.';
+      errEl.classList.remove('hidden');
+      return;
+    }
     const pass2 = document.getElementById('authPass2').value;
     if (pass !== pass2) { errEl.textContent='Passwords do not match.'; errEl.classList.remove('hidden'); return; }
     if (pass.length < 6) { errEl.textContent='Password must be at least 6 characters.'; errEl.classList.remove('hidden'); return; }
@@ -493,9 +767,34 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
     if (!localStorage.getItem(PROFILE_KEY)) localStorage.setItem(PROFILE_KEY, JSON.stringify({ name: user, role: 'Owner' }));
     showApp();
   } else {
-    if (user !== stored.user) { errEl.textContent='Invalid username or password.'; errEl.classList.remove('hidden'); return; }
+    // ===== Login — match against stored credentials =====
+    // Existing accounts that pre-date the restriction are grandfathered: if the stored username
+    // is not a craystar email, allow login as long as it matches stored credentials. New accounts
+    // (created after the upgrade) will always have craystar emails.
+    const storedUserLower = (stored.user || '').toLowerCase();
+    const isStoredCraystar = isAllowedEmail(storedUserLower);
+
+    if (isStoredCraystar) {
+      // New-style account — must enter craystar email matching stored
+      if (!isAllowedEmail(user) || user !== storedUserLower) {
+        errEl.textContent = 'Invalid email or password.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+    } else {
+      // Grandfathered account — match exactly what they originally typed (could be any string)
+      if (userRaw !== stored.user && user !== storedUserLower) {
+        errEl.textContent = 'Invalid email or password.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+    }
     const hash = await sha256(stored.salt + pass);
-    if (hash !== stored.hash) { errEl.textContent='Invalid username or password.'; errEl.classList.remove('hidden'); return; }
+    if (hash !== stored.hash) {
+      errEl.textContent = 'Invalid email or password.';
+      errEl.classList.remove('hidden');
+      return;
+    }
     sessionStorage.setItem(SESSION_KEY, 'ok');
     showApp();
   }
@@ -512,10 +811,20 @@ function showApp() {
   document.getElementById('authScreen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   loadState(); loadProfile(); loadCognitoConfig(); loadSyncConfig();
+  showEmailMigrationNoticeIfNeeded();
   switchView('dashboard');
   // Auto-sync on app load
   setTimeout(() => syncNow(true), 1500);
   startSyncTimer();
+}
+function showEmailMigrationNoticeIfNeeded() {
+  const stored = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
+  const noticeEl = document.getElementById('emailUpgradeNotice');
+  if (!stored || !noticeEl) return;
+  if (!isAllowedEmail(stored.user)) {
+    noticeEl.style.display = 'block';
+    noticeEl.innerHTML = '<strong>Account upgrade recommended.</strong> Your username (<code>' + escapeHtml(stored.user) + '</code>) was created before email-domain restrictions were added. Your existing login still works, but for cleaner agent management, consider clicking "Reset CRM" on the login screen and recreating your account with your @craystartravelagency.com email. (Be sure to <strong>export a backup first</strong>.)';
+  }
 }
 
 // PERSISTENCE
@@ -524,6 +833,7 @@ function loadState() {
   state.clients = raw ? JSON.parse(raw) : [];
   state.clients.forEach(c => {
     if (!Array.isArray(c.payments)) c.payments = [];
+    if (!Array.isArray(c.bookings)) c.bookings = [];
     if (!c.ccAuth) c.ccAuth = { sent:null, completed:null };
     if (!Array.isArray(c.timeline)) c.timeline = [];
   });
@@ -774,7 +1084,10 @@ function switchView(view) {
     dashboard: ['Dashboard', 'Your travel agency at a glance'],
     clients: ['Clients', 'All leads and bookings'],
     pipeline: ['Pipeline', 'Visual sales funnel'],
+    bookings: ['Bookings', 'All supplier bookings across all clients'],
     payments: ['Payments', 'Stripe-processed transactions'],
+    commissions: ['Commissions', 'Track what suppliers owe you'],
+    calendar: ['Travel Calendar', 'All check-ins, check-outs, and final payments'],
     settings: ['Settings', 'Profile, security, integrations']
   };
   document.getElementById('pageTitle').textContent = titles[view][0];
@@ -789,6 +1102,9 @@ function render() {
   renderClients();
   renderPipeline();
   renderPayments();
+  renderBookings();
+  renderCommissions();
+  renderCalendar();
 }
 function renderDashboard() {
   const total = state.clients.length;
@@ -934,6 +1250,569 @@ function renderPayments() {
     </div>`).join('');
 }
 
+// BOOKINGS HELPERS
+function bookingTotal(c) {
+  return (c.bookings||[]).filter(b => b.status !== 'Cancelled').reduce((s,b) => s + Number(b.total||0), 0);
+}
+function commissionTotal(c) {
+  return (c.bookings||[]).reduce((s,b) => s + Number(b.commAmount||0), 0);
+}
+function bookingsByStage() {
+  // Returns highest-stage booking status across all of a client's bookings
+  // Quoted < Booked < Final Paid < Traveled
+  const order = { 'Quoted': 1, 'Booked': 2, 'Final Paid': 3, 'Traveled': 4 };
+  const reverse = { 1: 'Quoted', 2: 'Booked', 3: 'Final Paid', 4: 'Traveled' };
+  return { order, reverse };
+}
+function autoUpdateClientStatus(client) {
+  if (!client.bookings || client.bookings.length === 0) return false;
+  const active = client.bookings.filter(b => b.status !== 'Cancelled');
+  if (active.length === 0) return false;
+  const { order, reverse } = bookingsByStage();
+  // If ALL active are Traveled, client = traveled
+  // Else, client = highest stage among active
+  const allTraveled = active.every(b => b.status === 'Traveled');
+  let targetStatus;
+  if (allTraveled) {
+    targetStatus = 'traveled';
+  } else {
+    const maxStage = Math.max(...active.map(b => order[b.status] || 0));
+    const stageName = reverse[maxStage];
+    targetStatus = ({ 'Quoted':'quote', 'Booked':'booked', 'Final Paid':'final', 'Traveled':'traveled' })[stageName];
+  }
+  if (targetStatus && client.status !== targetStatus) {
+    const old = client.status;
+    client.status = targetStatus;
+    client.timeline = client.timeline || [];
+    client.timeline.push({ date: new Date().toISOString(), text: `Status auto-updated: ${statusLabel(old)} → ${statusLabel(targetStatus)} (from booking activity)` });
+    return true;
+  }
+  return false;
+}
+
+// BOOKING CRUD
+function openBookingModal(clientId, bookingId) {
+  const c = state.clients.find(x => x.id === clientId);
+  if (!c) return;
+  state.currentClientId = clientId;
+  document.getElementById('bookingClientId').value = clientId;
+  const b = bookingId ? (c.bookings||[]).find(x => x.id === bookingId) : null;
+
+  document.getElementById('bookingModalTitle').textContent = b ? 'Edit Booking' : 'New Booking';
+  document.getElementById('bookingModalSub').textContent = b ? `Update booking for ${c.first} ${c.last||''}` : `Add a supplier booking for ${c.first} ${c.last||''}`;
+  document.getElementById('bookingId').value = b?.id || '';
+  document.getElementById('bkType').value = b?.type || '';
+  document.getElementById('bkStatus').value = b?.status || 'Quoted';
+  document.getElementById('bkSupplier').value = b?.supplier || '';
+  document.getElementById('bkConfNum').value = b?.confNum || '';
+  document.getElementById('bkCheckIn').value = b?.checkIn || '';
+  document.getElementById('bkCheckOut').value = b?.checkOut || '';
+  document.getElementById('bkTotal').value = b?.total || '';
+  document.getElementById('bkDeposit').value = b?.deposit || '';
+  document.getElementById('bkFinalDueDate').value = b?.finalDueDate || '';
+  document.getElementById('bkFinalPaidDate').value = b?.finalPaidDate || '';
+  document.getElementById('bkCommRate').value = b?.commRate || '';
+  document.getElementById('bkCommAmount').value = b?.commAmount || '';
+  document.getElementById('bkCommStatus').value = b?.commStatus || 'Pending';
+  document.getElementById('bkCommExpected').value = b?.commExpected || '';
+  document.getElementById('bkCommPaidDate').value = b?.commPaidDate || '';
+  document.getElementById('bkAdjustReason').value = b?.adjustReason || '';
+  document.getElementById('bkNotes').value = b?.notes || '';
+  document.getElementById('bkDeleteBtn').style.display = b ? 'inline-flex' : 'none';
+
+  updateBookingDuration();
+  updateAdjustmentVisibility();
+  closeModal('clientDetailModal');
+  openModal('bookingModal');
+}
+
+function updateBookingDuration() {
+  const ci = document.getElementById('bkCheckIn').value;
+  const co = document.getElementById('bkCheckOut').value;
+  const out = document.getElementById('bkDuration');
+  if (ci && co) {
+    const days = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    out.textContent = days > 0 ? `${days} night${days !== 1 ? 's' : ''}` : '';
+  } else {
+    out.textContent = '';
+  }
+}
+function updateBookingCommissionFromRate() {
+  const total = parseFloat(document.getElementById('bkTotal').value) || 0;
+  const rate = parseFloat(document.getElementById('bkCommRate').value);
+  if (!isNaN(rate) && rate > 0 && total > 0) {
+    document.getElementById('bkCommAmount').value = (total * rate / 100).toFixed(2);
+  }
+}
+function updateAdjustmentVisibility() {
+  const status = document.getElementById('bkCommStatus').value;
+  document.getElementById('bkAdjustmentWrap').style.display = status === 'Adjusted' ? 'block' : 'none';
+}
+
+// Hook up live updates inside booking modal
+function attachBookingFormListeners() {
+  ['bkCheckIn','bkCheckOut'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', updateBookingDuration);
+  });
+  ['bkTotal','bkCommRate'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateBookingCommissionFromRate);
+  });
+  const cs = document.getElementById('bkCommStatus');
+  if (cs) cs.addEventListener('change', updateAdjustmentVisibility);
+}
+
+document.getElementById('bookingForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const clientId = document.getElementById('bookingClientId').value;
+  const c = state.clients.find(x => x.id === clientId);
+  if (!c) return;
+  const id = document.getElementById('bookingId').value || uid();
+  const data = {
+    id,
+    type: document.getElementById('bkType').value,
+    status: document.getElementById('bkStatus').value,
+    supplier: document.getElementById('bkSupplier').value.trim(),
+    confNum: document.getElementById('bkConfNum').value.trim(),
+    checkIn: document.getElementById('bkCheckIn').value,
+    checkOut: document.getElementById('bkCheckOut').value,
+    total: parseFloat(document.getElementById('bkTotal').value) || 0,
+    deposit: parseFloat(document.getElementById('bkDeposit').value) || 0,
+    finalDueDate: document.getElementById('bkFinalDueDate').value,
+    finalPaidDate: document.getElementById('bkFinalPaidDate').value,
+    commRate: parseFloat(document.getElementById('bkCommRate').value) || 0,
+    commAmount: parseFloat(document.getElementById('bkCommAmount').value) || 0,
+    commStatus: document.getElementById('bkCommStatus').value,
+    commExpected: document.getElementById('bkCommExpected').value,
+    commPaidDate: document.getElementById('bkCommPaidDate').value,
+    adjustReason: document.getElementById('bkAdjustReason').value.trim(),
+    notes: document.getElementById('bkNotes').value.trim(),
+    updated: new Date().toISOString(),
+  };
+  c.bookings = c.bookings || [];
+  const existingIdx = c.bookings.findIndex(b => b.id === id);
+  const isNew = existingIdx < 0;
+  if (isNew) {
+    data.created = new Date().toISOString();
+    c.bookings.push(data);
+    c.timeline = c.timeline || [];
+    c.timeline.push({ date: new Date().toISOString(), text: `Booking added: ${data.supplier}${data.confNum ? ' (#'+data.confNum+')' : ''} — ${data.status}` });
+  } else {
+    const old = c.bookings[existingIdx];
+    c.bookings[existingIdx] = { ...old, ...data };
+    if (old.status !== data.status) {
+      c.timeline = c.timeline || [];
+      c.timeline.push({ date: new Date().toISOString(), text: `Booking status: ${data.supplier} ${old.status} → ${data.status}` });
+    }
+  }
+  c.updated = new Date().toISOString();
+  autoUpdateClientStatus(c);
+  saveState();
+  closeModal('bookingModal');
+  render();
+  openClient(clientId);
+  flash(isNew ? 'Booking added' : 'Booking updated');
+});
+
+function deleteBookingPrompt() {
+  const clientId = document.getElementById('bookingClientId').value;
+  const bookingId = document.getElementById('bookingId').value;
+  if (!bookingId) return;
+  if (!confirm('Delete this booking? Linked payments will become unlinked but stay in the record.')) return;
+  const c = state.clients.find(x => x.id === clientId);
+  if (!c) return;
+  c.bookings = (c.bookings||[]).filter(b => b.id !== bookingId);
+  // Unlink payments
+  (c.payments||[]).forEach(p => { if (p.bookingId === bookingId) p.bookingId = ''; });
+  c.timeline = c.timeline || [];
+  c.timeline.push({ date: new Date().toISOString(), text: 'Booking deleted' });
+  c.updated = new Date().toISOString();
+  autoUpdateClientStatus(c);
+  saveState();
+  closeModal('bookingModal');
+  render();
+  openClient(clientId);
+  flash('Booking deleted');
+}
+
+// BOOKINGS LIST RENDER
+function renderBookings() {
+  const search = (document.getElementById('bookingSearchInput')?.value || '').toLowerCase();
+  const status = document.getElementById('filterBookingStatus')?.value || '';
+  const supplier = document.getElementById('filterBookingSupplier')?.value || '';
+
+  // Build supplier dropdown options dynamically
+  const supplierSet = new Set();
+  state.clients.forEach(c => (c.bookings||[]).forEach(b => { if (b.supplier) supplierSet.add(b.supplier); }));
+  const supplierSelect = document.getElementById('filterBookingSupplier');
+  if (supplierSelect) {
+    const current = supplierSelect.value;
+    supplierSelect.innerHTML = '<option value="">All suppliers</option>' + [...supplierSet].sort().map(s => `<option value="${escapeHtml(s)}" ${s===current?'selected':''}>${escapeHtml(s)}</option>`).join('');
+  }
+
+  const all = [];
+  state.clients.forEach(c => (c.bookings||[]).forEach(b => all.push({ ...b, clientId: c.id, clientName: c.first + ' ' + (c.last||'') })));
+  const filtered = all.filter(b => {
+    if (status && b.status !== status) return false;
+    if (supplier && b.supplier !== supplier) return false;
+    if (search) {
+      const blob = (b.supplier + ' ' + (b.confNum||'') + ' ' + (b.clientName||'') + ' ' + (b.type||'')).toLowerCase();
+      if (!blob.includes(search)) return false;
+    }
+    return true;
+  }).sort((a,b) => new Date(b.updated||b.created||0) - new Date(a.updated||a.created||0));
+
+  const el = document.getElementById('bookingsList');
+  if (!el) return;
+  if (filtered.length === 0) {
+    el.innerHTML = `<div class="card card-pad text-center" style="color:var(--muted);"><p>No bookings match your filters.</p></div>`;
+    return;
+  }
+  el.innerHTML = filtered.map(b => {
+    const balance = (Number(b.total)||0) - (Number(b.deposit)||0);
+    const statusColor = b.status === 'Cancelled' ? 'var(--danger)' : b.status === 'Traveled' ? 'var(--teal)' : b.status === 'Final Paid' ? 'var(--success)' : b.status === 'Booked' ? 'var(--navy)' : 'var(--warn)';
+    return `<div class="card hover:shadow-md transition-shadow cursor-pointer" onclick="openBookingModal('${b.clientId}','${b.id}')">
+      <div class="p-4 flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center font-bold flex-shrink-0" style="background:var(--cream-2); color:var(--navy);">${escapeHtml(b.type ? b.type[0] : '?')}</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <p class="font-semibold truncate">${escapeHtml(b.supplier || 'Unknown supplier')}</p>
+            <span class="pill" style="background:${statusColor}22; color:${statusColor};">${escapeHtml(b.status)}</span>
+          </div>
+          <p class="text-xs truncate mt-0.5" style="color:var(--muted);">${escapeHtml(b.clientName)} · ${escapeHtml(b.type||'—')}${b.confNum ? ' · #'+escapeHtml(b.confNum) : ''}</p>
+          <p class="text-xs truncate" style="color:var(--muted);">${b.checkIn ? fmtDate(b.checkIn) : '—'}${b.checkOut ? ' → '+fmtDate(b.checkOut) : ''} · ${fmtMoney(b.total)}${balance > 0 ? ' · <span style="color:var(--warn);">'+fmtMoney(balance)+' due</span>' : ''}</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          ${Number(b.commAmount) > 0 ? `<p class="text-xs font-semibold" style="color:${b.commStatus==='Paid'?'var(--success)':b.commStatus==='Adjusted'?'var(--muted)':'var(--warn)'};">${fmtMoney(b.commAmount)}</p><p class="text-[10px]" style="color:var(--muted);">${escapeHtml(b.commStatus)}</p>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// COMMISSIONS RENDER
+function renderCommissions() {
+  const all = [];
+  state.clients.forEach(c => (c.bookings||[]).forEach(b => {
+    if (Number(b.commAmount) > 0) all.push({ ...b, clientId: c.id, clientName: c.first + ' ' + (c.last||'') });
+  }));
+
+  const pending = all.filter(b => b.commStatus === 'Pending');
+  const paid = all.filter(b => b.commStatus === 'Paid');
+  const adjusted = all.filter(b => b.commStatus === 'Adjusted');
+
+  const pendingTotal = pending.reduce((s,b) => s + Number(b.commAmount), 0);
+  const now = new Date();
+  const thisYear = paid.filter(b => { const d = new Date(b.commPaidDate||b.updated||0); return d.getFullYear() === now.getFullYear(); }).reduce((s,b) => s + Number(b.commAmount), 0);
+  const thisMonth = paid.filter(b => { const d = new Date(b.commPaidDate||b.updated||0); return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); }).reduce((s,b) => s + Number(b.commAmount), 0);
+  const adjustedTotal = adjusted.reduce((s,b) => s + Number(b.commAmount), 0);
+
+  const elPending = document.getElementById('comm-pending');
+  const elPaidYTD = document.getElementById('comm-paid-ytd');
+  const elPaidMonth = document.getElementById('comm-paid-month');
+  const elAdj = document.getElementById('comm-adjusted');
+  if (elPending) elPending.textContent = fmtMoneyShort(pendingTotal);
+  if (elPaidYTD) elPaidYTD.textContent = fmtMoneyShort(thisYear);
+  if (elPaidMonth) elPaidMonth.textContent = fmtMoneyShort(thisMonth);
+  if (elAdj) elAdj.textContent = fmtMoneyShort(adjustedTotal);
+
+  // Pending list — sort by expected payout date (oldest first = most overdue)
+  const pendingSorted = [...pending].sort((a,b) => new Date(a.commExpected||'9999-12-31') - new Date(b.commExpected||'9999-12-31'));
+  const pendingEl = document.getElementById('commPendingList');
+  if (pendingEl) {
+    pendingEl.innerHTML = pendingSorted.length === 0
+      ? `<div class="p-6 text-center" style="color:var(--muted);"><p class="text-sm">No pending commissions.</p></div>`
+      : pendingSorted.map(b => {
+          const isOverdue = b.commExpected && new Date(b.commExpected) < now;
+          return `<div class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer" onclick="openBookingModal('${b.clientId}','${b.id}')">
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-sm">${escapeHtml(b.supplier)} · ${escapeHtml(b.clientName)}</p>
+              <p class="text-xs" style="color:var(--muted);">${escapeHtml(b.type||'—')}${b.confNum ? ' · #'+escapeHtml(b.confNum) : ''} · ${b.commRate ? b.commRate+'% of '+fmtMoney(b.total) : ''}</p>
+              ${b.commExpected ? `<p class="text-xs" style="color:${isOverdue?'var(--danger)':'var(--muted)'};">Expected: ${fmtDate(b.commExpected)}${isOverdue?' (overdue)':''}</p>` : ''}
+            </div>
+            <div class="text-right"><p class="font-bold" style="color:var(--warn);">${fmtMoney(b.commAmount)}</p></div>
+          </div>`;
+        }).join('');
+  }
+
+  // Paid list — sort newest first
+  const paidSorted = [...paid].sort((a,b) => new Date(b.commPaidDate||0) - new Date(a.commPaidDate||0));
+  const paidEl = document.getElementById('commPaidList');
+  if (paidEl) {
+    paidEl.innerHTML = paidSorted.length === 0
+      ? `<div class="p-6 text-center" style="color:var(--muted);"><p class="text-sm">No commissions paid yet.</p></div>`
+      : paidSorted.slice(0, 25).map(b => `<div class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer" onclick="openBookingModal('${b.clientId}','${b.id}')">
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold text-sm">${escapeHtml(b.supplier)} · ${escapeHtml(b.clientName)}</p>
+            <p class="text-xs" style="color:var(--muted);">${escapeHtml(b.type||'—')}${b.commPaidDate ? ' · paid '+fmtDate(b.commPaidDate) : ''}</p>
+          </div>
+          <div class="text-right"><p class="font-bold" style="color:var(--success);">${fmtMoney(b.commAmount)}</p></div>
+        </div>`).join('');
+  }
+
+  // By supplier
+  const bySupplier = {};
+  all.forEach(b => {
+    if (!b.supplier) return;
+    if (!bySupplier[b.supplier]) bySupplier[b.supplier] = { total: 0, paid: 0, pending: 0, count: 0 };
+    bySupplier[b.supplier].total += Number(b.commAmount);
+    bySupplier[b.supplier].count++;
+    if (b.commStatus === 'Paid') bySupplier[b.supplier].paid += Number(b.commAmount);
+    if (b.commStatus === 'Pending') bySupplier[b.supplier].pending += Number(b.commAmount);
+  });
+  const supEl = document.getElementById('commBySupplier');
+  if (supEl) {
+    const entries = Object.entries(bySupplier).sort((a,b) => b[1].total - a[1].total);
+    supEl.innerHTML = entries.length === 0
+      ? `<div class="p-6 text-center" style="color:var(--muted);"><p class="text-sm">No commission data yet.</p></div>`
+      : entries.map(([sup, data]) => `<div class="flex items-center gap-3 px-5 py-3">
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold text-sm">${escapeHtml(sup)}</p>
+            <p class="text-xs" style="color:var(--muted);">${data.count} booking${data.count!==1?'s':''}${data.pending > 0 ? ' · '+fmtMoney(data.pending)+' pending' : ''}</p>
+          </div>
+          <div class="text-right"><p class="font-bold">${fmtMoney(data.total)}</p><p class="text-[10px]" style="color:var(--success);">${fmtMoney(data.paid)} paid</p></div>
+        </div>`).join('');
+  }
+}
+
+// ============== TRAVEL CALENDAR ==============
+let calCurrentDate = new Date();
+
+function renderCalendar() {
+  const grid = document.getElementById('calendarGrid');
+  if (!grid) return;
+  const label = document.getElementById('calendarMonthLabel');
+  const upcomingEl = document.getElementById('calendarUpcomingList');
+
+  const year = calCurrentDate.getFullYear();
+  const month = calCurrentDate.getMonth();
+  const firstOfMonth = new Date(year, month, 1);
+  const lastOfMonth = new Date(year, month + 1, 0);
+  const startDay = firstOfMonth.getDay(); // 0=Sun
+  const daysInMonth = lastOfMonth.getDate();
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  if (label) label.textContent = firstOfMonth.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+
+  // Build event index keyed by YYYY-MM-DD string
+  const events = {};
+  function addEvent(dateStr, evt) {
+    if (!dateStr) return;
+    const key = dateStr.slice(0,10);
+    if (!events[key]) events[key] = [];
+    events[key].push(evt);
+  }
+  state.clients.forEach(c => {
+    (c.bookings||[]).forEach(b => {
+      if (b.status === 'Cancelled') return;
+      const clientName = (c.first || '') + ' ' + (c.last || '');
+      const supplier = b.supplier || 'Booking';
+      if (b.checkIn) addEvent(b.checkIn, { kind:'in', label: clientName.trim() + ' — ' + supplier + ' check-in', clientId:c.id, bookingId:b.id });
+      if (b.checkOut) addEvent(b.checkOut, { kind:'out', label: clientName.trim() + ' — ' + supplier + ' check-out', clientId:c.id, bookingId:b.id });
+      if (b.finalDueDate && !b.finalPaidDate) addEvent(b.finalDueDate, { kind:'due', label: clientName.trim() + ' — ' + supplier + ' final payment due', clientId:c.id, bookingId:b.id });
+    });
+  });
+
+  // Build the grid
+  const headers = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let cells = '<div class="cal-grid">';
+  headers.forEach(h => { cells += `<div class="cal-head">${h}</div>`; });
+
+  // Previous month tail
+  const prevLast = new Date(year, month, 0).getDate();
+  for (let i = startDay - 1; i >= 0; i--) {
+    cells += `<div class="cal-cell dimmed"><div class="cal-num">${prevLast - i}</div></div>`;
+  }
+  // Current month
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayDate = new Date(year, month, d);
+    const isToday = dayDate.getTime() === today.getTime();
+    const dayEvents = events[dateStr] || [];
+    let evtHtml = '';
+    dayEvents.slice(0, 3).forEach(e => {
+      const cls = e.kind === 'in' ? 'cal-evt-in' : e.kind === 'out' ? 'cal-evt-out' : 'cal-evt-due';
+      evtHtml += `<div class="cal-event ${cls}" onclick="openBookingModal('${e.clientId}','${e.bookingId}')" title="${escapeHtml(e.label)}">${escapeHtml(e.label)}</div>`;
+    });
+    if (dayEvents.length > 3) evtHtml += `<div class="cal-event" style="background:#e5e7eb; color:#4b5563;">+${dayEvents.length - 3} more</div>`;
+    cells += `<div class="cal-cell ${isToday?'today':''}"><div class="cal-num">${d}</div>${evtHtml}</div>`;
+  }
+  // Next month head — fill to complete the last row
+  const totalCells = startDay + daysInMonth;
+  const trailing = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= trailing; i++) {
+    cells += `<div class="cal-cell dimmed"><div class="cal-num">${i}</div></div>`;
+  }
+  cells += '</div>';
+  grid.innerHTML = cells;
+
+  // Upcoming list — events from today through end of displayed month, sorted
+  if (upcomingEl) {
+    const upcoming = [];
+    Object.keys(events).forEach(k => {
+      const d = new Date(k + 'T00:00:00');
+      if (d.getFullYear() === year && d.getMonth() === month && d >= today) {
+        events[k].forEach(e => upcoming.push({ ...e, date: k }));
+      }
+    });
+    upcoming.sort((a,b) => a.date.localeCompare(b.date));
+    upcomingEl.innerHTML = upcoming.length === 0
+      ? `<div class="p-6 text-center" style="color:var(--muted);"><p class="text-sm">No upcoming events this month.</p></div>`
+      : upcoming.slice(0, 30).map(e => {
+          const cls = e.kind === 'in' ? 'cal-evt-in' : e.kind === 'out' ? 'cal-evt-out' : 'cal-evt-due';
+          return `<div class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer" onclick="openBookingModal('${e.clientId}','${e.bookingId}')">
+            <span class="cal-event ${cls}" style="margin:0; padding:.25rem .55rem;">${e.kind === 'in' ? 'Check-in' : e.kind === 'out' ? 'Check-out' : 'Final due'}</span>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-sm truncate">${escapeHtml(e.label)}</p>
+              <p class="text-xs" style="color:var(--muted);">${fmtDate(e.date)}</p>
+            </div>
+          </div>`;
+        }).join('');
+  }
+}
+function calendarPrevMonth() { calCurrentDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() - 1, 1); renderCalendar(); }
+function calendarNextMonth() { calCurrentDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() + 1, 1); renderCalendar(); }
+function calendarToday() { calCurrentDate = new Date(); renderCalendar(); }
+
+// ============== TRIP ITINERARY ==============
+function buildItineraryHTML(client, includeCommission) {
+  const profile = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+  const agentName = profile.name || 'Eric Crayton';
+  const fullName = (client.first || '') + ' ' + (client.last || '');
+  const activeBookings = (client.bookings || []).filter(b => b.status !== 'Cancelled');
+  const tripTotal = activeBookings.reduce((s,b) => s + Number(b.total||0), 0);
+  const paid = totalPaid(client);
+  const balance = tripTotal > 0 ? tripTotal - paid : 0;
+  const totalCommission = activeBookings.reduce((s,b) => s + Number(b.commAmount||0), 0);
+
+  // Find earliest/latest dates across bookings for trip header
+  const allDates = [];
+  activeBookings.forEach(b => { if (b.checkIn) allDates.push(b.checkIn); if (b.checkOut) allDates.push(b.checkOut); });
+  allDates.sort();
+  const tripStart = allDates[0] || '';
+  const tripEnd = allDates[allDates.length - 1] || '';
+
+  const totalTravelers = (parseInt(client.party) || 0) || (function() {
+    // Try to extract from "2 adults, 1 child" format
+    const m = (client.party||'').match(/\d+/g);
+    return m ? m.reduce((s,n) => s + parseInt(n), 0) : null;
+  })();
+
+  let html = `<div class="itinerary-doc">`;
+
+  // Header
+  html += `<div style="display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:1rem; border-bottom:2px solid #c9a961; margin-bottom:1.25rem;">`;
+  html += `<div>`;
+  html += `<p style="font-family:'Fraunces',serif; font-weight:600; letter-spacing:.18em; font-size:.7rem; color:#c9a961;">CRAYSTAR TRAVEL AGENCY</p>`;
+  html += `<h1 style="margin:.3rem 0;">Trip Itinerary</h1>`;
+  html += `<p style="font-size:.85rem; color:#6b7a8f;">Prepared for ${escapeHtml(fullName.trim())}${tripStart ? ' · ' + fmtDate(tripStart) : ''}${tripEnd && tripEnd !== tripStart ? ' to ' + fmtDate(tripEnd) : ''}</p>`;
+  html += `</div>`;
+  html += `<div style="text-align:right; font-size:.75rem; color:#6b7a8f;">`;
+  html += `<p style="font-weight:600; color:#0a2342;">${escapeHtml(agentName)}</p>`;
+  html += `<p>Travel Advisor</p>`;
+  html += `<p>417-771-0910</p>`;
+  html += `<p>eric.crayton@craystartravelagency.com</p>`;
+  html += `</div>`;
+  html += `</div>`;
+
+  // Trip summary
+  html += `<div class="iti-section">`;
+  html += `<h2 style="margin-top:0;">Trip Summary</h2>`;
+  html += `<table>`;
+  html += `<tr><td style="width:35%; color:#6b7a8f;">Traveler(s)</td><td>${escapeHtml(fullName.trim())}${client.party ? ' · ' + escapeHtml(client.party) : ''}</td></tr>`;
+  if (client.email) html += `<tr><td style="color:#6b7a8f;">Contact</td><td>${escapeHtml(client.email)}${client.phone ? ' · ' + escapeHtml(client.phone) : ''}</td></tr>`;
+  if (tripStart) html += `<tr><td style="color:#6b7a8f;">Travel Dates</td><td>${fmtDate(tripStart)}${tripEnd && tripEnd !== tripStart ? ' through ' + fmtDate(tripEnd) : ''}</td></tr>`;
+  if (client.destination) html += `<tr><td style="color:#6b7a8f;">Destination</td><td>${escapeHtml(client.destination)}</td></tr>`;
+  html += `</table>`;
+  html += `</div>`;
+
+  // Bookings
+  if (activeBookings.length === 0) {
+    html += `<p style="color:#6b7a8f; font-size:.9rem; padding:1rem 0;"><em>No bookings recorded yet.</em></p>`;
+  } else {
+    html += `<h2 style="margin-top:1.5rem;">Bookings</h2>`;
+    activeBookings.forEach(b => {
+      html += `<div class="iti-section">`;
+      html += `<div class="iti-supplier">${escapeHtml(b.supplier || 'Supplier')}</div>`;
+      html += `<div class="iti-meta">${escapeHtml(b.type || '')}${b.confNum ? ' · Confirmation #' + escapeHtml(b.confNum) : ''} · Status: ${escapeHtml(b.status)}</div>`;
+      html += `<table style="margin-top:.5rem;">`;
+      if (b.checkIn || b.checkOut) {
+        html += `<tr><td style="width:35%; color:#6b7a8f;">Dates</td><td>${b.checkIn ? fmtDate(b.checkIn) : '—'}${b.checkOut ? ' through ' + fmtDate(b.checkOut) : ''}`;
+        if (b.checkIn && b.checkOut) {
+          const nights = Math.round((new Date(b.checkOut) - new Date(b.checkIn)) / 86400000);
+          if (nights > 0) html += ` · ${nights} night${nights !== 1 ? 's' : ''}`;
+        }
+        html += `</td></tr>`;
+      }
+      if (Number(b.total) > 0) {
+        html += `<tr><td style="color:#6b7a8f;">Total</td><td>${fmtMoney(b.total)}${Number(b.deposit) > 0 ? ' (Deposit paid: ' + fmtMoney(b.deposit) + ')' : ''}</td></tr>`;
+      }
+      if (b.finalDueDate && !b.finalPaidDate) html += `<tr><td style="color:#6b7a8f;">Final payment due</td><td><strong>${fmtDate(b.finalDueDate)}</strong></td></tr>`;
+      if (b.finalPaidDate) html += `<tr><td style="color:#6b7a8f;">Final payment</td><td>Paid in full · ${fmtDate(b.finalPaidDate)}</td></tr>`;
+      if (b.notes) html += `<tr><td style="color:#6b7a8f;">Notes</td><td>${escapeHtml(b.notes)}</td></tr>`;
+      if (includeCommission && Number(b.commAmount) > 0) {
+        html += `<tr><td style="color:#9a3412;"><em>Commission</em></td><td><em>${fmtMoney(b.commAmount)} · ${escapeHtml(b.commStatus)}${b.commRate ? ' (' + b.commRate + '%)' : ''}</em></td></tr>`;
+      }
+      html += `</table>`;
+      html += `</div>`;
+    });
+
+    // Trip totals
+    if (tripTotal > 0) {
+      html += `<div style="background:#0a2342; color:#faf6f0; border-radius:.5rem; padding:1rem 1.25rem; margin-top:1rem;">`;
+      html += `<table style="color:inherit;">`;
+      html += `<tr><td style="color:rgba(250,246,240,.7); border:none;">Trip Total</td><td style="text-align:right; font-weight:700; border:none;">${fmtMoney(tripTotal)}</td></tr>`;
+      html += `<tr><td style="color:rgba(250,246,240,.7); border:none;">Total Paid</td><td style="text-align:right; border:none;">${fmtMoney(paid)}</td></tr>`;
+      if (balance > 0) {
+        html += `<tr><td style="color:#c9a961; border:none; font-weight:600;">Balance Remaining</td><td style="text-align:right; color:#c9a961; font-weight:700; border:none;">${fmtMoney(balance)}</td></tr>`;
+      }
+      if (includeCommission && totalCommission > 0) {
+        html += `<tr><td style="color:#fbbf24; border:none; font-weight:600;"><em>Total Commission</em></td><td style="text-align:right; color:#fbbf24; font-weight:700; border:none;"><em>${fmtMoney(totalCommission)}</em></td></tr>`;
+      }
+      html += `</table>`;
+      html += `</div>`;
+    }
+  }
+
+  // Footer
+  html += `<div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid #e5dfd0; font-size:.7rem; color:#6b7a8f; text-align:center;">`;
+  html += `<p><strong>Craystar Travel Agency, LLC</strong> · 417-771-0910 · eric.crayton@craystartravelagency.com</p>`;
+  html += `<p style="margin-top:.25rem;">Free planning service · Disney, Universal, Cruise & All-Inclusive specialists · Generated ${fmtDate(new Date().toISOString())}</p>`;
+  if (includeCommission) html += `<p style="margin-top:.5rem; color:#9a3412;"><strong>INTERNAL COPY — contains commission details. Do not give to client.</strong></p>`;
+  html += `</div>`;
+
+  html += `</div>`;
+  return html;
+}
+
+function openItineraryModal(clientId) {
+  const c = state.clients.find(x => x.id === clientId);
+  if (!c) return;
+  state.currentClientId = clientId;
+  const showComm = document.getElementById('itiShowCommission');
+  if (showComm) showComm.checked = false;
+  renderItineraryPreview();
+  // Hook up checkbox to live re-render
+  if (showComm) showComm.onchange = renderItineraryPreview;
+  closeModal('clientDetailModal');
+  openModal('itineraryModal');
+}
+function renderItineraryPreview() {
+  const c = state.clients.find(x => x.id === state.currentClientId);
+  if (!c) return;
+  const showComm = document.getElementById('itiShowCommission').checked;
+  document.getElementById('itineraryPreview').innerHTML = buildItineraryHTML(c, showComm);
+}
+function printItinerary() {
+  const c = state.clients.find(x => x.id === state.currentClientId);
+  if (!c) return;
+  const showComm = document.getElementById('itiShowCommission').checked;
+  document.getElementById('printArea').innerHTML = buildItineraryHTML(c, showComm);
+  setTimeout(() => { window.print(); }, 100);
+}
+
 // CLIENT CRUD
 function openClientForm(client) {
   document.getElementById('clientModalTitle').textContent = client ? 'Edit Client' : 'New Client';
@@ -987,14 +1866,17 @@ function openClient(id) {
   state.currentClientId = id;
   const el = document.getElementById('clientDetailContent');
   const initials = ((c.first[0]||'?')+(c.last[0]||'')).toUpperCase();
-  const paid = totalPaid(c);
-  const budget = parseBudget(c.budget);
-  const balance = budget > 0 ? budget - paid : null;
+      const paid = totalPaid(c);
+  const budgetEstimate = parseBudget(c.budget);
+  const tripTotal = bookingTotal(c); // sum of active booking totals
+  const hasRealTotal = tripTotal > 0;
+  const balance = hasRealTotal ? tripTotal - paid : null;
   el.innerHTML = `
     <div class="navy-bg p-5 md:p-6 sticky top-0 z-10" style="color:var(--cream);">
       <div class="flex items-center justify-between mb-4">
         <button onclick="closeModal('clientDetailModal')" class="text-sm flex items-center gap-1" style="color:var(--cream); opacity:.8;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
         <div class="flex gap-1">
+          <button onclick="openItineraryModal('${c.id}')" class="btn-icon hover:bg-white/10 rounded-lg" title="Print Itinerary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
           <button onclick="openClientForm(state.clients.find(x=>x.id===state.currentClientId)); closeModal('clientDetailModal');" class="btn-icon hover:bg-white/10 rounded-lg" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
           <button onclick="deleteClient('${c.id}')" class="btn-icon hover:bg-white/10 rounded-lg" title="Delete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
         </div>
@@ -1019,10 +1901,48 @@ function openClient(id) {
         <button onclick="openModal('noteModal')" class="btn btn-ghost text-xs">+ Note</button>
       </div>
 
+      <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#fffbeb 0%,#faf6f0 100%); border:1px solid rgba(201,169,97,.2);">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="display text-lg">Bookings (${(c.bookings||[]).length})</h4>
+          <button onclick="openBookingModal('${c.id}',null)" class="btn btn-gold text-xs">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Booking
+          </button>
+        </div>
+        ${(c.bookings||[]).length === 0 ? `
+          <p class="text-sm" style="color:var(--muted);">No bookings yet. Click "Add Booking" to track a supplier reservation.</p>
+        ` : `
+          <div class="space-y-2">
+            ${c.bookings.map(b => {
+              const bal = (Number(b.total)||0) - (Number(b.deposit)||0);
+              const statusColor = b.status === 'Cancelled' ? 'var(--danger)' : b.status === 'Traveled' ? 'var(--teal)' : b.status === 'Final Paid' ? 'var(--success)' : b.status === 'Booked' ? 'var(--navy)' : 'var(--warn)';
+              return `<div class="card-pad rounded-lg cursor-pointer hover:shadow-sm transition-shadow" style="background:#fff; border:1px solid rgba(10,35,66,.06); padding:.75rem;" onclick="openBookingModal('${c.id}','${b.id}')">
+                <div class="flex items-start justify-between gap-2 mb-1">
+                  <div class="flex-1 min-w-0">
+                    <p class="font-semibold text-sm">${escapeHtml(b.supplier || 'Unknown')}${b.confNum ? ' <span style="color:var(--muted); font-weight:400;">· #'+escapeHtml(b.confNum)+'</span>' : ''}</p>
+                    <p class="text-xs" style="color:var(--muted);">${escapeHtml(b.type || '—')}${b.checkIn ? ' · '+fmtDate(b.checkIn) : ''}${b.checkOut ? ' → '+fmtDate(b.checkOut) : ''}</p>
+                  </div>
+                  <span class="pill" style="background:${statusColor}22; color:${statusColor}; flex-shrink:0;">${escapeHtml(b.status)}</span>
+                </div>
+                <div class="flex items-center justify-between text-xs" style="color:var(--muted);">
+                  <span>${fmtMoney(b.total)}${bal > 0 ? ' · <span style="color:var(--warn); font-weight:600;">'+fmtMoney(bal)+' due</span>' : ''}${b.finalDueDate ? ' · final due '+fmtDate(b.finalDueDate) : ''}</span>
+                  ${Number(b.commAmount) > 0 ? `<span style="color:${b.commStatus==='Paid'?'var(--success)':b.commStatus==='Adjusted'?'var(--muted)':'var(--warn)'}; font-weight:600;">${fmtMoney(b.commAmount)} ${escapeHtml(b.commStatus)}</span>` : ''}
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+          <div class="mt-3 pt-3 border-t flex justify-between text-sm" style="border-color:rgba(10,35,66,.08);">
+            <span style="color:var(--muted);">Trip total across bookings:</span>
+            <span class="font-bold">${fmtMoney(bookingTotal(c))}</span>
+          </div>
+          ${commissionTotal(c) > 0 ? `<div class="flex justify-between text-sm mt-1"><span style="color:var(--muted);">Total commission:</span><span class="font-bold" style="color:var(--gold-2);">${fmtMoney(commissionTotal(c))}</span></div>` : ''}
+        `}
+      </div>
+
       <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#f5f3ff 0%,#faf6f0 100%); border:1px solid rgba(99,91,255,.15);">
         <div class="flex items-center justify-between mb-3"><h4 class="display text-lg flex items-center gap-2">Payments &amp; Authorization <span class="stripe-badge">STRIPE</span></h4></div>
         <div class="grid grid-cols-3 gap-3 mb-3">
-          <div><p class="label">Trip Total</p><p class="font-bold text-lg">${budget > 0 ? fmtMoney(budget) : '—'}</p></div>
+          <div><p class="label">Trip Total</p><p class="font-bold text-lg">${hasRealTotal ? fmtMoney(tripTotal) : (budgetEstimate > 0 ? '<span style="color:var(--muted);">~'+fmtMoney(budgetEstimate)+'</span>' : '—')}</p>${hasRealTotal && budgetEstimate > 0 ? `<p class="text-[10px]" style="color:var(--muted);">Budget: ${fmtMoney(budgetEstimate)}</p>` : ''}</div>
           <div><p class="label">Paid</p><p class="font-bold text-lg" style="color:var(--success);">${fmtMoney(paid)}</p></div>
           <div><p class="label">Balance</p><p class="font-bold text-lg" style="color:${balance != null && balance > 0 ? 'var(--warn)' : 'var(--muted)'};">${balance != null ? fmtMoney(Math.max(0,balance)) : '—'}</p></div>
         </div>
@@ -1141,9 +2061,11 @@ function openCCAuthModal(clientId) {
   const c = state.clients.find(x => x.id === clientId);
   if (!c) return;
   state.currentClientId = clientId;
+  const tripTotal = bookingTotal(c);
   const budget = parseBudget(c.budget);
+  const baseAmount = tripTotal > 0 ? tripTotal : budget;
   const paid = totalPaid(c);
-  const balance = budget > 0 ? Math.max(0, budget - paid) : '';
+  const balance = baseAmount > 0 ? Math.max(0, baseAmount - paid) : '';
   document.getElementById('ccAuthAmount').value = balance || '';
   document.getElementById('ccAuthType').value = paid === 0 ? 'Deposit' : balance > 0 ? 'Final Payment' : 'Mid Payment';
   const trip = c.destination || c.tripType || '';
@@ -1218,7 +2140,7 @@ function markCCCompleted(id) {
 }
 
 // PAYMENTS
-function openPaymentModal(clientId) {
+function openPaymentModal(clientId, presetBookingId) {
   state.currentClientId = clientId;
   document.getElementById('payClientId').value = clientId;
   document.getElementById('payAmount').value = '';
@@ -1227,6 +2149,16 @@ function openPaymentModal(clientId) {
   document.getElementById('payMethod').value = 'Credit Card (Stripe)';
   document.getElementById('payTxnId').value = '';
   document.getElementById('payNotes').value = '';
+  // Populate booking selector
+  const c = state.clients.find(x => x.id === clientId);
+  const selectEl = document.getElementById('payBookingId');
+  if (selectEl && c) {
+    selectEl.innerHTML = '<option value="">General — not linked to a specific booking</option>' +
+      (c.bookings || []).filter(b => b.status !== 'Cancelled').map(b => {
+        const label = `${b.supplier || 'Unnamed'}${b.confNum ? ' #'+b.confNum : ''} — ${fmtMoney(b.total)}`;
+        return `<option value="${escapeHtml(b.id)}" ${presetBookingId===b.id?'selected':''}>${escapeHtml(label)}</option>`;
+      }).join('');
+  }
   closeModal('clientDetailModal');
   openModal('paymentModal');
 }
@@ -1241,6 +2173,7 @@ function savePayment() {
     id: uid(), amount, date,
     type: document.getElementById('payType').value,
     method: document.getElementById('payMethod').value,
+    bookingId: document.getElementById('payBookingId').value || '',
     txnId: document.getElementById('payTxnId').value.trim(),
     notes: document.getElementById('payNotes').value.trim(),
     created: new Date().toISOString(),
@@ -1275,6 +2208,12 @@ document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', (e)
 
 // SEARCH/FILTER
 ['searchInput','filterStatus','filterType'].forEach(id => document.getElementById(id).addEventListener('input', renderClients));
+['bookingSearchInput','filterBookingStatus','filterBookingSupplier'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', renderBookings);
+  if (el) el.addEventListener('change', renderBookings);
+});
+attachBookingFormListeners();
 
 // SETTINGS
 async function changePassword() {
