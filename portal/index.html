@@ -1030,7 +1030,27 @@ function fmtMoneyShort(n) {
   if (num >= 1000) return '$' + (num/1000).toFixed(1).replace(/\.0$/,'') + 'k';
   return '$' + Math.round(num).toLocaleString('en-US');
 }
-function parseBudget(s) { if (!s) return 0; const n = parseFloat(String(s).replace(/[^0-9.]/g,'')); return isNaN(n) ? 0 : n; }
+function parseBudget(s) {
+  // Returns a NUMERIC budget value. Handles ranges like "$5,000 - $8,000" by taking the LOW end
+  // (conservative — better to under-promise than over-promise on auto-calculated balances).
+  // Also handles "Under $3,000" → 3000, "$20,000+" → 20000, plain numbers, and "Not sure" → 0.
+  if (!s) return 0;
+  const str = String(s);
+  // Find all numeric groups (with commas / decimals), preserving order
+  const matches = str.match(/[\d,]+(?:\.\d+)?/g);
+  if (!matches || matches.length === 0) return 0;
+  // Convert each to a number (strip commas)
+  const nums = matches.map(m => parseFloat(m.replace(/,/g,''))).filter(n => !isNaN(n));
+  if (nums.length === 0) return 0;
+  // For ranges (2+ numbers), return the lowest. For single number, return it as-is.
+  return Math.min(...nums);
+}
+function formatBudgetDisplay(s) {
+  // Shows the original range as-is (e.g. "$5,000 - $8,000") rather than collapsing to one number.
+  // Used in client detail header where we want to show the intake estimate naturally.
+  if (!s) return '';
+  return String(s).trim();
+}
 function fmtDate(d) {
   if (!d) return '';
   const dt = new Date(d);
@@ -1942,7 +1962,7 @@ function openClient(id) {
       <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#f5f3ff 0%,#faf6f0 100%); border:1px solid rgba(99,91,255,.15);">
         <div class="flex items-center justify-between mb-3"><h4 class="display text-lg flex items-center gap-2">Payments &amp; Authorization <span class="stripe-badge">STRIPE</span></h4></div>
         <div class="grid grid-cols-3 gap-3 mb-3">
-          <div><p class="label">Trip Total</p><p class="font-bold text-lg">${hasRealTotal ? fmtMoney(tripTotal) : (budgetEstimate > 0 ? '<span style="color:var(--muted);">~'+fmtMoney(budgetEstimate)+'</span>' : '—')}</p>${hasRealTotal && budgetEstimate > 0 ? `<p class="text-[10px]" style="color:var(--muted);">Budget: ${fmtMoney(budgetEstimate)}</p>` : ''}</div>
+          <div><p class="label">Trip Total</p><p class="font-bold text-lg">${hasRealTotal ? fmtMoney(tripTotal) : (c.budget ? '<span style="color:var(--muted); font-size:.85em;">~' + escapeHtml(formatBudgetDisplay(c.budget)) + '</span>' : '—')}</p>${hasRealTotal && budgetEstimate > 0 ? `<p class="text-[10px]" style="color:var(--muted);">Budget: ${escapeHtml(formatBudgetDisplay(c.budget))}</p>` : ''}</div>
           <div><p class="label">Paid</p><p class="font-bold text-lg" style="color:var(--success);">${fmtMoney(paid)}</p></div>
           <div><p class="label">Balance</p><p class="font-bold text-lg" style="color:${balance != null && balance > 0 ? 'var(--warn)' : 'var(--muted)'};">${balance != null ? fmtMoney(Math.max(0,balance)) : '—'}</p></div>
         </div>
