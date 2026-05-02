@@ -169,7 +169,7 @@
         <div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate" id="userNameSidebar">Eric</p><p class="text-xs opacity-60">Owner</p></div>
         <button onclick="logout()" class="btn-icon hover:bg-white/10 rounded-lg" title="Sign out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
       </div>
-      <p class="text-[10px] opacity-40">v1.5 · Staff Email Auth</p>
+      <p class="text-[10px] opacity-40">v1.6 · My Cut tracking</p>
     </div>
   </aside>
 
@@ -205,8 +205,8 @@
           <div class="card card-pad col-span-2 lg:col-span-1"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Pending CC Auth</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-pending-cc">0</p><p class="text-xs mt-1" style="color:var(--muted);">Awaiting signature</p></div>
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
-          <div class="card card-pad" style="background:linear-gradient(135deg,#fef9c3 0%,#ffffff 100%);"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Commissions Pending</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-comm-pending">$0</p><p class="text-xs mt-1" style="color:var(--muted);">Owed to you</p></div>
-          <div class="card card-pad" style="background:linear-gradient(135deg,#dcfce7 0%,#ffffff 100%);"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Commissions Paid</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--success);" id="stat-comm-paid">$0</p><p class="text-xs mt-1" style="color:var(--muted);">Year to date</p></div>
+          <div class="card card-pad" style="background:linear-gradient(135deg,#fef9c3 0%,#ffffff 100%);"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">My Cut Pending</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-comm-pending">$0</p><p class="text-xs mt-1" style="color:var(--muted);" id="stat-comm-pending-gross">$0 gross</p></div>
+          <div class="card card-pad" style="background:linear-gradient(135deg,#dcfce7 0%,#ffffff 100%);"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">My Cut Paid YTD</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--success);" id="stat-comm-paid">$0</p><p class="text-xs mt-1" style="color:var(--muted);" id="stat-comm-paid-gross">$0 gross</p></div>
           <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Active Bookings</p><p class="display text-3xl md:text-4xl mt-1 font-medium" id="stat-active-bookings">0</p><p class="text-xs mt-1" style="color:var(--muted);">Booked + Final paid</p></div>
           <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Final Payment Due</p><p class="display text-3xl md:text-4xl mt-1 font-medium" style="color:var(--warn);" id="stat-final-due">0</p><p class="text-xs mt-1" style="color:var(--muted);">In next 30 days</p></div>
         </div>
@@ -294,14 +294,14 @@
       <!-- COMMISSIONS -->
       <section id="view-commissions" class="view-section hidden fadein">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
-          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Total Pending</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--warn);" id="comm-pending">$0</p></div>
-          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Paid YTD</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--success);" id="comm-paid-ytd">$0</p></div>
-          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Paid This Month</p><p class="display text-2xl md:text-3xl mt-1 font-medium" id="comm-paid-month">$0</p></div>
-          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Adjusted</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--muted);" id="comm-adjusted">$0</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">My Cut Pending</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--warn);" id="comm-pending">$0</p><p class="text-xs mt-1" style="color:var(--muted);" id="comm-pending-gross">$0 gross</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">My Cut Paid YTD</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--success);" id="comm-paid-ytd">$0</p><p class="text-xs mt-1" style="color:var(--muted);" id="comm-paid-ytd-gross">$0 gross</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">My Cut This Month</p><p class="display text-2xl md:text-3xl mt-1 font-medium" id="comm-paid-month">$0</p><p class="text-xs mt-1" style="color:var(--muted);" id="comm-paid-month-gross">$0 gross</p></div>
+          <div class="card card-pad"><p class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">Adjusted</p><p class="display text-2xl md:text-3xl mt-1 font-medium" style="color:var(--muted);" id="comm-adjusted">$0</p><p class="text-xs mt-1" style="color:var(--muted);" id="comm-adjusted-gross">$0 gross</p></div>
         </div>
 
         <div class="card card-pad mb-4" style="background:linear-gradient(135deg,#fef9c3 0%,#ffffff 100%);">
-          <p class="text-sm" style="color:var(--muted);"><strong>How this works:</strong> Commissions are tracked per booking. Set a rate when you create a booking, mark it Paid when the supplier pays you (typically 30–45 days after travel), or Adjusted if a cancellation reduced it.</p>
+          <p class="text-sm" style="color:var(--muted);"><strong>How this works:</strong> Commissions are tracked per booking. Set a rate when you create a booking, mark it Paid when the supplier pays you (typically 30–45 days after travel), or Adjusted if a cancellation reduced it. <strong>"My Cut"</strong> is the portion you keep after your host agency split (configurable in <a href="#" onclick="switchView('settings'); return false;" style="color:var(--teal); text-decoration:underline;">Settings</a>).</p>
         </div>
 
         <div class="card mb-4">
@@ -418,6 +418,19 @@
             <label class="label">Display Name</label><input id="settingDisplayName" class="input mb-3" placeholder="Eric Crayton">
             <label class="label">Role</label><input id="settingRole" class="input mb-3" placeholder="Owner">
             <button onclick="saveProfile()" class="btn btn-primary">Save profile</button>
+          </div>
+
+          <div class="card card-pad" style="background:linear-gradient(135deg,#fef9c3 0%,#ffffff 100%); border-color:rgba(201,169,97,.3);">
+            <h3 class="display text-xl mb-1">Commission Split</h3>
+            <p class="text-sm mb-4" style="color:var(--muted);">What percentage of each commission do <strong>you</strong> keep, after your host agency takes their share? Defaults to 70%.</p>
+            <label class="label">My Cut (%)</label>
+            <div class="flex gap-2 items-center">
+              <input id="settingSplitPct" type="number" step="0.01" min="0" max="100" class="input" placeholder="70">
+              <span style="color:var(--muted); font-size:.9rem;">%</span>
+            </div>
+            <p class="text-xs mt-2 mb-3" style="color:var(--muted);">Example: a $500 gross commission at 70% = $350 my cut. The CRM tracks both numbers everywhere.</p>
+            <button onclick="saveProfile()" class="btn btn-gold">Save split</button>
+            <p class="text-xs mt-3 p-2 rounded" style="background:#fef3c7; color:#92400e;"><strong>Note:</strong> Changing the split recalculates "My Cut" totals in real time across all bookings — past, present, and future.</p>
           </div>
 
           <div class="card card-pad">
@@ -657,9 +670,10 @@
 
       <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#fef9c3 0%,#faf6f0 100%); border:1px solid rgba(201,169,97,.2);">
         <p class="label mb-2">Commission</p>
+        <p class="text-xs mb-3" style="color:var(--muted);">Enter the <strong>gross</strong> commission (what the supplier pays). The CRM auto-calculates your <strong>My Cut</strong> based on your split percentage from Settings.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><label class="label">Commission Rate (%)</label><input id="bkCommRate" type="number" step="0.01" class="input" placeholder="e.g. 10"></div>
-          <div><label class="label">Commission Amount ($)</label><input id="bkCommAmount" type="number" step="0.01" class="input" placeholder="auto"></div>
+          <div><label class="label">Gross Commission ($)</label><input id="bkCommAmount" type="number" step="0.01" class="input" placeholder="auto"></div>
           <div><label class="label">Commission Status</label><select id="bkCommStatus" class="select"><option>Pending</option><option>Paid</option><option>Adjusted</option></select></div>
           <div><label class="label">Expected Payout Date</label><input id="bkCommExpected" type="date" class="input"></div>
           <div><label class="label">Actual Payout Date</label><input id="bkCommPaidDate" type="date" class="input"></div>
@@ -667,6 +681,10 @@
         <div class="mt-3" id="bkAdjustmentWrap" style="display:none;">
           <label class="label">Adjustment Reason</label>
           <input id="bkAdjustReason" class="input" placeholder="e.g. Client cancelled, supplier reduced rate">
+        </div>
+        <div class="mt-3 p-2 rounded text-sm flex items-center justify-between" id="bkMyCutPreview" style="background:rgba(201,169,97,.15); border:1px dashed rgba(201,169,97,.4);">
+          <span style="color:var(--muted);">My Cut (<span id="bkMyCutPctLabel">70</span>%):</span>
+          <span class="font-bold" style="color:var(--gold-2);" id="bkMyCutPreviewAmount">$0.00</span>
         </div>
       </div>
 
@@ -847,12 +865,27 @@ function loadProfile() {
   document.getElementById('userAvatar').textContent = (name[0] || 'C').toUpperCase();
   document.getElementById('settingDisplayName').value = name;
   document.getElementById('settingRole').value = p.role || 'Owner';
+  const splitEl = document.getElementById('settingSplitPct');
+  if (splitEl) splitEl.value = p.splitPct != null ? p.splitPct : 70;
 }
 function saveProfile() {
   const name = document.getElementById('settingDisplayName').value.trim() || 'You';
   const role = document.getElementById('settingRole').value.trim() || 'Owner';
-  localStorage.setItem(PROFILE_KEY, JSON.stringify({ name, role }));
-  loadProfile(); flash('Profile saved');
+  let splitPct = parseFloat(document.getElementById('settingSplitPct').value);
+  if (isNaN(splitPct) || splitPct < 0 || splitPct > 100) splitPct = 70;
+  localStorage.setItem(PROFILE_KEY, JSON.stringify({ name, role, splitPct }));
+  loadProfile();
+  render(); // recalculate everything that displays My Cut
+  flash('Settings saved');
+}
+// Helper: get the configured split percentage (defaults to 70%)
+function getSplitPct() {
+  const p = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+  const pct = parseFloat(p.splitPct);
+  return (isNaN(pct) || pct < 0 || pct > 100) ? 70 : pct;
+}
+function myCut(grossAmount) {
+  return Number(grossAmount || 0) * getSplitPct() / 100;
 }
 
 function loadCognitoConfig() {
@@ -1132,6 +1165,40 @@ function renderDashboard() {
   const booked = state.clients.filter(c => ['booked','final','traveled'].includes(c.status)).length;
   const revenue = state.clients.reduce((s,c) => s + totalPaid(c), 0);
   const pendingCC = state.clients.filter(c => c.ccAuth?.sent && !c.ccAuth?.completed).length;
+
+  // Commission stats for dashboard cards
+  const splitPctDash = getSplitPct();
+  let commPendingGross = 0, commPaidGross = 0;
+  const yearNow = new Date().getFullYear();
+  state.clients.forEach(c => (c.bookings||[]).forEach(b => {
+    const amt = Number(b.commAmount) || 0;
+    if (amt <= 0) return;
+    if (b.commStatus === 'Pending') commPendingGross += amt;
+    if (b.commStatus === 'Paid') {
+      const d = new Date(b.commPaidDate||b.updated||0);
+      if (d.getFullYear() === yearNow) commPaidGross += amt;
+    }
+  }));
+  const commPendingCut = commPendingGross * splitPctDash / 100;
+  const commPaidCut = commPaidGross * splitPctDash / 100;
+  const setIf = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setIf('stat-comm-pending', fmtMoneyShort(commPendingCut));
+  setIf('stat-comm-pending-gross', fmtMoneyShort(commPendingGross) + ' gross');
+  setIf('stat-comm-paid', fmtMoneyShort(commPaidCut));
+  setIf('stat-comm-paid-gross', fmtMoneyShort(commPaidGross) + ' gross');
+
+  // Active bookings + final due in 30 days (already-existing dashboard cards from v1.3)
+  const allBookings = [];
+  state.clients.forEach(c => (c.bookings||[]).forEach(b => allBookings.push(b)));
+  const activeBookingsCount = allBookings.filter(b => b.status === 'Booked' || b.status === 'Final Paid').length;
+  const in30 = Date.now() + 30 * 86400000;
+  const finalDueSoon = allBookings.filter(b => {
+    if (!b.finalDueDate || b.finalPaidDate) return false;
+    const d = new Date(b.finalDueDate).getTime();
+    return d >= Date.now() && d <= in30;
+  }).length;
+  setIf('stat-active-bookings', activeBookingsCount);
+  setIf('stat-final-due', finalDueSoon);
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-active').textContent = active;
   document.getElementById('stat-booked').textContent = booked;
@@ -1342,6 +1409,7 @@ function openBookingModal(clientId, bookingId) {
 
   updateBookingDuration();
   updateAdjustmentVisibility();
+  updateBookingMyCutPreview();
   closeModal('clientDetailModal');
   openModal('bookingModal');
 }
@@ -1363,6 +1431,16 @@ function updateBookingCommissionFromRate() {
   if (!isNaN(rate) && rate > 0 && total > 0) {
     document.getElementById('bkCommAmount').value = (total * rate / 100).toFixed(2);
   }
+  updateBookingMyCutPreview();
+}
+function updateBookingMyCutPreview() {
+  const gross = parseFloat(document.getElementById('bkCommAmount').value) || 0;
+  const pct = getSplitPct();
+  const cut = gross * pct / 100;
+  const lbl = document.getElementById('bkMyCutPctLabel');
+  const amt = document.getElementById('bkMyCutPreviewAmount');
+  if (lbl) lbl.textContent = pct;
+  if (amt) amt.textContent = fmtMoney(cut);
 }
 function updateAdjustmentVisibility() {
   const status = document.getElementById('bkCommStatus').value;
@@ -1381,6 +1459,8 @@ function attachBookingFormListeners() {
   });
   const cs = document.getElementById('bkCommStatus');
   if (cs) cs.addEventListener('change', updateAdjustmentVisibility);
+  const ca = document.getElementById('bkCommAmount');
+  if (ca) ca.addEventListener('input', updateBookingMyCutPreview);
 }
 
 document.getElementById('bookingForm').addEventListener('submit', (e) => {
@@ -1504,7 +1584,7 @@ function renderBookings() {
           <p class="text-xs truncate" style="color:var(--muted);">${b.checkIn ? fmtDate(b.checkIn) : '—'}${b.checkOut ? ' → '+fmtDate(b.checkOut) : ''} · ${fmtMoney(b.total)}${balance > 0 ? ' · <span style="color:var(--warn);">'+fmtMoney(balance)+' due</span>' : ''}</p>
         </div>
         <div class="text-right flex-shrink-0">
-          ${Number(b.commAmount) > 0 ? `<p class="text-xs font-semibold" style="color:${b.commStatus==='Paid'?'var(--success)':b.commStatus==='Adjusted'?'var(--muted)':'var(--warn)'};">${fmtMoney(b.commAmount)}</p><p class="text-[10px]" style="color:var(--muted);">${escapeHtml(b.commStatus)}</p>` : ''}
+          ${Number(b.commAmount) > 0 ? `<p class="text-xs font-semibold" style="color:${b.commStatus==='Paid'?'var(--success)':b.commStatus==='Adjusted'?'var(--muted)':'var(--warn)'};">${fmtMoney(myCut(b.commAmount))}</p><p class="text-[10px]" style="color:var(--muted);">${fmtMoney(b.commAmount)} gross · ${escapeHtml(b.commStatus)}</p>` : ''}
         </div>
       </div>
     </div>`;
@@ -1522,20 +1602,28 @@ function renderCommissions() {
   const paid = all.filter(b => b.commStatus === 'Paid');
   const adjusted = all.filter(b => b.commStatus === 'Adjusted');
 
-  const pendingTotal = pending.reduce((s,b) => s + Number(b.commAmount), 0);
+  const pendingGross = pending.reduce((s,b) => s + Number(b.commAmount), 0);
   const now = new Date();
-  const thisYear = paid.filter(b => { const d = new Date(b.commPaidDate||b.updated||0); return d.getFullYear() === now.getFullYear(); }).reduce((s,b) => s + Number(b.commAmount), 0);
-  const thisMonth = paid.filter(b => { const d = new Date(b.commPaidDate||b.updated||0); return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); }).reduce((s,b) => s + Number(b.commAmount), 0);
-  const adjustedTotal = adjusted.reduce((s,b) => s + Number(b.commAmount), 0);
+  const thisYearGross = paid.filter(b => { const d = new Date(b.commPaidDate||b.updated||0); return d.getFullYear() === now.getFullYear(); }).reduce((s,b) => s + Number(b.commAmount), 0);
+  const thisMonthGross = paid.filter(b => { const d = new Date(b.commPaidDate||b.updated||0); return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); }).reduce((s,b) => s + Number(b.commAmount), 0);
+  const adjustedGross = adjusted.reduce((s,b) => s + Number(b.commAmount), 0);
 
-  const elPending = document.getElementById('comm-pending');
-  const elPaidYTD = document.getElementById('comm-paid-ytd');
-  const elPaidMonth = document.getElementById('comm-paid-month');
-  const elAdj = document.getElementById('comm-adjusted');
-  if (elPending) elPending.textContent = fmtMoneyShort(pendingTotal);
-  if (elPaidYTD) elPaidYTD.textContent = fmtMoneyShort(thisYear);
-  if (elPaidMonth) elPaidMonth.textContent = fmtMoneyShort(thisMonth);
-  if (elAdj) elAdj.textContent = fmtMoneyShort(adjustedTotal);
+  // My Cut = gross × splitPct%
+  const splitPct = getSplitPct();
+  const pendingCut = pendingGross * splitPct / 100;
+  const thisYearCut = thisYearGross * splitPct / 100;
+  const thisMonthCut = thisMonthGross * splitPct / 100;
+  const adjustedCut = adjustedGross * splitPct / 100;
+
+  const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setText('comm-pending', fmtMoneyShort(pendingCut));
+  setText('comm-pending-gross', fmtMoneyShort(pendingGross) + ' gross');
+  setText('comm-paid-ytd', fmtMoneyShort(thisYearCut));
+  setText('comm-paid-ytd-gross', fmtMoneyShort(thisYearGross) + ' gross');
+  setText('comm-paid-month', fmtMoneyShort(thisMonthCut));
+  setText('comm-paid-month-gross', fmtMoneyShort(thisMonthGross) + ' gross');
+  setText('comm-adjusted', fmtMoneyShort(adjustedCut));
+  setText('comm-adjusted-gross', fmtMoneyShort(adjustedGross) + ' gross');
 
   // Pending list — sort by expected payout date (oldest first = most overdue)
   const pendingSorted = [...pending].sort((a,b) => new Date(a.commExpected||'9999-12-31') - new Date(b.commExpected||'9999-12-31'));
@@ -1551,7 +1639,7 @@ function renderCommissions() {
               <p class="text-xs" style="color:var(--muted);">${escapeHtml(b.type||'—')}${b.confNum ? ' · #'+escapeHtml(b.confNum) : ''} · ${b.commRate ? b.commRate+'% of '+fmtMoney(b.total) : ''}</p>
               ${b.commExpected ? `<p class="text-xs" style="color:${isOverdue?'var(--danger)':'var(--muted)'};">Expected: ${fmtDate(b.commExpected)}${isOverdue?' (overdue)':''}</p>` : ''}
             </div>
-            <div class="text-right"><p class="font-bold" style="color:var(--warn);">${fmtMoney(b.commAmount)}</p></div>
+            <div class="text-right"><p class="font-bold" style="color:var(--warn);">${fmtMoney(myCut(b.commAmount))}</p><p class="text-[10px]" style="color:var(--muted);">${fmtMoney(b.commAmount)} gross</p></div>
           </div>`;
         }).join('');
   }
@@ -1567,7 +1655,7 @@ function renderCommissions() {
             <p class="font-semibold text-sm">${escapeHtml(b.supplier)} · ${escapeHtml(b.clientName)}</p>
             <p class="text-xs" style="color:var(--muted);">${escapeHtml(b.type||'—')}${b.commPaidDate ? ' · paid '+fmtDate(b.commPaidDate) : ''}</p>
           </div>
-          <div class="text-right"><p class="font-bold" style="color:var(--success);">${fmtMoney(b.commAmount)}</p></div>
+          <div class="text-right"><p class="font-bold" style="color:var(--success);">${fmtMoney(myCut(b.commAmount))}</p><p class="text-[10px]" style="color:var(--muted);">${fmtMoney(b.commAmount)} gross</p></div>
         </div>`).join('');
   }
 
@@ -1591,7 +1679,7 @@ function renderCommissions() {
             <p class="font-semibold text-sm">${escapeHtml(sup)}</p>
             <p class="text-xs" style="color:var(--muted);">${data.count} booking${data.count!==1?'s':''}${data.pending > 0 ? ' · '+fmtMoney(data.pending)+' pending' : ''}</p>
           </div>
-          <div class="text-right"><p class="font-bold">${fmtMoney(data.total)}</p><p class="text-[10px]" style="color:var(--success);">${fmtMoney(data.paid)} paid</p></div>
+          <div class="text-right"><p class="font-bold" style="color:var(--gold-2);">${fmtMoney(data.total * splitPct / 100)}</p><p class="text-[10px]" style="color:var(--muted);">${fmtMoney(data.total)} gross · ${fmtMoney(data.paid * splitPct / 100)} paid</p></div>
         </div>`).join('');
   }
 }
@@ -1773,7 +1861,8 @@ function buildItineraryHTML(client, includeCommission) {
       if (b.finalPaidDate) html += `<tr><td style="color:#6b7a8f;">Final payment</td><td>Paid in full · ${fmtDate(b.finalPaidDate)}</td></tr>`;
       if (b.notes) html += `<tr><td style="color:#6b7a8f;">Notes</td><td>${escapeHtml(b.notes)}</td></tr>`;
       if (includeCommission && Number(b.commAmount) > 0) {
-        html += `<tr><td style="color:#9a3412;"><em>Commission</em></td><td><em>${fmtMoney(b.commAmount)} · ${escapeHtml(b.commStatus)}${b.commRate ? ' (' + b.commRate + '%)' : ''}</em></td></tr>`;
+        html += `<tr><td style="color:#9a3412;"><em>Commission (gross)</em></td><td><em>${fmtMoney(b.commAmount)} · ${escapeHtml(b.commStatus)}${b.commRate ? ' (' + b.commRate + '%)' : ''}</em></td></tr>`;
+        html += `<tr><td style="color:#9a3412;"><em>My Cut (${getSplitPct()}%)</em></td><td><em>${fmtMoney(myCut(b.commAmount))}</em></td></tr>`;
       }
       html += `</table>`;
       html += `</div>`;
@@ -1789,7 +1878,8 @@ function buildItineraryHTML(client, includeCommission) {
         html += `<tr><td style="color:#c9a961; border:none; font-weight:600;">Balance Remaining</td><td style="text-align:right; color:#c9a961; font-weight:700; border:none;">${fmtMoney(balance)}</td></tr>`;
       }
       if (includeCommission && totalCommission > 0) {
-        html += `<tr><td style="color:#fbbf24; border:none; font-weight:600;"><em>Total Commission</em></td><td style="text-align:right; color:#fbbf24; font-weight:700; border:none;"><em>${fmtMoney(totalCommission)}</em></td></tr>`;
+        html += `<tr><td style="color:#fbbf24; border:none; font-weight:600;"><em>Total Commission (gross)</em></td><td style="text-align:right; color:#fbbf24; font-weight:700; border:none;"><em>${fmtMoney(totalCommission)}</em></td></tr>`;
+        html += `<tr><td style="color:#fbbf24; border:none; font-weight:600;"><em>My Cut (${getSplitPct()}%)</em></td><td style="text-align:right; color:#fbbf24; font-weight:700; border:none;"><em>${fmtMoney(myCut(totalCommission))}</em></td></tr>`;
       }
       html += `</table>`;
       html += `</div>`;
@@ -1946,7 +2036,7 @@ function openClient(id) {
                 </div>
                 <div class="flex items-center justify-between text-xs" style="color:var(--muted);">
                   <span>${fmtMoney(b.total)}${bal > 0 ? ' · <span style="color:var(--warn); font-weight:600;">'+fmtMoney(bal)+' due</span>' : ''}${b.finalDueDate ? ' · final due '+fmtDate(b.finalDueDate) : ''}</span>
-                  ${Number(b.commAmount) > 0 ? `<span style="color:${b.commStatus==='Paid'?'var(--success)':b.commStatus==='Adjusted'?'var(--muted)':'var(--warn)'}; font-weight:600;">${fmtMoney(b.commAmount)} ${escapeHtml(b.commStatus)}</span>` : ''}
+                  ${Number(b.commAmount) > 0 ? `<span style="color:${b.commStatus==='Paid'?'var(--success)':b.commStatus==='Adjusted'?'var(--muted)':'var(--warn)'}; font-weight:600;">${fmtMoney(myCut(b.commAmount))} <span style="font-weight:400; opacity:.7;">(${fmtMoney(b.commAmount)} gross)</span> ${escapeHtml(b.commStatus)}</span>` : ''}
                 </div>
               </div>`;
             }).join('')}
@@ -1955,7 +2045,7 @@ function openClient(id) {
             <span style="color:var(--muted);">Trip total across bookings:</span>
             <span class="font-bold">${fmtMoney(bookingTotal(c))}</span>
           </div>
-          ${commissionTotal(c) > 0 ? `<div class="flex justify-between text-sm mt-1"><span style="color:var(--muted);">Total commission:</span><span class="font-bold" style="color:var(--gold-2);">${fmtMoney(commissionTotal(c))}</span></div>` : ''}
+          ${commissionTotal(c) > 0 ? `<div class="flex justify-between text-sm mt-1"><span style="color:var(--muted);">Total commission (gross):</span><span class="font-bold" style="color:var(--muted);">${fmtMoney(commissionTotal(c))}</span></div><div class="flex justify-between text-sm mt-1"><span style="color:var(--muted);">My Cut (${getSplitPct()}%):</span><span class="font-bold" style="color:var(--gold-2);">${fmtMoney(myCut(commissionTotal(c)))}</span></div>` : ''}
         `}
       </div>
 
