@@ -142,7 +142,7 @@
         <button type="submit" class="btn btn-gold w-full" id="authSubmit">Sign in / Sign up</button>
       </form>
     </div>
-    <p class="text-center text-xs mt-6" style="color:rgba(250,246,240,.4);">Multi-device sync via Firebase. Card data handled by Stripe via Cognito.</p>
+    <p class="text-center text-xs mt-6" style="color:rgba(250,246,240,.4);">Multi-device sync via Firebase. Card data handled by JotForm (PCI compliant).</p>
   </div>
 </div>
 
@@ -402,13 +402,13 @@
           </div>
 
           <div class="card card-pad" style="background:linear-gradient(135deg,#f5f3ff 0%,#ffffff 100%);">
-            <h3 class="display text-xl mb-1 flex items-center gap-2">CC Authorization Form <span class="stripe-badge">STRIPE</span></h3>
-            <p class="text-sm mb-4" style="color:var(--muted);">PCI-compliant authorization form linked to Stripe via Cognito Forms.</p>
-            <label class="label">Cognito Form URL</label>
-            <input id="ccFormUrl" class="input mb-3" placeholder="https://www.cognitoforms.com/...">
-            <details class="text-xs mb-3" style="color:var(--muted);">
-              <summary class="cursor-pointer font-semibold">Advanced: field name mapping</summary>
-              <p class="mt-2 mb-2">If prefill isn't filling correctly, adjust to match your form's exact field names (case-sensitive, no spaces).</p>
+            <h3 class="display text-xl mb-1 flex items-center gap-2">CC Authorization Form <span class="stripe-badge">JOTFORM</span></h3>
+            <p class="text-sm mb-4" style="color:var(--muted);">PCI-compliant authorization form via JotForm. Client fills in their own info on the JotForm page (no prefill).</p>
+            <label class="label">JotForm URL</label>
+            <input id="ccFormUrl" class="input mb-3" placeholder="https://form.jotform.com/...">
+            <details class="text-xs mb-3" style="color:var(--muted);" hidden>
+              <summary class="cursor-pointer font-semibold">Advanced: field name mapping (legacy — unused)</summary>
+              <p class="mt-2 mb-2">Prefill is disabled for JotForm. These fields are kept hidden for backwards compatibility but no longer affect the URL.</p>
               <div class="grid grid-cols-2 gap-2">
                 <div><label class="label">Name field</label><input id="ccNameField" class="input" placeholder="Name"></div>
                 <div><label class="label">Email field</label><input id="ccEmailField" class="input" placeholder="Email"></div>
@@ -467,7 +467,7 @@
           </div>
         </div>
         <div class="card card-pad mt-4" style="background:#fef9c3; border-color:#facc15;">
-          <p class="text-xs leading-relaxed" style="color:#713f12;"><strong>Security note:</strong> Authentication is handled by Firebase (Google) — emails are restricted to @craystartravelagency.com via Firestore security rules. Data syncs across all your devices in real-time via Firestore. Card data is handled by Stripe (PCI Level 1) via Cognito — the CRM never sees, transmits, or stores card numbers.</p>
+          <p class="text-xs leading-relaxed" style="color:#713f12;"><strong>Security note:</strong> Authentication is handled by Firebase (Google) — emails are restricted to @craystartravelagency.com via Firestore security rules. Data syncs across all your devices in real-time via Firestore. Card data is handled by JotForm (PCI compliant) — the CRM never sees, transmits, or stores card numbers.</p>
         </div>
       </section>
     </div>
@@ -529,7 +529,7 @@
         <h3 class="display text-xl flex items-center gap-2">Send CC Authorization <span class="stripe-badge">STRIPE</span></h3>
         <button onclick="closeModal('ccAuthModal')" class="btn-icon hover:bg-gray-100 rounded-lg"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
-      <p class="text-xs mt-1" style="color:var(--muted);">Generates a prefilled link to your Cognito form. Card data goes to Stripe — never to the CRM.</p>
+      <p class="text-xs mt-1" style="color:var(--muted);">Opens the JotForm CC authorization page. Send the link via email/text — client fills in card details directly on JotForm.</p>
     </div>
     <div class="p-5 space-y-4">
       <div class="grid grid-cols-2 gap-3">
@@ -794,9 +794,7 @@ const SYNC_STATE_KEY = 'craystar_sync_state_v1';
 const SEEN_LEADS_KEY = 'craystar_seen_leads_v1';
 
 const DEFAULT_COGNITO = {
-  formUrl: 'https://www.cognitoforms.com/CraystarTravelAgencyLLC/CreditCardAuthorizationForm',
-  nameField: 'Name', emailField: 'Email', phoneField: 'Phone',
-  amountField: 'AuthorizationAmount', descField: 'Description',
+  formUrl: 'https://form.jotform.com/261227631182048',
 };
 
 let state = { clients: [], currentView: 'dashboard', currentClientId: null };
@@ -2447,13 +2445,7 @@ function saveNote() {
 // CC AUTH
 function buildCCAuthURL(client, amount, description) {
   const cfg = getCognitoConfig();
-  const entry = {};
-  if (client.first || client.last) entry[cfg.nameField] = { First: client.first || '', Last: client.last || '' };
-  if (client.email) entry[cfg.emailField] = client.email;
-  if (client.phone) entry[cfg.phoneField] = client.phone;
-  if (amount && !isNaN(amount)) entry[cfg.amountField] = Number(amount);
-  if (description) entry[cfg.descField] = description;
-  return cfg.formUrl + '?entry=' + encodeURIComponent(JSON.stringify(entry));
+  return cfg.formUrl;
 }
 function openCCAuthModal(clientId) {
   const c = state.clients.find(x => x.id === clientId);
@@ -2495,9 +2487,11 @@ function copyCCLink() {
 function emailCCLink() {
   const c = state.clients.find(x => x.id === state.currentClientId);
   const url = document.getElementById('ccAuthLink').dataset.url;
+  const amount = document.getElementById('ccAuthAmount').value;
   const desc = document.getElementById('ccAuthDesc').value || 'your trip';
+  const amountLine = amount ? `\nAuthorization amount: $${Number(amount).toFixed(2)}` : '';
   const subject = encodeURIComponent(`Credit card authorization for ${desc} – Craystar Travel`);
-  const body = encodeURIComponent(`Hi ${c?.first || 'there'},\n\nPlease use the secure link below to complete your credit card authorization. The form is processed through Stripe and is fully PCI compliant — your card information goes directly to our payment processor and is never stored on our website.\n\n${url}\n\nLet me know if you have any questions!\n\nThanks,\nEric Crayton\nCraystar Travel Agency\n417-771-0910\neric.crayton@craystartravelagency.com`);
+  const body = encodeURIComponent(`Hi ${c?.first || 'there'},\n\nPlease use the secure link below to complete your credit card authorization. The form is PCI compliant — your card information is encrypted and processed securely.\n\n${url}\n\nWhen you fill it out, please reference:\nDescription: ${desc}${amountLine}\n\nLet me know if you have any questions!\n\nThanks,\nEric Crayton\nCraystar Travel Agency\n417-771-0910\neric.crayton@craystartravelagency.com`);
   window.location.href = `mailto:${c?.email || ''}?subject=${subject}&body=${body}`;
 }
 function textCCLink() {
