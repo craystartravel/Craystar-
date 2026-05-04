@@ -50,7 +50,7 @@
   .fadein { animation:fade .3s ease both; }
   @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
   .kanban-col { min-width:280px; max-width:320px; }
-  .stripe-badge { display:inline-flex; align-items:center; gap:.35rem; background:linear-gradient(135deg,#635bff 0%,#4f46e5 100%); color:white; padding:.2rem .55rem; border-radius:6px; font-size:.65rem; font-weight:700; letter-spacing:.05em; }
+  .payment-badge { display:inline-flex; align-items:center; gap:.35rem; background:linear-gradient(135deg,#c9a961 0%,#a8884a 100%); color:white; padding:.2rem .55rem; border-radius:6px; font-size:.65rem; font-weight:700; letter-spacing:.05em; }
 
   /* Calendar grid */
   .cal-grid { display:grid; grid-template-columns: repeat(7, 1fr); }
@@ -142,7 +142,7 @@
         <button type="submit" class="btn btn-gold w-full" id="authSubmit">Sign in / Sign up</button>
       </form>
     </div>
-    <p class="text-center text-xs mt-6" style="color:rgba(250,246,240,.4);">Multi-device sync via Firebase. Card data handled by JotForm (PCI compliant).</p>
+    <p class="text-center text-xs mt-6" style="color:rgba(250,246,240,.4);">Multi-device sync via Firebase. Card authorizations via Jotform (PCI-compliant, encrypted).</p>
   </div>
 </div>
 
@@ -234,7 +234,7 @@
         </div>
         <div class="card mt-4 md:mt-6">
           <div class="px-5 py-4 border-b flex items-center justify-between" style="border-color:rgba(10,35,66,.06);">
-            <div><h3 class="display text-lg flex items-center gap-2">Recent payments <span class="stripe-badge">via Stripe</span></h3><p class="text-xs" style="color:var(--muted);">Latest transactions logged</p></div>
+            <div><h3 class="display text-lg flex items-center gap-2">Recent payments</h3><p class="text-xs" style="color:var(--muted);">Latest transactions logged</p></div>
             <button onclick="switchView('payments')" class="text-xs font-semibold" style="color:var(--teal);">View all →</button>
           </div>
           <div id="recentPayments" class="divide-y" style="border-color:rgba(10,35,66,.05);"></div>
@@ -272,10 +272,10 @@
         </div>
         <div class="card card-pad mb-4" style="background:linear-gradient(135deg,#f5f3ff 0%,#faf6f0 100%); border-color:rgba(99,91,255,.2);">
           <div class="flex items-start gap-3">
-            <div class="stripe-badge">STRIPE</div>
+            <div class="payment-badge">JOTFORM</div>
             <div class="flex-1">
-              <p class="text-sm font-semibold">Stripe is your source of truth for payments</p>
-              <p class="text-xs mt-1" style="color:var(--muted);">Card data lives in Stripe (PCI Level 1). The CRM logs the metadata you enter here after charges process. Full transactions, refunds, and disputes at <a href="https://dashboard.stripe.com" target="_blank" class="underline" style="color:#635bff;">dashboard.stripe.com</a>.</p>
+              <p class="text-sm font-semibold">Jotform handles card authorizations</p>
+              <p class="text-xs mt-1" style="color:var(--muted);">Card data is encrypted client-side via Jotform JF-CSE-V2 — the CRM never sees, transmits, or stores card numbers. Authorizations auto-delete after 3 days. View submissions at <a href="https://www.jotform.com/inbox" target="_blank" class="underline" style="color:#c9a961;">jotform.com/inbox</a>.</p>
             </div>
           </div>
         </div>
@@ -402,22 +402,22 @@
           </div>
 
           <div class="card card-pad" style="background:linear-gradient(135deg,#f5f3ff 0%,#ffffff 100%);">
-            <h3 class="display text-xl mb-1 flex items-center gap-2">CC Authorization Form <span class="stripe-badge">JOTFORM</span></h3>
-            <p class="text-sm mb-4" style="color:var(--muted);">PCI-compliant authorization form via JotForm. Client fills in their own info on the JotForm page (no prefill).</p>
-            <label class="label">JotForm URL</label>
-            <input id="ccFormUrl" class="input mb-3" placeholder="https://form.jotform.com/...">
-            <details class="text-xs mb-3" style="color:var(--muted);" hidden>
-              <summary class="cursor-pointer font-semibold">Advanced: field name mapping (legacy — unused)</summary>
-              <p class="mt-2 mb-2">Prefill is disabled for JotForm. These fields are kept hidden for backwards compatibility but no longer affect the URL.</p>
+            <h3 class="display text-xl mb-1 flex items-center gap-2">Payment Authorization Form <span class="payment-badge">JOTFORM</span></h3>
+            <p class="text-sm mb-4" style="color:var(--muted);">PCI-compliant Jotform with client-side encryption (JF-CSE-V2). Submissions auto-delete after 3 days.</p>
+            <label class="label">Jotform URL</label>
+            <input id="ccFormUrl" class="input mb-3" placeholder="https://form.jotform.com/261227631182048">
+            <details class="text-xs mb-3" style="color:var(--muted);">
+              <summary class="cursor-pointer font-semibold">Advanced: field name mapping</summary>
+              <p class="mt-2 mb-2">If prefill isn't filling correctly, adjust to match your form's exact field names (case-sensitive, no spaces).</p>
               <div class="grid grid-cols-2 gap-2">
-                <div><label class="label">Name field</label><input id="ccNameField" class="input" placeholder="Name"></div>
-                <div><label class="label">Email field</label><input id="ccEmailField" class="input" placeholder="Email"></div>
-                <div><label class="label">Phone field</label><input id="ccPhoneField" class="input" placeholder="Phone"></div>
-                <div><label class="label">Amount field</label><input id="ccAmountField" class="input" placeholder="AuthorizationAmount"></div>
-                <div class="col-span-2"><label class="label">Description field</label><input id="ccDescField" class="input" placeholder="Description"></div>
+                <div><label class="label">Name field prefix</label><input id="ccNameField" class="input" placeholder="q2_q2_fullname0"></div>
+                <div><label class="label">Email field</label><input id="ccEmailField" class="input" placeholder="q3_q3_email1"></div>
+                <div><label class="label">Phone field prefix</label><input id="ccPhoneField" class="input" placeholder="q4_q4_phone2"></div>
+                <div><label class="label">Address field prefix</label><input id="ccAmountField" class="input" placeholder="q17_address"></div>
+                <div class="col-span-2 hidden"><input id="ccDescField" type="hidden" value=""></div>
               </div>
             </details>
-            <button onclick="saveCognitoConfig()" class="btn btn-gold">Save form settings</button>
+            <button onclick="saveJotformConfig()" class="btn btn-gold">Save form settings</button>
             <p class="text-xs mt-3" style="color:var(--muted);">Your form: <a id="ccFormLinkPreview" href="#" target="_blank" class="underline" style="color:var(--teal); word-break:break-all;"></a></p>
           </div>
 
@@ -467,7 +467,7 @@
           </div>
         </div>
         <div class="card card-pad mt-4" style="background:#fef9c3; border-color:#facc15;">
-          <p class="text-xs leading-relaxed" style="color:#713f12;"><strong>Security note:</strong> Authentication is handled by Firebase (Google) — emails are restricted to @craystartravelagency.com via Firestore security rules. Data syncs across all your devices in real-time via Firestore. Card data is handled by JotForm (PCI compliant) — the CRM never sees, transmits, or stores card numbers.</p>
+          <p class="text-xs leading-relaxed" style="color:#713f12;"><strong>Security note:</strong> Authentication is handled by Firebase (Google) — emails are restricted to @craystartravelagency.com via Firestore security rules. Data syncs across all your devices in real-time via Firestore. Card authorizations are handled by Jotform with JF-CSE-V2 client-side encryption — the CRM never sees, transmits, or stores card numbers. Authorizations auto-delete from Jotform after 3 days.</p>
         </div>
       </section>
     </div>
@@ -526,10 +526,10 @@
   <div class="card w-full max-w-lg fadein max-h-[92vh] overflow-y-auto">
     <div class="p-5 border-b sticky top-0 bg-white z-10" style="border-color:rgba(10,35,66,.08);">
       <div class="flex items-center justify-between">
-        <h3 class="display text-xl flex items-center gap-2">Send CC Authorization <span class="stripe-badge">STRIPE</span></h3>
+        <h3 class="display text-xl flex items-center gap-2">Send Payment Authorization <span class="payment-badge">JOTFORM</span></h3>
         <button onclick="closeModal('ccAuthModal')" class="btn-icon hover:bg-gray-100 rounded-lg"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
-      <p class="text-xs mt-1" style="color:var(--muted);">Opens the JotForm CC authorization page. Send the link via email/text — client fills in card details directly on JotForm.</p>
+      <p class="text-xs mt-1" style="color:var(--muted);">Generates a prefilled link to your Jotform. Card data is encrypted in the client's browser — never sent to the CRM.</p>
     </div>
     <div class="p-5 space-y-4">
       <div class="grid grid-cols-2 gap-3">
@@ -559,17 +559,17 @@
         <h3 class="display text-xl">Log a payment</h3>
         <button onclick="closeModal('paymentModal')" class="btn-icon hover:bg-gray-100 rounded-lg"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
-      <p class="text-xs mt-1" style="color:var(--muted);">Record a payment after Stripe processes it. The CRM stores only metadata.</p>
+      <p class="text-xs mt-1" style="color:var(--muted);">Record a payment after the supplier processes the charge. The CRM stores only metadata.</p>
     </div>
     <div class="p-5 space-y-4">
       <input type="hidden" id="payClientId">
       <div class="grid grid-cols-2 gap-3"><div><label class="label">Amount *</label><input id="payAmount" type="number" step="0.01" class="input" required></div><div><label class="label">Date *</label><input id="payDate" type="date" class="input" required></div></div>
       <div class="grid grid-cols-2 gap-3">
         <div><label class="label">Type</label><select id="payType" class="select"><option>Deposit</option><option>Mid Payment</option><option>Final Payment</option><option>Other</option><option>Refund</option></select></div>
-        <div><label class="label">Method</label><select id="payMethod" class="select"><option>Credit Card (Stripe)</option><option>Other</option></select></div>
+        <div><label class="label">Method</label><select id="payMethod" class="select"><option>Credit Card</option><option>Bank Transfer</option><option>Check</option><option>Other</option></select></div>
       </div>
       <div><label class="label">Apply to Booking (optional)</label><select id="payBookingId" class="select"><option value="">General — not linked to a specific booking</option></select></div>
-      <div><label class="label">Stripe Transaction ID (optional)</label><input id="payTxnId" class="input" placeholder="ch_... or pi_..."></div>
+      <div><label class="label">Reference / Confirmation # (optional)</label><input id="payTxnId" class="input" placeholder="Supplier confirmation, check #, etc."></div>
       <div><label class="label">Notes</label><input id="payNotes" class="input" placeholder="Optional reference"></div>
       <div class="flex gap-2"><button onclick="closeModal('paymentModal')" class="btn btn-ghost flex-1">Cancel</button><button onclick="savePayment()" class="btn btn-gold flex-1">Save payment</button></div>
     </div>
@@ -728,16 +728,13 @@ import {
 // (You get these values from Firebase Console after creating
 //  your project. See firebase-setup-guide.md Step 3.)
 // =====================================================
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCdkhjx6KX-RdasZxdRhQgAnfjOsS9sB80",
-  authDomain: "craystar-crm-1a987.firebaseapp.com",
-  databaseURL: "https://craystar-crm-1a987-default-rtdb.firebaseio.com",
-  projectId: "craystar-crm-1a987",
-  storageBucket: "craystar-crm-1a987.firebasestorage.app",
-  messagingSenderId: "60714144052",
-  appId: "1:60714144052:web:5e92f53adaaf952a9cd561",
-  measurementId: "G-F1XGR3SC62"
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
+  projectId: "PASTE_YOUR_PROJECT_ID_HERE",
+  storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
+  appId: "PASTE_YOUR_APP_ID_HERE"
 };
 // =====================================================
 
@@ -745,7 +742,7 @@ const ALLOWED_DOMAIN = '@craystartravelagency.com';
 const AGENCY_ID = 'craystar';
 
 // Detect placeholder config — show helpful warning instead of crashing
-const FIREBASE_CONFIGURED = firebaseConfig.apiKey && firebaseConfig.apiKey.startsWith('AIzaSy');;
+const FIREBASE_CONFIGURED = firebaseConfig.apiKey && firebaseConfig.apiKey !== 'PASTE_YOUR_API_KEY_HERE';
 
 let fbApp, fbAuth, fbDb;
 if (FIREBASE_CONFIGURED) {
@@ -788,13 +785,21 @@ const STORE_KEY = 'craystar_crm_v1';
 const AUTH_KEY = 'craystar_crm_auth_v1';
 const SESSION_KEY = 'craystar_session';
 const PROFILE_KEY = 'craystar_profile_v1';
-const COGNITO_KEY = 'craystar_cognito_v1';
+const JOTFORM_KEY = 'craystar_jotform_v1';
+const LEGACY_COGNITO_KEY = 'craystar_cognito_v1';
 const SYNC_KEY = 'craystar_sync_v1';
 const SYNC_STATE_KEY = 'craystar_sync_state_v1';
 const SEEN_LEADS_KEY = 'craystar_seen_leads_v1';
 
-const DEFAULT_COGNITO = {
+const DEFAULT_JOTFORM = {
   formUrl: 'https://form.jotform.com/261227631182048',
+  // Jotform field name prefixes (matched from form source).
+  // Subfields like [first], [last], [full] are appended in buildCCAuthURL.
+  nameField: 'q2_q2_fullname0',
+  emailField: 'q3_q3_email1',
+  phoneField: 'q4_q4_phone2',
+  amountField: 'q17_address',  // address field — repurposed as the 4th prefill slot
+  descField: '',
 };
 
 let state = { clients: [], currentView: 'dashboard', currentClientId: null };
@@ -967,7 +972,7 @@ async function logout() {
     try { await window.__fb.signOut(window.__fb.auth); } catch(e) {}
   }
   // Clear local cache too so the next user on this device starts fresh
-  [STORE_KEY, PROFILE_KEY, COGNITO_KEY, SYNC_KEY, SYNC_STATE_KEY, SEEN_LEADS_KEY].forEach(k => localStorage.removeItem(k));
+  [STORE_KEY, PROFILE_KEY, JOTFORM_KEY, LEGACY_COGNITO_KEY, SYNC_KEY, SYNC_STATE_KEY, SEEN_LEADS_KEY].forEach(k => localStorage.removeItem(k));
   location.reload();
 }
 async function showApp() {
@@ -975,7 +980,7 @@ async function showApp() {
   document.getElementById('app').classList.remove('hidden');
 
   // First, paint from cached localStorage so the UI is responsive immediately
-  loadState(); loadProfile(); loadCognitoConfig(); loadSyncConfig();
+  loadState(); loadProfile(); loadJotformConfig(); loadSyncConfig();
   switchView('dashboard');
 
   // Then attach live Firestore listeners — these will overwrite local cache as remote data arrives
@@ -1009,12 +1014,12 @@ async function attachFirestoreListeners() {
     }, console.error)
   );
 
-  // 2. Subscribe to shared agency settings (cognito + sync)
+  // 2. Subscribe to shared agency settings (jotform + sync)
   firestoreUnsubs.push(
-    onSnapshot(doc(db, 'agency', AGENCY_ID, 'settings', 'cognito'), (snap) => {
+    onSnapshot(doc(db, 'agency', AGENCY_ID, 'settings', 'jotform'), (snap) => {
       if (snap.exists()) {
-        localStorage.setItem(COGNITO_KEY, JSON.stringify(snap.data()));
-        loadCognitoConfig();
+        localStorage.setItem(JOTFORM_KEY, JSON.stringify(snap.data()));
+        loadJotformConfig();
       }
     }, console.error)
   );
@@ -1150,37 +1155,47 @@ function myCut(grossAmount) {
   return Number(grossAmount || 0) * getSplitPct() / 100;
 }
 
-function loadCognitoConfig() {
-  const c = { ...DEFAULT_COGNITO, ...JSON.parse(localStorage.getItem(COGNITO_KEY) || '{}') };
+function loadJotformConfig() {
+  // One-time cleanup of legacy Cognito storage key (Cognito field names won't work for Jotform)
+  if (localStorage.getItem(LEGACY_COGNITO_KEY) && !localStorage.getItem(JOTFORM_KEY)) {
+    localStorage.removeItem(LEGACY_COGNITO_KEY);
+  }
+  const c = { ...DEFAULT_JOTFORM, ...JSON.parse(localStorage.getItem(JOTFORM_KEY) || '{}') };
   document.getElementById('ccFormUrl').value = c.formUrl;
   document.getElementById('ccNameField').value = c.nameField;
   document.getElementById('ccEmailField').value = c.emailField;
   document.getElementById('ccPhoneField').value = c.phoneField;
   document.getElementById('ccAmountField').value = c.amountField;
-  document.getElementById('ccDescField').value = c.descField;
+  if (document.getElementById('ccDescField')) {
+    document.getElementById('ccDescField').value = c.descField || '';
+  }
   const link = document.getElementById('ccFormLinkPreview');
   link.href = c.formUrl;
   link.textContent = c.formUrl;
 }
-async function saveCognitoConfig() {
+const loadCognitoConfig = loadJotformConfig;
+async function saveJotformConfig() {
+  const descEl = document.getElementById('ccDescField');
   const c = {
-    formUrl: document.getElementById('ccFormUrl').value.trim() || DEFAULT_COGNITO.formUrl,
-    nameField: document.getElementById('ccNameField').value.trim() || 'Name',
-    emailField: document.getElementById('ccEmailField').value.trim() || 'Email',
-    phoneField: document.getElementById('ccPhoneField').value.trim() || 'Phone',
-    amountField: document.getElementById('ccAmountField').value.trim() || 'AuthorizationAmount',
-    descField: document.getElementById('ccDescField').value.trim() || 'Description',
+    formUrl: document.getElementById('ccFormUrl').value.trim() || DEFAULT_JOTFORM.formUrl,
+    nameField: document.getElementById('ccNameField').value.trim() || DEFAULT_JOTFORM.nameField,
+    emailField: document.getElementById('ccEmailField').value.trim() || DEFAULT_JOTFORM.emailField,
+    phoneField: document.getElementById('ccPhoneField').value.trim() || DEFAULT_JOTFORM.phoneField,
+    amountField: document.getElementById('ccAmountField').value.trim() || DEFAULT_JOTFORM.amountField,
+    descField: descEl ? (descEl.value.trim() || '') : '',
   };
-  localStorage.setItem(COGNITO_KEY, JSON.stringify(c));
-  loadCognitoConfig();
+  localStorage.setItem(JOTFORM_KEY, JSON.stringify(c));
+  loadJotformConfig();
   if (window.__fb && window.__fb.configured && currentUser) {
     try {
-      await window.__fb.setDoc(window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'settings', 'cognito'), c);
-    } catch (e) { console.error('Failed to save cognito config:', e); }
+      await window.__fb.setDoc(window.__fb.doc(window.__fb.db, 'agency', window.__fb.AGENCY_ID, 'settings', 'jotform'), c);
+    } catch (e) { console.error('Failed to save jotform config:', e); }
   }
-  flash('CC form settings saved');
+  flash('Payment form settings saved');
 }
-function getCognitoConfig() { return { ...DEFAULT_COGNITO, ...JSON.parse(localStorage.getItem(COGNITO_KEY) || '{}') }; }
+const saveCognitoConfig = saveJotformConfig;
+function getJotformConfig() { return { ...DEFAULT_JOTFORM, ...JSON.parse(localStorage.getItem(JOTFORM_KEY) || '{}') }; }
+const getCognitoConfig = getJotformConfig;
 
 // SYNC CONFIG
 function loadSyncConfig() {
@@ -1604,7 +1619,7 @@ function renderPayments() {
   document.getElementById('pay-finals').textContent = all.filter(p => p.type === 'Final Payment').length;
   const el = document.getElementById('allPayments');
   if (all.length === 0) {
-    el.innerHTML = `<div class="p-8 text-center" style="color:var(--muted);"><p class="text-sm mb-2">No payments logged yet.</p><p class="text-xs">Open a client and click "Log Payment" after Stripe processes a charge.</p></div>`;
+    el.innerHTML = `<div class="p-8 text-center" style="color:var(--muted);"><p class="text-sm mb-2">No payments logged yet.</p><p class="text-xs">Open a client and click "Log Payment" after the supplier processes a charge.</p></div>`;
     return;
   }
   el.innerHTML = all.map(p => `
@@ -2331,7 +2346,7 @@ function openClient(id) {
       </div>
 
       <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#f5f3ff 0%,#faf6f0 100%); border:1px solid rgba(99,91,255,.15);">
-        <div class="flex items-center justify-between mb-3"><h4 class="display text-lg flex items-center gap-2">Payments &amp; Authorization <span class="stripe-badge">STRIPE</span></h4></div>
+        <div class="flex items-center justify-between mb-3"><h4 class="display text-lg flex items-center gap-2">Payments &amp; Authorization <span class="payment-badge">JOTFORM</span></h4></div>
         <div class="grid grid-cols-3 gap-3 mb-3">
           <div><p class="label">Trip Total</p><p class="font-bold text-lg">${hasRealTotal ? fmtMoney(tripTotal) : (c.budget ? '<span style="color:var(--muted); font-size:.85em;">~' + escapeHtml(formatBudgetDisplay(c.budget)) + '</span>' : '—')}</p>${hasRealTotal && budgetEstimate > 0 ? `<p class="text-[10px]" style="color:var(--muted);">Budget: ${escapeHtml(formatBudgetDisplay(c.budget))}</p>` : ''}</div>
           <div><p class="label">Paid</p><p class="font-bold text-lg" style="color:var(--success);">${fmtMoney(paid)}</p></div>
@@ -2339,7 +2354,7 @@ function openClient(id) {
         </div>
         ${c.ccAuth?.sent ? `<p class="text-xs" style="color:var(--muted);">CC Auth link sent ${fmtDate(c.ccAuth.sent)}${c.ccAuth.completed ? ' · <span style="color:var(--success); font-weight:600;">✓ Authorized '+fmtDate(c.ccAuth.completed)+'</span>' : ' · awaiting client signature'}</p>` : ''}
         <div class="grid grid-cols-2 gap-2 mt-3">
-          <button onclick="openCCAuthModal('${c.id}')" class="btn btn-gold text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Send CC Auth</button>
+          <button onclick="openCCAuthModal('${c.id}')" class="btn btn-gold text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Send Payment Link</button>
           <button onclick="openPaymentModal('${c.id}')" class="btn btn-primary text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Log Payment</button>
         </div>
         ${c.ccAuth?.sent && !c.ccAuth?.completed ? `<button onclick="markCCCompleted('${c.id}')" class="btn btn-ghost w-full text-sm mt-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Mark as authorized</button>` : ''}
@@ -2444,8 +2459,33 @@ function saveNote() {
 
 // CC AUTH
 function buildCCAuthURL(client, amount, description) {
-  const cfg = getCognitoConfig();
-  return cfg.formUrl;
+  // Jotform expects bracket-encoded subfield params:
+  //   ?q2_q2_fullname0%5Bfirst%5D=Jane&q3_q3_email1=jane@example.com
+  // amount/description aren't fields on the auth form — they're shared in the email/text body.
+  const cfg = getJotformConfig();
+  const params = [];
+  const enc = encodeURIComponent;
+
+  function add(field, subfield, value) {
+    if (!field || value === undefined || value === null || value === '') return;
+    const key = subfield ? field + '%5B' + subfield + '%5D' : field;
+    params.push(key + '=' + enc(value));
+  }
+
+  if (client.first) add(cfg.nameField, 'first', client.first);
+  if (client.last)  add(cfg.nameField, 'last',  client.last);
+  if (client.email) add(cfg.emailField, null, client.email);
+
+  if (client.phone) {
+    const digits = String(client.phone).replace(/\D/g, '');
+    let formatted = client.phone;
+    if (digits.length === 10) {
+      formatted = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+    }
+    add(cfg.phoneField, 'full', formatted);
+  }
+
+  return cfg.formUrl + (params.length ? '?' + params.join('&') : '');
 }
 function openCCAuthModal(clientId) {
   const c = state.clients.find(x => x.id === clientId);
@@ -2487,17 +2527,20 @@ function copyCCLink() {
 function emailCCLink() {
   const c = state.clients.find(x => x.id === state.currentClientId);
   const url = document.getElementById('ccAuthLink').dataset.url;
-  const amount = document.getElementById('ccAuthAmount').value;
   const desc = document.getElementById('ccAuthDesc').value || 'your trip';
-  const amountLine = amount ? `\nAuthorization amount: $${Number(amount).toFixed(2)}` : '';
-  const subject = encodeURIComponent(`Credit card authorization for ${desc} – Craystar Travel`);
-  const body = encodeURIComponent(`Hi ${c?.first || 'there'},\n\nPlease use the secure link below to complete your credit card authorization. The form is PCI compliant — your card information is encrypted and processed securely.\n\n${url}\n\nWhen you fill it out, please reference:\nDescription: ${desc}${amountLine}\n\nLet me know if you have any questions!\n\nThanks,\nEric Crayton\nCraystar Travel Agency\n417-771-0910\neric.crayton@craystartravelagency.com`);
+  const amount = document.getElementById('ccAuthAmount').value;
+  const amountLine = amount ? `\n\nAuthorization amount: $${Number(amount).toFixed(2)}` : '';
+  const subject = encodeURIComponent(`Payment authorization for ${desc} – Craystar Travel`);
+  const body = encodeURIComponent(`Hi ${c?.first || 'there'},\n\nPlease use the secure link below to complete your payment authorization for ${desc}.${amountLine}\n\nThe form is encrypted in your browser before submission and is fully PCI compliant — your card information is never stored on our website. The form auto-deletes after 3 days for additional security.\n\n${url}\n\nLet me know if you have any questions!\n\nThanks,\nEric Crayton\nCraystar Travel Agency\n417-771-0910\neric.crayton@craystartravelagency.com`);
   window.location.href = `mailto:${c?.email || ''}?subject=${subject}&body=${body}`;
 }
 function textCCLink() {
   const c = state.clients.find(x => x.id === state.currentClientId);
   const url = document.getElementById('ccAuthLink').dataset.url;
-  const body = encodeURIComponent(`Hi ${c?.first || ''}, here's the secure CC auth link for your trip: ${url} - Eric @ Craystar Travel`);
+  const amount = document.getElementById('ccAuthAmount').value;
+  const desc = document.getElementById('ccAuthDesc').value || 'your trip';
+  const amountStr = amount ? ` for $${Number(amount).toFixed(2)}` : '';
+  const body = encodeURIComponent(`Hi ${c?.first || ''}, here's the secure payment authorization link for ${desc}${amountStr}: ${url} - Eric @ Craystar Travel`);
   window.location.href = `sms:${c?.phone || ''}?&body=${body}`;
 }
 function openCCLink() {
