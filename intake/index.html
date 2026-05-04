@@ -747,6 +747,40 @@
     });
   });
 
+  // Cruise-line-specific suite tier hints
+  const cruiseLineSelect = document.getElementById('cruiseLine');
+  const roomTypeSelect = document.getElementById('cruiseRoomType');
+  const suiteHint = document.getElementById('suiteHint');
+
+  // Each line has its own premium suite branding — show a friendly hint when premium tier is being considered
+  const SUITE_HINTS = {
+    'Royal Caribbean': "Royal Caribbean premium suites include Junior Suite, Grand Suite, Owner's Suite, and Star Class (Royal Genie service on Oasis-class & Icon-class).",
+    'Carnival': 'Carnival premium suites include Grand Suite, Excel Suites (with private hot tubs on Excel-class), and Family Harbor staterooms with private lounge.',
+    'Celebrity': 'Celebrity premium suites are part of The Retreat — private restaurant (Luminae), lounge, and sun deck. Sky Suites through Iconic Suite.',
+    'Norwegian': 'Norwegian premium suites include The Haven — ship-within-a-ship private courtyard, restaurant, sun deck, and butler service.',
+    'Princess': "Princess premium options include Reserve Collection (private restaurant + concierge), Sanctuary Collection on Sphere-class, and Owner's Suite.",
+    'Viking — Ocean': "Viking Ocean suites include Penthouse Veranda, Penthouse Junior Suite, Explorer Suite, and Owner's Suite — all with verandas and butler service.",
+    'Viking — River': 'Viking River top tier is the Explorer Suite — 445 sq ft, the largest river suites in Europe, with wraparound veranda.',
+    'Viking — Expedition': "Viking Expedition top tier is the Owner's Suite on Octantis and Polaris — separate living room and panoramic forward views.",
+    'Disney Cruise Line': 'Disney Cruise Line premium options include Concierge-level staterooms with private lounge, sun deck, and dedicated concierge service.',
+  };
+
+  function updateSuiteHint() {
+    if (!cruiseLineSelect || !roomTypeSelect || !suiteHint) return;
+    const line = cruiseLineSelect.value;
+    const room = roomTypeSelect.value;
+    const isPremium = room === 'Full Suite' || room === 'Premium suite tier (varies by line)' || room === 'Mini-suite';
+    if (isPremium && SUITE_HINTS[line]) {
+      suiteHint.textContent = SUITE_HINTS[line];
+      suiteHint.style.display = 'block';
+    } else {
+      suiteHint.style.display = 'none';
+    }
+  }
+
+  if (cruiseLineSelect) cruiseLineSelect.addEventListener('change', updateSuiteHint);
+  if (roomTypeSelect) roomTypeSelect.addEventListener('change', updateSuiteHint);
+
   // Date mode toggle (specific vs approximate)
   const dateTabs = document.querySelectorAll('.date-tab');
   const datePanes = document.querySelectorAll('.date-pane');
@@ -824,6 +858,7 @@
           notes: data.notes || '',
           cruiseLine: data.cruiseLine || '',
           cruiseRegion: data.cruiseRegion || '',
+          cruiseRoomType: data.cruiseRoomType || '',
           resortBrand: data.resortBrand || '',
           source: data.source || 'Website',
           submittedFrom: 'craystartravelagency.com'
