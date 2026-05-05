@@ -538,7 +538,10 @@
       </div>
       <div><label class="label">Description (shown to client)</label><input id="ccAuthDesc" class="input" placeholder="e.g. Disney World deposit"></div>
       <div class="card-pad rounded-lg" style="background:var(--cream); font-size:.8rem; word-break:break-all;">
-        <p class="label mb-1">Generated link</p>
+        <div class="flex items-center justify-between mb-1">
+          <p class="label" style="margin:0;">Generated link</p>
+          <span id="ccLinkStatus" class="text-xs" style="color:var(--muted); font-weight:600;"></span>
+        </div>
         <p id="ccAuthLink" style="color:var(--teal); font-family:monospace; font-size:.7rem;">—</p>
       </div>
       <div class="grid grid-cols-3 gap-2">
@@ -2510,6 +2513,20 @@ function openCCAuthModal(clientId) {
     document.getElementById(id).onchange = updateCCLink;
   });
 }
+// LINK SHORTENING (TinyURL free API — no key required)
+let _shortenTimer = null;
+async function shortenViaTinyURL(longUrl) {
+  // TinyURL's open endpoint accepts the URL as a query param and returns the short URL as plain text
+  const endpoint = 'https://tinyurl.com/api-create.php?url=' + encodeURIComponent(longUrl);
+  const resp = await fetch(endpoint, { method: 'GET' });
+  if (!resp.ok) throw new Error('TinyURL HTTP ' + resp.status);
+  const text = (await resp.text()).trim();
+  if (!text.startsWith('https://tinyurl.com/') && !text.startsWith('http://tinyurl.com/')) {
+    throw new Error('TinyURL bad response: ' + text.slice(0, 80));
+  }
+  return text;
+}
+
 function updateCCLink() {
   const c = state.clients.find(x => x.id === state.currentClientId);
   if (!c) return;
@@ -2517,9 +2534,47 @@ function updateCCLink() {
   let desc = document.getElementById('ccAuthDesc').value;
   const type = document.getElementById('ccAuthType').value;
   if (desc && !desc.toLowerCase().includes(type.toLowerCase())) desc = `${type}: ${desc}`;
-  const url = buildCCAuthURL(c, amount, desc);
-  document.getElementById('ccAuthLink').textContent = url;
-  document.getElementById('ccAuthLink').dataset.url = url;
+  const longUrl = buildCCAuthURL(c, amount, desc);
+  const linkEl = document.getElementById('ccAuthLink');
+  const statusEl = document.getElementById('ccLinkStatus');
+
+  // Immediately show the long URL (responsive feedback even if TinyURL is slow)
+  linkEl.textContent = longUrl;
+  linkEl.dataset.url = longUrl;
+  linkEl.dataset.longUrl = longUrl;
+  linkEl.dataset.shortUrl = '';
+  if (statusEl) {
+    statusEl.textContent = 'shortening…';
+    statusEl.style.color = 'var(--muted)';
+  }
+
+  // Debounce — wait 600ms after the last keystroke before calling TinyURL
+  if (_shortenTimer) clearTimeout(_shortenTimer);
+  _shortenTimer = setTimeout(async () => {
+    // Make sure the URL hasn't changed since we started (user kept typing)
+    const targetUrl = longUrl;
+    try {
+      const shortUrl = await shortenViaTinyURL(targetUrl);
+      // Make sure user hasn't navigated away or modified the form during the request
+      if (linkEl.dataset.longUrl !== targetUrl) return;
+      linkEl.textContent = shortUrl;
+      linkEl.dataset.url = shortUrl;
+      linkEl.dataset.shortUrl = shortUrl;
+      if (statusEl) {
+        statusEl.textContent = '✓ shortened';
+        statusEl.style.color = 'var(--success, #16a34a)';
+      }
+    } catch (e) {
+      console.warn('TinyURL shorten failed:', e);
+      if (linkEl.dataset.longUrl !== targetUrl) return;
+      // Keep the long URL — already displayed — and show a polite warning
+      if (statusEl) {
+        statusEl.textContent = '⚠ using full URL';
+        statusEl.style.color = '#a16207';
+        statusEl.title = 'Link shortener unavailable. Full URL still works — just longer.';
+      }
+    }
+  }, 600);
 }
 function copyCCLink() {
   const url = document.getElementById('ccAuthLink').dataset.url;
@@ -2554,10 +2609,14 @@ function markCCSent() {
   if (!c) return;
   const amount = document.getElementById('ccAuthAmount').value;
   const desc = document.getElementById('ccAuthDesc').value;
+  const linkEl = document.getElementById('ccAuthLink');
   c.ccAuth = c.ccAuth || {};
   c.ccAuth.sent = new Date().toISOString();
   c.ccAuth.lastAmount = amount;
   c.ccAuth.lastDesc = desc;
+  // Store both URLs for audit — short is what client received, long is the actual destination
+  c.ccAuth.lastUrl = linkEl?.dataset?.longUrl || '';
+  c.ccAuth.lastShortUrl = linkEl?.dataset?.shortUrl || '';
   c.timeline.push({ date: new Date().toISOString(), text: `CC Auth link sent${amount ? ' for '+fmtMoney(amount) : ''}${desc ? ' ('+desc+')' : ''}` });
   c.updated = new Date().toISOString();
   saveState();
