@@ -2357,34 +2357,25 @@ function openClient(id) {
           <div><p class="label">Paid</p><p class="font-bold text-lg" style="color:var(--success);">${fmtMoney(paid)}</p></div>
           <div><p class="label">Balance</p><p class="font-bold text-lg" style="color:${balance != null && balance > 0 ? 'var(--warn)' : 'var(--muted)'};">${balance != null ? fmtMoney(Math.max(0,balance)) : 'â€”'}</p></div>
         </div>
-        ${c.ccAuth?.sent ? `<p class="text-xs" style="color:var(--muted);">CC Auth link sent ${fmtDate(c.ccAuth.sent)}${c.ccAuth.completed ? ' · <span style="color:var(--success); font-weight:600;">âœ“ Authorized '+fmtDate(c.ccAuth.completed)+'</span>' : ' · awaiting client signature'}</p>` : ''}
+        ${c.ccAuth?.sent ? `<p class="text-xs" style="color:var(--muted);">CC Auth link sent ${fmtDate(c.ccAuth.sent)}${c.ccAuth.completed ? ' <span style="color:var(--success); font-weight:600;">âœ“ Authorized '+fmtDate(c.ccAuth.completed)+'</span>' : ' awaiting client signature'}</p>` : ''}
         <div class="grid grid-cols-2 gap-2 mt-3">
           <button onclick="openCCAuthModal('${c.id}')" class="btn btn-gold text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Send Payment Link</button>
           <button onclick="openPaymentModal('${c.id}')" class="btn btn-primary text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Log Payment</button>
         </div>
         ${c.ccAuth?.sent && !c.ccAuth?.completed ? `<button onclick="markCCCompleted('${c.id}')" class="btn btn-ghost w-full text-sm mt-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Mark as authorized</button>` : ''}
-      </div>
-
-      <div class="card-pad rounded-lg" style="background:linear-gradient(135deg,#f5f3ff 0%,#faf6f0 100%); border:1px solid rgba(99,91,255,.15);">
-        <div class="flex items-center justify-between mb-3"><h4 class="display text-lg flex items-center gap-2">Payments &amp; Authorization <span class="payment-badge">JOTFORM</span></h4></div>
-        <div class="grid grid-cols-3 gap-3 mb-3">
-          <div><p class="label">Trip Total</p><p class="font-bold text-lg">${hasRealTotal ? fmtMoney(tripTotal) : (c.budget ? '<span style="color:var(--muted); font-size:.85em;">~' + escapeHtml(formatBudgetDisplay(c.budget)) + '</span>' : '—')}</p>${hasRealTotal && budgetEstimate > 0 ? `<p class="text-[10px]" style="color:var(--muted);">Budget: ${escapeHtml(formatBudgetDisplay(c.budget))}</p>` : ''}</div>
-          <div><p class="label">Paid</p><p class="font-bold text-lg" style="color:var(--success);">${fmtMoney(paid)}</p></div>
-          <div><p class="label">Balance</p><p class="font-bold text-lg" style(" · '+escapeHtml(p.txnId) : ''}${p.notes ? ' · '+escapeHtml(p.notes) : ''}</p>
-                  </div>
         ${(c.payments||[]).length ? `
-          <div class="mt-3 border-t pt-3" style("border-color:rgba(10,35,66,.08);">
+          <div class="mt-3 border-t pt-3" style="border-color:rgba(10,35,66,.08);">
             <p class="label mb-2">Payment history</p>
-            <div class("space-y-2">
+            <div class="space-y-2">
               ${c.payments.slice().reverse().map(p => `
-                <div class("flex items-center justify-between text-sm">
-                  <div class("flex-1 min-w-0">
-                    <p class("font-semibold">${escapeHtml(p.type)}</p>
-                    <p class("text-xs" style("color:var(--muted);">${fmtDate(p.date)}${p.txnId ? ' · '+escapeHtml(p.txnId) : ''}${p.notes ? ' · '+escapeHtml(p.notes) : ''}</p>
+                <div class="flex items-center justify-between text-sm">
+                  <div class="flex-1 min-w-0">
+                    <p class="font-semibold">${escapeHtml(p.type)}</p>
+                    <p class="text-xs" style="color:var(--muted);">${fmtDate(p.date)}${p.txnId ? '  '+escapeHtml(p.txnId) : ''}${p.notes ? '  '+escapeHtml(p.notes) : ''}</p>
                   </div>
                   <div class="flex items-center gap-2">
-                    <span class="font-bold" style="color:${p.type==='Refund'?'var(--danger)':'var(--success)'};">${p.type==='Refund'?'−':''}${fmtMoney(p.amount)}</span>
-                    <button onclick="deletePayment('${c.id}','${p.id}')" class="text-xs" style="color:var(--muted);" title="Delete">×</button>
+                    <span class="font-bold" style="color:${p.type==='Refund'?'var(--danger)':'var(--success)'};">${p.type==='Refund'?'âˆ’':''}${fmtMoney(p.amount)}</span>
+                    <button onclick="deletePayment('${c.id}','${p.id}')" class="text-xs" style="color:var(--muted);" title="Delete">—</button>
                   </div>
                 </div>`).join('')}
             </div>
