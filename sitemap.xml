@@ -8,6 +8,20 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- ── About ── -->
+  <url>
+    <loc>https://craystartravelagency.com/about-us</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ── Intake / Booking Form ── -->
+  <url>
+    <loc>https://craystartravelagency.com/intake</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- ── Disney ── -->
   <url>
     <loc>https://craystartravelagency.com/disney</loc>
@@ -295,7 +309,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- ── Privacy & Review ── -->
+  <!-- ── Privacy ── -->
   <url>
     <loc>https://craystartravelagency.com/privacy</loc>
     <changefreq>yearly</changefreq>
