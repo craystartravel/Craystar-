@@ -4,20 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Redirecting… | Craystar Travel Agency</title>
+<title>Secure Payment | Craystar Travel Agency</title>
 <style>
-  body { font-family: 'Open Sans', Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #0a1f44; color: #fff; text-align: center; }
-  .wrap { max-width: 400px; padding: 24px; }
-  .spinner { width: 36px; height: 36px; border: 4px solid rgba(212,175,55,.3); border-top-color: #d4af37; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 16px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  p { font-size: 1rem; line-height: 1.5; opacity: .85; }
-  a { color: #d4af37; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Open Sans', Helvetica, Arial, sans-serif; background: #0a1f44; color: #fff; min-height: 100vh; }
+  .header { text-align: center; padding: 1.5rem 1rem .5rem; }
+  .header img { width: 120px; height: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,.3)); }
+  .form-wrap { max-width: 700px; margin: 0 auto; padding: 0 1rem 2rem; }
+  .error { display: flex; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
+  .error p { font-size: 1rem; line-height: 1.5; opacity: .85; }
+  .error a { color: #d4af37; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="spinner"></div>
-  <p id="msg">Redirecting you now…</p>
+<div class="header">
+  <a href="https://craystartravelagency.com/">
+    <img src="https://craystartravelagency.com/logo.webp" alt="Craystar Travel Agency">
+  </a>
+</div>
+<div class="form-wrap" id="formContainer"></div>
+<div class="error hidden" id="errorContainer">
+  <p>Something went wrong with this link.<br><a href="https://craystartravelagency.com/">Return to Craystar Travel</a></p>
 </div>
 <script>
 (function () {
@@ -30,32 +37,34 @@
 
     if (!first && !last && !email && !phone) throw new Error('missing');
 
-    // Format phone to match Jotform expected format: (XXX) XXX-XXXX
+    // Format phone: (XXX) XXX-XXXX
     var digits = phone.replace(/\D/g, '');
     var formattedPhone = phone;
     if (digits.length === 10) {
       formattedPhone = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
     }
 
-    // Build URL using manual param encoding — same method the CRM portal uses.
-    // Jotform expects bracket-encoded subfield params like:
-    //   q2_q2_fullname0%5Bfirst%5D=Jane
-    // Using URLSearchParams would double-encode the %5B brackets, so we build manually.
-    var base = 'https://form.jotform.com/261227631182048';
+    // Build prefill query params using pre-encoded brackets (same as portal)
     var enc = encodeURIComponent;
     var parts = [];
-
     if (first) parts.push('q2_q2_fullname0%5Bfirst%5D=' + enc(first));
     if (last)  parts.push('q2_q2_fullname0%5Blast%5D=' + enc(last));
     if (email) parts.push('q3_q3_email1=' + enc(email));
     if (formattedPhone) parts.push('q4_q4_phone2%5Bfull%5D=' + enc(formattedPhone));
 
-    var url = base + (parts.length ? '?' + parts.join('&') : '');
+    var qs = parts.length ? '?' + parts.join('&') : '';
 
-    window.location.replace(url);
+    // Inject the Jotform embed script with prefill params
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://form.jotform.com/jsform/261227631182048' + qs;
+    document.getElementById('formContainer').appendChild(script);
+
   } catch (e) {
-    document.getElementById('msg').innerHTML =
-      'Something went wrong with this link.<br><a href="https://craystartravelagency.com/">Return to Craystar Travel</a>';
+    document.getElementById('formContainer').style.display = 'none';
+    var err = document.getElementById('errorContainer');
+    err.style.display = 'flex';
+    err.classList.remove('hidden');
   }
 })();
 </script>
