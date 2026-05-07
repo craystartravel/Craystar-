@@ -1569,8 +1569,8 @@ function buildReminderTemplate(c, b, balance, daysOut) {
   else if (daysOut <= 7) subject = `Final payment due in 1 week — ${supplier}`;
   else subject = `Friendly reminder: final payment for ${supplier} coming up`;
 
-  const paymentUrl = (typeof makeShortLink === 'function' && typeof buildCCAuthURL === 'function')
-    ? makeShortLink(buildCCAuthURL(c, balance, supplier + ' final payment'))
+  const paymentUrl = (typeof makeShortLink === 'function')
+    ? makeShortLink(c)
     : '';
 
   const body = [
@@ -1627,8 +1627,8 @@ function textReminder(clientId, bookingId) {
   const supplier = b.supplier || c.destination || 'your trip';
   const d = new Date(b.finalDueDate + 'T00:00:00');
   const monthDay = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  const paymentUrl = (typeof makeShortLink === 'function' && typeof buildCCAuthURL === 'function')
-    ? makeShortLink(buildCCAuthURL(c, balance, supplier + ' final payment'))
+  const paymentUrl = (typeof makeShortLink === 'function')
+    ? makeShortLink(c)
     : '';
   const dueLabel = daysOut <= 1 ? 'tomorrow' : daysOut <= 3 ? 'this ' + d.toLocaleDateString('en-US', { weekday: 'long' }) : 'on ' + monthDay;
   const body = `Hi ${c.first || ''}, friendly reminder — final payment for ${supplier} (${fmtMoney(balance)}) is due ${dueLabel}. Pay here: ${paymentUrl} Or call me at 417-771-0910. — Eric @ Craystar Travel`;
@@ -2719,23 +2719,22 @@ function openCCAuthModal(clientId) {
     document.getElementById(id).onchange = updateCCLink;
   });
 }
-// LINK SHORTENING — self-hosted via /p redirector
+// LINK SHORTENING — self-hosted via /auth redirector
 // No external API, no network call, no failure modes — instant and deterministic.
-// The redirector page at https://craystartravelagency.com/p decodes ?k= and redirects.
-const SHORTENER_BASE = 'https://craystartravelagency.com/p';
+// The redirector page at /auth reads short params (f, l, e, p) and builds the Jotform URL.
+const SHORTENER_BASE = 'https://craystartravelagency.com/auth';
 
-function encodeForShortLink(longUrl) {
-  // base64url encoding (URL-safe: + → -, / → _, no padding)
-  // unescape(encodeURIComponent(...)) is the standard browser-safe pattern for handling Unicode
-  const utf8 = unescape(encodeURIComponent(longUrl));
-  let b64 = btoa(utf8);
-  // Convert to URL-safe variant
-  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-
-function makeShortLink(longUrl) {
-  const encoded = encodeForShortLink(longUrl);
-  return SHORTENER_BASE + '?k=' + encoded;
+function makeShortLink(client) {
+  const params = [];
+  const enc = encodeURIComponent;
+  if (client.first) params.push('f=' + enc(client.first));
+  if (client.last)  params.push('l=' + enc(client.last));
+  if (client.email) params.push('e=' + enc(client.email));
+  if (client.phone) {
+    const digits = String(client.phone).replace(/\D/g, '');
+    params.push('p=' + enc(digits));
+  }
+  return SHORTENER_BASE + (params.length ? '?' + params.join('&') : '');
 }
 
 function updateCCLink() {
@@ -2746,7 +2745,7 @@ function updateCCLink() {
   const type = document.getElementById('ccAuthType').value;
   if (desc && !desc.toLowerCase().includes(type.toLowerCase())) desc = `${type}: ${desc}`;
   const longUrl = buildCCAuthURL(c, amount, desc);
-  const shortUrl = makeShortLink(longUrl);
+  const shortUrl = makeShortLink(c);
 
   const linkEl = document.getElementById('ccAuthLink');
   const statusEl = document.getElementById('ccLinkStatus');
@@ -2760,7 +2759,7 @@ function updateCCLink() {
   if (statusEl) {
     statusEl.textContent = '✓ branded link';
     statusEl.style.color = 'var(--success, #16a34a)';
-    statusEl.title = 'Self-hosted at craystartravelagency.com/p — no third-party shortener';
+    statusEl.title = 'Self-hosted at craystartravelagency.com/auth — no third-party shortener';
   }
 }
 function copyCCLink() {
