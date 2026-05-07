@@ -30,14 +30,29 @@
 
     if (!first && !last && !email && !phone) throw new Error('missing');
 
-    var base = 'https://form.jotform.com/261227631182048';
-    var q = new URLSearchParams();
-    if (first) q.set('q2_q2_fullname0[first]', first);
-    if (last)  q.set('q2_q2_fullname0[last]', last);
-    if (email) q.set('q3_q3_email1', email);
-    if (phone) q.set('q4_q4_phone2[full]', phone);
+    // Format phone to match Jotform expected format: (XXX) XXX-XXXX
+    var digits = phone.replace(/\D/g, '');
+    var formattedPhone = phone;
+    if (digits.length === 10) {
+      formattedPhone = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+    }
 
-    window.location.replace(base + '?' + q.toString());
+    // Build URL using manual param encoding — same method the CRM portal uses.
+    // Jotform expects bracket-encoded subfield params like:
+    //   q2_q2_fullname0%5Bfirst%5D=Jane
+    // Using URLSearchParams would double-encode the %5B brackets, so we build manually.
+    var base = 'https://form.jotform.com/261227631182048';
+    var enc = encodeURIComponent;
+    var parts = [];
+
+    if (first) parts.push('q2_q2_fullname0%5Bfirst%5D=' + enc(first));
+    if (last)  parts.push('q2_q2_fullname0%5Blast%5D=' + enc(last));
+    if (email) parts.push('q3_q3_email1=' + enc(email));
+    if (formattedPhone) parts.push('q4_q4_phone2%5Bfull%5D=' + enc(formattedPhone));
+
+    var url = base + (parts.length ? '?' + parts.join('&') : '');
+
+    window.location.replace(url);
   } catch (e) {
     document.getElementById('msg').innerHTML =
       'Something went wrong with this link.<br><a href="https://craystartravelagency.com/">Return to Craystar Travel</a>';
