@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Secure Payment | Craystar Travel Agency</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Open Sans', Helvetica, Arial, sans-serif; background: #0a1f44; color: #fff; min-height: 100vh; }
+  .header { text-align: center; padding: 1.5rem 1rem .5rem; }
+  .header img { width: 120px; height: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,.3)); }
+  .form-wrap { max-width: 700px; margin: 0 auto; padding: 0 1rem 2rem; }
+  .error { display: flex; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
+  .error p { font-size: 1rem; line-height: 1.5; opacity: .85; }
+  .error a { color: #d4af37; }
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="https://craystartravelagency.com/">
+    <img src="https://craystartravelagency.com/logo.webp" alt="Craystar Travel Agency">
+  </a>
+</div>
+<div class="form-wrap" id="formContainer"></div>
+<div class="error hidden" id="errorContainer">
+  <p>Something went wrong with this link.<br><a href="https://craystartravelagency.com/">Return to Craystar Travel</a></p>
+</div>
+<script>
+(function () {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var first = params.get('f') || '';
+    var last  = params.get('l') || '';
+    var email = params.get('e') || '';
+    var phone = params.get('p') || '';
+
+    if (!first && !last && !email && !phone) throw new Error('missing');
+
+    // Format phone: (XXX) XXX-XXXX
+    var digits = phone.replace(/\D/g, '');
+    var formattedPhone = phone;
+    if (digits.length === 10) {
+      formattedPhone = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+    }
+
+    // Build prefill query params using pre-encoded brackets (same as portal)
+    var enc = encodeURIComponent;
+    var parts = [];
+    if (first) parts.push('q2_q2_fullname0%5Bfirst%5D=' + enc(first));
+    if (last)  parts.push('q2_q2_fullname0%5Blast%5D=' + enc(last));
+    if (email) parts.push('q3_q3_email1=' + enc(email));
+    if (formattedPhone) parts.push('q4_q4_phone2%5Bfull%5D=' + enc(formattedPhone));
+
+    var qs = parts.length ? '?' + parts.join('&') : '';
+
+    // Inject the Jotform embed script with prefill params
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://form.jotform.com/jsform/261227631182048' + qs;
+    document.getElementById('formContainer').appendChild(script);
+
+  } catch (e) {
+    document.getElementById('formContainer').style.display = 'none';
+    var err = document.getElementById('errorContainer');
+    err.style.display = 'flex';
+    err.classList.remove('hidden');
+  }
+})();
+</script>
+</body>
+</html>
