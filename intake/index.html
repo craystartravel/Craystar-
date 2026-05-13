@@ -10,885 +10,1106 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/webp" href="logo.webp">
 <style>
-  :root {
-    --navy: #0A2540;
-    --navy-dark: #061829;
-    --gold: #C9A961;
-    --gold-soft: #E5D5A8;
-    --teal: #2A6F6B;
-    --cream: #FAF7F0;
-    --cream-warm: #F4EFE3;
-    --ink: #1a1a1a;
-    --muted: #6b6b6b;
-    --line: #e5dfd0;
-    --shadow: 0 4px 24px rgba(10, 37, 64, 0.08);
-    --radius: 4px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    line-height: 1.6;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Hero */
-  .hero {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-    color: var(--cream);
-    padding: 4rem 1.5rem 5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(42, 111, 107, 0.12) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
-
-  .hero-logo {
-    display: block;
-    max-width: 180px;
-    width: 100%;
-    height: auto;
-    margin: 0 auto 1.5rem;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
-  }
-
-  @media (min-width: 600px) {
-    .hero-logo { max-width: 220px; }
-  }
-
-  .eyebrow {
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-
-  h1 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(2rem, 6vw, 3.25rem);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    margin-bottom: 1rem;
-  }
-
-  h1 em { color: var(--gold); font-style: italic; }
-
-  .hero p {
-    font-size: 1.0625rem;
-    color: rgba(250, 247, 240, 0.85);
-    max-width: 540px;
-    margin: 0 auto;
-  }
-
-  .badges {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 2rem;
-    flex-wrap: wrap;
-    font-size: 0.8125rem;
-    color: var(--gold-soft);
-  }
-
-  .badges span { display: flex; align-items: center; gap: 0.4rem; }
-  .badges svg { width: 14px; height: 14px; stroke: var(--gold); }
-
-  /* Form container */
-  .form-wrap {
-    max-width: 720px;
-    margin: -2.5rem auto 4rem;
-    padding: 0 1rem;
-    position: relative;
-  }
-
-  form {
-    background: #fff;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border-top: 3px solid var(--gold);
-    padding: 2.5rem 1.75rem;
-  }
-
-  .section { margin-bottom: 2.25rem; }
-  .section:last-of-type { margin-bottom: 1rem; }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.25rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-  }
-
-  .section-title::before {
-    content: counter(section, decimal-leading-zero);
-    counter-increment: section;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    font-weight: 500;
-  }
-
-  form { counter-reset: section; }
-
-  .section-sub {
-    font-size: 0.875rem;
-    color: var(--muted);
-    margin-bottom: 1.25rem;
-  }
-
-  /* Inputs */
-  .field { margin-bottom: 1.125rem; }
-  .field-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.125rem;
-    margin-bottom: 1.125rem;
-  }
-  @media (min-width: 600px) {
-    .field-row.two { grid-template-columns: 1fr 1fr; }
-    .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
-  }
-
-  label {
-    display: block;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--navy);
-    margin-bottom: 0.4rem;
-    letter-spacing: 0.01em;
-  }
-
-  label .req { color: #b8390a; margin-left: 2px; }
-
-  input[type="text"], input[type="email"], input[type="tel"], input[type="date"],
-  input[type="number"], select, textarea {
-    width: 100%;
-    padding: 0.75rem 0.875rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    font-family: inherit;
-    font-size: 1rem;
-    background: var(--cream);
-    color: var(--ink);
-    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
-  }
-
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--gold);
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.15);
-  }
-
-  textarea { resize: vertical; min-height: 100px; font-family: inherit; }
-
-  /* Trip type chips */
-  .chips {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.625rem;
-  }
-  @media (min-width: 600px) { .chips { grid-template-columns: repeat(3, 1fr); } }
-
-  .chip {
-    position: relative;
-    cursor: pointer;
-    padding: 0.875rem 0.75rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--cream);
-    text-align: center;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--navy);
-    transition: all 0.15s;
-  }
-
-  .chip:hover { border-color: var(--gold); background: #fff; }
-
-  .chip input { position: absolute; opacity: 0; pointer-events: none; }
-
-  .chip:has(input:checked) {
-    border-color: var(--navy);
-    background: var(--navy);
-    color: var(--cream);
-    box-shadow: 0 2px 8px rgba(10, 37, 64, 0.18);
-  }
-
-  .chip-icon { display: block; font-size: 1.25rem; margin-bottom: 0.25rem; }
-
-  /* Date mode toggle */
-  .date-toggle {
-    display: flex;
-    gap: 0;
-    margin-bottom: 1rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--cream);
-  }
-
-  .date-tab {
-    flex: 1;
-    padding: 0.75rem 0.5rem;
-    background: transparent;
-    border: none;
-    font-family: inherit;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .date-tab:hover { color: var(--navy); }
-
-  .date-tab.active {
-    background: var(--navy);
-    color: var(--cream);
-  }
-
-  .date-pane { display: none; animation: fadeIn 0.25s ease-out; }
-  .date-pane.active { display: block; }
-
-  /* Conditional sections */
-  .conditional { display: none; padding-top: 1rem; border-top: 1px dashed var(--line); margin-top: 1rem; }
-  .conditional.active { display: block; animation: fadeIn 0.3s ease-out; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Checkbox grid */
-  .check-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-  @media (min-width: 600px) { .check-grid { grid-template-columns: 1fr 1fr; } }
-
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.625rem 0.75rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-size: 0.875rem;
-    background: var(--cream);
-    transition: all 0.15s;
-  }
-
-  .check-item:hover { border-color: var(--gold); }
-
-  .check-item input { width: 16px; height: 16px; accent-color: var(--navy); }
-
-  .check-item:has(input:checked) {
-    background: #fff;
-    border-color: var(--navy);
-    color: var(--navy);
-    font-weight: 500;
-  }
-
-  /* Submit */
-  .submit-row {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--line);
-  }
-
-  button[type="submit"] {
-    width: 100%;
-    padding: 1.125rem 1.5rem;
-    background: var(--navy);
-    color: var(--cream);
-    border: none;
-    border-radius: var(--radius);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-  }
-
-  button[type="submit"]:hover:not(:disabled) {
-    background: var(--navy-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(10, 37, 64, 0.2);
-  }
-
-  button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  .fine-print {
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 1rem;
-  }
-
-  /* Success state */
-  .success-state {
-    display: none;
-    text-align: center;
-    padding: 3rem 1.5rem;
-  }
-
-  .success-state.show { display: block; animation: fadeIn 0.4s ease-out; }
-  .form-content.hide { display: none; }
-
-  .success-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 1.5rem;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 2rem;
-  }
-
-  .success-state h2 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 2rem;
-    color: var(--navy);
-    margin-bottom: 0.75rem;
-  }
-
-  .success-state p { color: var(--muted); max-width: 420px; margin: 0 auto 1.5rem; }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    color: var(--muted);
-    font-size: 0.8125rem;
-    border-top: 1px solid var(--line);
-    background: var(--cream-warm);
-  }
-
-  footer a { color: var(--navy); text-decoration: none; font-weight: 500; }
-  footer a:hover { color: var(--gold); }
-
-  .agent-link {
-    margin-top: 1.25rem;
-    font-size: 0.7rem;
-    opacity: 0.55;
-    transition: opacity 0.2s;
-  }
-  .agent-link:hover { opacity: 1; }
-  .agent-link a { color: var(--muted); font-weight: 400; }
-
-  .error-msg {
-    background: #fdf2ef;
-    border: 1px solid #f4c4b8;
-    color: #b8390a;
-    padding: 0.875rem 1rem;
-    border-radius: var(--radius);
-    font-size: 0.875rem;
-    margin-top: 1rem;
-    display: none;
-  }
-  .error-msg.show { display: block; }
+:root {
+--navy: #0A2540;
+--navy-dark: #061829;
+--gold: #C9A961;
+--gold-soft: #E5D5A8;
+--teal: #2A6F6B;
+--cream: #FAF7F0;
+--cream-warm: #F4EFE3;
+--ink: #1a1a1a;
+--muted: #6b6b6b;
+--line: #e5dfd0;
+--shadow: 0 4px 24px rgba(10, 37, 64, 0.08);
+--radius: 4px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+font-family: 'Inter', -apple-system, sans-serif;
+background: var(--cream);
+color: var(--ink);
+line-height: 1.6;
+font-size: 16px;
+-webkit-font-smoothing: antialiased;
+}
+.hero {
+background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+color: var(--cream);
+padding: 4rem 1.5rem 5rem;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+.hero::before {
+content: '';
+position: absolute;
+inset: 0;
+background-image:
+radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.15) 0%, transparent 50%),
+radial-gradient(circle at 80% 70%, rgba(42, 111, 107, 0.12) 0%, transparent 50%);
+pointer-events: none;
+}
+.hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+.hero-logo {
+display: block;
+max-width: 180px;
+width: 100%;
+height: auto;
+margin: 0 auto 1.5rem;
+filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+}
+@media (min-width: 600px) { .hero-logo { max-width: 220px; } }
+.eyebrow {
+font-size: 0.75rem;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(--gold);
+margin-bottom: 1rem;
+font-weight: 500;
+}
+h1 {
+font-family: 'Cormorant Garamond', Georgia, serif;
+font-size: clamp(2rem, 6vw, 3.25rem);
+font-weight: 500;
+line-height: 1.15;
+letter-spacing: -0.01em;
+margin-bottom: 1rem;
+}
+h1 em { color: var(--gold); font-style: italic; }
+.hero p {
+font-size: 1.0625rem;
+color: rgba(250, 247, 240, 0.85);
+max-width: 540px;
+margin: 0 auto;
+}
+.badges {
+display: flex;
+justify-content: center;
+gap: 1.5rem;
+margin-top: 2rem;
+flex-wrap: wrap;
+font-size: 0.8125rem;
+color: var(--gold-soft);
+}
+.badges span { display: flex; align-items: center; gap: 0.4rem; }
+.badges svg { width: 14px; height: 14px; stroke: var(--gold); }
+.form-wrap {
+max-width: 720px;
+margin: -2.5rem auto 4rem;
+padding: 0 1rem;
+position: relative;
+}
+form {
+background: #fff;
+border-radius: var(--radius);
+box-shadow: var(--shadow);
+border-top: 3px solid var(--gold);
+padding: 2.5rem 1.75rem;
+}
+.section { margin-bottom: 2.25rem; }
+.section:last-of-type { margin-bottom: 1rem; }
+.section-title {
+font-family: 'Cormorant Garamond', Georgia, serif;
+font-size: 1.5rem;
+font-weight: 600;
+color: var(--navy);
+margin-bottom: 0.25rem;
+display: flex;
+align-items: baseline;
+gap: 0.6rem;
+}
+.section-title::before {
+content: counter(section, decimal-leading-zero);
+counter-increment: section;
+font-family: 'Inter', sans-serif;
+font-size: 0.75rem;
+color: var(--gold);
+letter-spacing: 0.1em;
+font-weight: 500;
+}
+form { counter-reset: section; }
+.section-sub {
+font-size: 0.875rem;
+color: var(--muted);
+margin-bottom: 1.25rem;
+}
+.field { margin-bottom: 1.125rem; }
+.field-row {
+display: grid;
+grid-template-columns: 1fr;
+gap: 1.125rem;
+margin-bottom: 1.125rem;
+}
+@media (min-width: 600px) {
+.field-row.two { grid-template-columns: 1fr 1fr; }
+.field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+}
+label {
+display: block;
+font-size: 0.8125rem;
+font-weight: 500;
+color: var(--navy);
+margin-bottom: 0.4rem;
+letter-spacing: 0.01em;
+}
+label .req { color: #b8390a; margin-left: 2px; }
+input[type="text"], input[type="email"], input[type="tel"], input[type="date"],
+input[type="number"], select, textarea {
+width: 100%;
+padding: 0.75rem 0.875rem;
+border: 1px solid var(--line);
+border-radius: var(--radius);
+font-family: inherit;
+font-size: 1rem;
+background: var(--cream);
+color: var(--ink);
+transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+input:focus, select:focus, textarea:focus {
+outline: none;
+border-color: var(--gold);
+background: #fff;
+box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.15);
+}
+textarea { resize: vertical; min-height: 100px; font-family: inherit; }
+.chips {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 0.625rem;
+}
+@media (min-width: 600px) { .chips { grid-template-columns: repeat(3, 1fr); } }
+.chip {
+position: relative;
+cursor: pointer;
+padding: 0.875rem 0.75rem;
+border: 1px solid var(--line);
+border-radius: var(--radius);
+background: var(--cream);
+text-align: center;
+font-size: 0.875rem;
+font-weight: 500;
+color: var(--navy);
+transition: all 0.15s;
+}
+.chip:hover { border-color: var(--gold); background: #fff; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:has(input:checked) {
+border-color: var(--navy);
+background: var(--navy);
+color: var(--cream);
+box-shadow: 0 2px 8px rgba(10, 37, 64, 0.18);
+}
+.chip-icon { display: block; font-size: 1.25rem; margin-bottom: 0.25rem; }
+.date-toggle {
+display: flex;
+gap: 0;
+margin-bottom: 1rem;
+border: 1px solid var(--line);
+border-radius: var(--radius);
+overflow: hidden;
+background: var(--cream);
+}
+.date-tab {
+flex: 1;
+padding: 0.75rem 0.5rem;
+background: transparent;
+border: none;
+font-family: inherit;
+font-size: 0.875rem;
+font-weight: 500;
+color: var(--muted);
+cursor: pointer;
+transition: all 0.15s;
+}
+.date-tab:hover { color: var(--navy); }
+.date-tab.active { background: var(--navy); color: var(--cream); }
+.date-pane { display: none; animation: fadeIn 0.25s ease-out; }
+.date-pane.active { display: block; }
+.conditional { display: none; padding-top: 1rem; border-top: 1px dashed var(--line); margin-top: 1rem; }
+.conditional.active { display: block; animation: fadeIn 0.3s ease-out; }
+.nested-cond { display: none; }
+.nested-cond.active { display: block; animation: fadeIn 0.25s ease-out; }
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(-4px); }
+to { opacity: 1; transform: translateY(0); }
+}
+/* Traveler-names block */
+.travelers-block {
+margin-top: 0.5rem;
+padding: 1rem 1rem 0.5rem;
+background: var(--cream-warm);
+border-radius: var(--radius);
+border-left: 3px solid var(--gold);
+animation: fadeIn 0.25s ease-out;
+}
+.travelers-heading {
+font-size: 0.875rem;
+font-weight: 600;
+color: var(--navy);
+margin-bottom: 0.25rem;
+}
+.travelers-sub {
+font-size: 0.75rem;
+color: var(--muted);
+margin-bottom: 0.875rem;
+}
+.travelers-group { margin-bottom: 0.75rem; }
+.travelers-group:last-child { margin-bottom: 0.25rem; }
+.travelers-group-label {
+font-size: 0.7rem;
+font-weight: 600;
+color: var(--gold);
+text-transform: uppercase;
+letter-spacing: 0.12em;
+margin-bottom: 0.5rem;
+}
+.adult-row {
+margin-bottom: 0.625rem;
+animation: fadeIn 0.2s ease-out;
+}
+.adult-row label,
+.child-row label {
+font-size: 0.7rem;
+margin-bottom: 0.25rem;
+color: var(--muted);
+font-weight: 500;
+}
+.child-row {
+display: grid;
+grid-template-columns: 1fr;
+gap: 0.5rem;
+margin-bottom: 0.875rem;
+animation: fadeIn 0.2s ease-out;
+}
+@media (min-width: 600px) {
+.child-row { grid-template-columns: 1fr 170px; gap: 0.625rem; }
+}
+.travelers-block input { background: #fff; }
+.check-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 0.5rem;
+}
+@media (min-width: 600px) { .check-grid { grid-template-columns: 1fr 1fr; } }
+.check-item {
+display: flex;
+align-items: center;
+gap: 0.625rem;
+padding: 0.625rem 0.75rem;
+border: 1px solid var(--line);
+border-radius: var(--radius);
+cursor: pointer;
+font-size: 0.875rem;
+background: var(--cream);
+transition: all 0.15s;
+}
+.check-item:hover { border-color: var(--gold); }
+.check-item input { width: 16px; height: 16px; accent-color: var(--navy); }
+.check-item:has(input:checked) {
+background: #fff;
+border-color: var(--navy);
+color: var(--navy);
+font-weight: 500;
+}
+.submit-row {
+margin-top: 2rem;
+padding-top: 2rem;
+border-top: 1px solid var(--line);
+}
+button[type="submit"] {
+width: 100%;
+padding: 1.125rem 1.5rem;
+background: var(--navy);
+color: var(--cream);
+border: none;
+border-radius: var(--radius);
+font-family: 'Inter', sans-serif;
+font-size: 0.9375rem;
+font-weight: 600;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.2s;
+}
+button[type="submit"]:hover:not(:disabled) {
+background: var(--navy-dark);
+transform: translateY(-1px);
+box-shadow: 0 6px 20px rgba(10, 37, 64, 0.2);
+}
+button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+.fine-print {
+font-size: 0.75rem;
+color: var(--muted);
+text-align: center;
+margin-top: 1rem;
+}
+.success-state {
+display: none;
+text-align: center;
+padding: 3rem 1.5rem;
+}
+.success-state.show { display: block; animation: fadeIn 0.4s ease-out; }
+.form-content.hide { display: none; }
+.success-icon {
+width: 64px;
+height: 64px;
+margin: 0 auto 1.5rem;
+background: var(--gold);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #fff;
+font-size: 2rem;
+}
+.success-state h2 {
+font-family: 'Cormorant Garamond', Georgia, serif;
+font-size: 2rem;
+color: var(--navy);
+margin-bottom: 0.75rem;
+}
+.success-state p { color: var(--muted); max-width: 420px; margin: 0 auto 1.5rem; }
+footer {
+text-align: center;
+padding: 2rem 1.5rem;
+color: var(--muted);
+font-size: 0.8125rem;
+border-top: 1px solid var(--line);
+background: var(--cream-warm);
+}
+footer a { color: var(--navy); text-decoration: none; font-weight: 500; }
+footer a:hover { color: var(--gold); }
+.agent-link {
+margin-top: 1.25rem;
+font-size: 0.7rem;
+opacity: 0.55;
+transition: opacity 0.2s;
+}
+.agent-link:hover { opacity: 1; }
+.agent-link a { color: var(--muted); font-weight: 400; }
+.error-msg {
+background: #fdf2ef;
+border: 1px solid #f4c4b8;
+color: #b8390a;
+padding: 0.875rem 1rem;
+border-radius: var(--radius);
+font-size: 0.875rem;
+margin-top: 1rem;
+display: none;
+}
+.error-msg.show { display: block; }
 </style>
 </head>
 <body>
 
 <section class="hero">
-  <div class="hero-inner">
-    <img src="logo.webp" alt="Craystar Travel Agency" class="hero-logo" onerror="this.style.display='none'">
-    <p class="eyebrow">Craystar Travel Agency</p>
-    <h1>Tell us about your <em>dream trip</em></h1>
-    <p>Share a few details and we'll design a vacation that fits you perfectly. Our planning service is always free — we're paid by travel suppliers, never by you.</p>
-    <div class="badges">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free planning</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Disney, Universal & Cruise specialists</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Nationwide booking</span>
-    </div>
-  </div>
+<div class="hero-inner">
+<img src="logo.webp" alt="Craystar Travel Agency" class="hero-logo" onerror="this.style.display='none'">
+<p class="eyebrow">Craystar Travel Agency</p>
+<h1>Tell us about your <em>dream trip</em></h1>
+<p>Share a few details and we'll design a vacation that fits you perfectly. Our planning service is always free — we're paid by travel suppliers, never by you.</p>
+<div class="badges">
+<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free planning</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Disney, Universal & Cruise specialists</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Nationwide booking</span>
+</div>
+</div>
 </section>
 
 <div class="form-wrap">
-  <form id="intakeForm" novalidate>
-    <div class="form-content" id="formContent">
+<form id="intakeForm">
+<div class="form-content" id="formContent">
 
-      <!-- SECTION 1: CONTACT -->
-      <div class="section">
-        <h2 class="section-title">Let's connect</h2>
-        <p class="section-sub">So we can send you trip ideas and pricing.</p>
+<!-- SECTION 1: CONTACT -->
+<div class="section">
+<h2 class="section-title">Let's connect</h2>
+<p class="section-sub">So we can send you trip ideas and pricing.</p>
+<div class="field-row two">
+<div class="field">
+<label for="firstName">First name <span class="req">*</span></label>
+<input type="text" id="firstName" name="firstName" required autocomplete="given-name">
+</div>
+<div class="field">
+<label for="lastName">Last name <span class="req">*</span></label>
+<input type="text" id="lastName" name="lastName" required autocomplete="family-name">
+</div>
+</div>
+<div class="field-row two">
+<div class="field">
+<label for="email">Email <span class="req">*</span></label>
+<input type="email" id="email" name="email" required autocomplete="email">
+</div>
+<div class="field">
+<label for="phone">Phone <span class="req">*</span></label>
+<input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="(417) 555-0123">
+</div>
+</div>
+<div class="field">
+<label for="streetAddress">Street address <span class="req">*</span></label>
+<input type="text" id="streetAddress" name="streetAddress" required autocomplete="address-line1" placeholder="123 Main St">
+</div>
+<div class="field">
+<label for="addressLine2">Apt / Suite / Unit <span style="color:var(--muted); font-weight:400;">(optional)</span></label>
+<input type="text" id="addressLine2" name="addressLine2" autocomplete="address-line2" placeholder="Apt 4B">
+</div>
+<div class="field-row three">
+<div class="field">
+<label for="city">City <span class="req">*</span></label>
+<input type="text" id="city" name="city" required autocomplete="address-level2" placeholder="Springfield">
+</div>
+<div class="field">
+<label for="state">State <span class="req">*</span></label>
+<select id="state" name="state" required autocomplete="address-level1">
+<option value="">Select...</option>
+<option value="AL">Alabama</option>
+<option value="AK">Alaska</option>
+<option value="AZ">Arizona</option>
+<option value="AR">Arkansas</option>
+<option value="CA">California</option>
+<option value="CO">Colorado</option>
+<option value="CT">Connecticut</option>
+<option value="DE">Delaware</option>
+<option value="DC">District of Columbia</option>
+<option value="FL">Florida</option>
+<option value="GA">Georgia</option>
+<option value="HI">Hawaii</option>
+<option value="ID">Idaho</option>
+<option value="IL">Illinois</option>
+<option value="IN">Indiana</option>
+<option value="IA">Iowa</option>
+<option value="KS">Kansas</option>
+<option value="KY">Kentucky</option>
+<option value="LA">Louisiana</option>
+<option value="ME">Maine</option>
+<option value="MD">Maryland</option>
+<option value="MA">Massachusetts</option>
+<option value="MI">Michigan</option>
+<option value="MN">Minnesota</option>
+<option value="MS">Mississippi</option>
+<option value="MO">Missouri</option>
+<option value="MT">Montana</option>
+<option value="NE">Nebraska</option>
+<option value="NV">Nevada</option>
+<option value="NH">New Hampshire</option>
+<option value="NJ">New Jersey</option>
+<option value="NM">New Mexico</option>
+<option value="NY">New York</option>
+<option value="NC">North Carolina</option>
+<option value="ND">North Dakota</option>
+<option value="OH">Ohio</option>
+<option value="OK">Oklahoma</option>
+<option value="OR">Oregon</option>
+<option value="PA">Pennsylvania</option>
+<option value="RI">Rhode Island</option>
+<option value="SC">South Carolina</option>
+<option value="SD">South Dakota</option>
+<option value="TN">Tennessee</option>
+<option value="TX">Texas</option>
+<option value="UT">Utah</option>
+<option value="VT">Vermont</option>
+<option value="VA">Virginia</option>
+<option value="WA">Washington</option>
+<option value="WV">West Virginia</option>
+<option value="WI">Wisconsin</option>
+<option value="WY">Wyoming</option>
+<option value="PR">Puerto Rico</option>
+<option value="VI">U.S. Virgin Islands</option>
+<option value="GU">Guam</option>
+<option value="Other">Outside US</option>
+</select>
+</div>
+<div class="field">
+<label for="zip">ZIP / Postal <span class="req">*</span></label>
+<input type="text" id="zip" name="zip" required autocomplete="postal-code" placeholder="65801" inputmode="numeric">
+</div>
+</div>
+</div>
 
-        <div class="field-row two">
-          <div class="field">
-            <label for="firstName">First name <span class="req">*</span></label>
-            <input type="text" id="firstName" name="firstName" required autocomplete="given-name">
-          </div>
-          <div class="field">
-            <label for="lastName">Last name <span class="req">*</span></label>
-            <input type="text" id="lastName" name="lastName" required autocomplete="family-name">
-          </div>
-        </div>
+<!-- SECTION 2: TRIP TYPE -->
+<div class="section">
+<h2 class="section-title">What kind of trip?</h2>
+<p class="section-sub">Pick the closest match — we book it all. <span class="req">*</span></p>
+<div class="chips" role="radiogroup">
+<label class="chip"><input type="radio" name="tripType" value="Disney" required><span class="chip-icon">🏰</span>Disney</label>
+<label class="chip"><input type="radio" name="tripType" value="Universal"><span class="chip-icon">🎢</span>Universal</label>
+<label class="chip"><input type="radio" name="tripType" value="Cruise"><span class="chip-icon">🚢</span>Cruise</label>
+<label class="chip"><input type="radio" name="tripType" value="All-Inclusive Resort"><span class="chip-icon">🏝️</span>All-Inclusive</label>
+<label class="chip"><input type="radio" name="tripType" value="Other"><span class="chip-icon">✈️</span>Other / Not Sure</label>
+<label class="chip"><input type="radio" name="tripType" value="Multi-destination"><span class="chip-icon">🌍</span>Multi-stop</label>
+</div>
 
-        <div class="field-row two">
-          <div class="field">
-            <label for="email">Email <span class="req">*</span></label>
-            <input type="email" id="email" name="email" required autocomplete="email">
-          </div>
-          <div class="field">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(417) 555-0123">
-          </div>
-        </div>
+<!-- Disney destination + hotel category -->
+<div class="conditional" data-show="Disney">
+<div class="field">
+<label for="disneyDestination">Which Disney destination?</label>
+<select id="disneyDestination" name="disneyDestination">
+<option value="">Select...</option>
+<option>Walt Disney World (Florida)</option>
+<option>Disneyland (California)</option>
+<option>Not sure / open to suggestions</option>
+</select>
+</div>
+<div class="nested-cond" data-disney-show="Walt Disney World (Florida)">
+<div class="field">
+<label for="wdwHotelCategory">Preferred hotel category (Walt Disney World)</label>
+<select id="wdwHotelCategory" name="wdwHotelCategory">
+<option value="">No preference / open to suggestions</option>
+<option>Value Resort (All-Star, Pop Century, Art of Animation)</option>
+<option>Moderate Resort (Caribbean Beach, Coronado Springs, Port Orleans)</option>
+<option>Deluxe Resort (Grand Floridian, Polynesian, Contemporary, etc.)</option>
+<option>Deluxe Villa / DVC (Bay Lake Tower, Riviera, Saratoga Springs, etc.)</option>
+<option>Offsite hotel</option>
+<option>Not sure / need a recommendation</option>
+</select>
+</div>
+</div>
+<div class="nested-cond" data-disney-show="Disneyland (California)">
+<div class="field">
+<label for="dlHotelCategory">Preferred hotel (Disneyland)</label>
+<select id="dlHotelCategory" name="dlHotelCategory">
+<option value="">No preference / open to suggestions</option>
+<option>Disneyland Hotel</option>
+<option>Disney's Grand Californian Hotel &amp; Spa</option>
+<option>Pixar Place Hotel</option>
+<option>Good Neighbor Hotel (Disney-partner offsite)</option>
+<option>Other offsite hotel</option>
+<option>Not sure / need a recommendation</option>
+</select>
+</div>
+</div>
+</div>
 
-        <div class="field">
-          <label for="city">City & State</label>
-          <input type="text" id="city" name="city" placeholder="Springfield, MO">
-        </div>
-      </div>
+<!-- Universal destination + hotel category -->
+<div class="conditional" data-show="Universal">
+<div class="field">
+<label for="universalDestination">Which Universal?</label>
+<select id="universalDestination" name="universalDestination">
+<option value="">Select...</option>
+<option>Universal Orlando (Florida)</option>
+<option>Universal Hollywood (California)</option>
+<option>Not sure / open to suggestions</option>
+</select>
+</div>
+<div class="nested-cond" data-universal-show="Universal Orlando (Florida)">
+<div class="field">
+<label for="uoHotelCategory">Preferred hotel category (Universal Orlando)</label>
+<select id="uoHotelCategory" name="uoHotelCategory">
+<option value="">No preference / open to suggestions</option>
+<option>Premier — Express Unlimited included (Portofino Bay, Hard Rock, Royal Pacific)</option>
+<option>Preferred (Sapphire Falls, Aventura, Helios Grand at Epic Universe)</option>
+<option>Prime Value (Cabana Bay, Dockside, Surfside)</option>
+<option>Epic Universe Value (Stella Nova, Terra Luna)</option>
+<option>Offsite hotel</option>
+<option>Not sure / need a recommendation</option>
+</select>
+</div>
+</div>
+<div class="nested-cond" data-universal-show="Universal Hollywood (California)">
+<div class="field">
+<label for="uhHotelCategory">Preferred hotel (Universal Hollywood)</label>
+<select id="uhHotelCategory" name="uhHotelCategory">
+<option value="">No preference / open to suggestions</option>
+<option>Universal Partner Hotel (Hilton Universal City, Sheraton Universal, etc.)</option>
+<option>Other offsite hotel</option>
+<option>Not sure / need a recommendation</option>
+</select>
+</div>
+</div>
+</div>
 
-      <!-- SECTION 2: TRIP TYPE -->
-      <div class="section">
-        <h2 class="section-title">What kind of trip?</h2>
-        <p class="section-sub">Pick the closest match — we book it all.</p>
+<!-- Cruise -->
+<div class="conditional" data-show="Cruise">
+<div class="field-row two">
+<div class="field">
+<label for="cruiseLine">Preferred cruise line</label>
+<select id="cruiseLine" name="cruiseLine">
+<option value="">No preference</option>
+<option>Royal Caribbean</option>
+<option>Carnival</option>
+<option>Norwegian</option>
+<option>Celebrity</option>
+<option>Princess</option>
+<option>Disney Cruise Line</option>
+<option>Viking</option>
+<option>MSC</option>
+<option>Other / Not sure</option>
+</select>
+</div>
+<div class="field">
+<label for="cruiseRegion">Region of interest</label>
+<select id="cruiseRegion" name="cruiseRegion">
+<option value="">No preference</option>
+<option>Caribbean</option>
+<option>Bahamas</option>
+<option>Mexico / Western Caribbean</option>
+<option>Alaska</option>
+<option>Mediterranean / Europe</option>
+<option>Hawaii</option>
+<option>Other</option>
+</select>
+</div>
+</div>
+</div>
 
-        <div class="chips" role="radiogroup">
-          <label class="chip"><input type="radio" name="tripType" value="Disney" required><span class="chip-icon">🏰</span>Disney</label>
-          <label class="chip"><input type="radio" name="tripType" value="Universal"><span class="chip-icon">🎢</span>Universal</label>
-          <label class="chip"><input type="radio" name="tripType" value="Cruise"><span class="chip-icon">🚢</span>Cruise</label>
-          <label class="chip"><input type="radio" name="tripType" value="All-Inclusive Resort"><span class="chip-icon">🏝️</span>All-Inclusive</label>
-          <label class="chip"><input type="radio" name="tripType" value="Other"><span class="chip-icon">✈️</span>Other / Not Sure</label>
-          <label class="chip"><input type="radio" name="tripType" value="Multi-destination"><span class="chip-icon">🌍</span>Multi-stop</label>
-        </div>
+<!-- All-Inclusive Resort -->
+<div class="conditional" data-show="All-Inclusive Resort">
+<div class="field">
+<label for="resortBrand">Brand preference (optional)</label>
+<select id="resortBrand" name="resortBrand">
+<option value="">No preference / Open to suggestions</option>
+<option>Sandals (couples)</option>
+<option>Beaches (family)</option>
+<option>Hyatt Inclusive Collection</option>
+<option>Riu</option>
+<option>Club Med</option>
+<option>Other</option>
+</select>
+</div>
+</div>
 
-        <!-- Cruise-specific -->
-        <div class="conditional" data-show="Cruise">
-          <div class="field-row two">
-            <div class="field">
-              <label for="cruiseLine">Preferred cruise line</label>
-              <select id="cruiseLine" name="cruiseLine">
-                <option value="">No preference</option>
-                <option>Royal Caribbean</option>
-                <option>Carnival</option>
-                <option>Norwegian</option>
-                <option>Celebrity</option>
-                <option>Princess</option>
-                <option>Disney Cruise Line</option>
-                <option>Viking</option>
-                <option>MSC</option>
-                <option>Other / Not sure</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="cruiseRegion">Region of interest</label>
-              <select id="cruiseRegion" name="cruiseRegion">
-                <option value="">No preference</option>
-                <option>Caribbean</option>
-                <option>Bahamas</option>
-                <option>Mexico / Western Caribbean</option>
-                <option>Alaska</option>
-                <option>Mediterranean / Europe</option>
-                <option>Hawaii</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-        </div>
+<div class="field" style="margin-top: 1rem;">
+<label for="destination">Destination or specific resort (if known)</label>
+<input type="text" id="destination" name="destination" placeholder="e.g. Walt Disney World, Royal Caribbean Bahamas, or 'open to ideas'">
+</div>
+</div>
 
-        <!-- Resort-specific -->
-        <div class="conditional" data-show="All-Inclusive Resort">
-          <div class="field">
-            <label for="resortBrand">Brand preference (optional)</label>
-            <select id="resortBrand" name="resortBrand">
-              <option value="">No preference / Open to suggestions</option>
-              <option>Sandals (couples)</option>
-              <option>Beaches (family)</option>
-              <option>Hyatt Inclusive Collection</option>
-              <option>Riu</option>
-              <option>Club Med</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
+<!-- SECTION 3: WHEN & WHO -->
+<div class="section">
+<h2 class="section-title">When & who's traveling</h2>
+<p class="section-sub">Approximate is fine — we'll firm it up later.</p>
+<div class="date-toggle" role="tablist">
+<button type="button" class="date-tab active" data-mode="approximate" role="tab">Approximate / flexible</button>
+<button type="button" class="date-tab" data-mode="specific" role="tab">I have specific dates</button>
+</div>
+<div class="date-pane active" data-pane="approximate">
+<div class="field-row two">
+<div class="field">
+<label for="travelMonth">Target travel month <span class="req">*</span></label>
+<input type="text" id="travelMonth" name="travelMonth" required placeholder="e.g. June 2026 or 'flexible'">
+</div>
+<div class="field">
+<label for="dateFlex">How flexible?</label>
+<select id="dateFlex" name="dateFlex">
+<option value="">Select...</option>
+<option>Locked to that month</option>
+<option>+/- 2 weeks</option>
+<option>+/- 1 month</option>
+<option>Anytime that season</option>
+<option>Wide open — show me deals</option>
+</select>
+</div>
+</div>
+</div>
+<div class="date-pane" data-pane="specific">
+<div class="field-row two">
+<div class="field">
+<label for="startDate">Departure date <span class="req">*</span></label>
+<input type="date" id="startDate" name="startDate" required>
+</div>
+<div class="field">
+<label for="endDate">Return date</label>
+<input type="date" id="endDate" name="endDate">
+</div>
+</div>
+</div>
+<div class="field">
+<label for="duration">Trip length</label>
+<select id="duration" name="duration">
+<option value="">Select...</option>
+<option>Long weekend (3-4 nights)</option>
+<option>About a week (5-7 nights)</option>
+<option>10-14 nights</option>
+<option>Two weeks or more</option>
+<option>Not sure yet</option>
+</select>
+</div>
+<div class="field-row three">
+<div class="field">
+<label for="adults">Adults <span class="req">*</span></label>
+<input type="number" id="adults" name="adults" min="1" max="20" value="2" required>
+</div>
+<div class="field">
+<label for="children">Children</label>
+<input type="number" id="children" name="children" min="0" max="20" value="0">
+</div>
+<div class="field">
+<label for="rooms">Rooms / cabins</label>
+<input type="number" id="rooms" name="rooms" min="1" max="10" value="1">
+</div>
+</div>
 
-        <!-- Disney/Universal/Other destination text -->
-        <div class="field" style="margin-top: 1rem;">
-          <label for="destination">Destination or specific resort (if known)</label>
-          <input type="text" id="destination" name="destination" placeholder="e.g. Walt Disney World, Royal Caribbean Bahamas, or 'open to ideas'">
-        </div>
-      </div>
+<!-- TRAVELER NAMES — dynamic, tied to counts above -->
+<div class="travelers-block" id="travelersBlock" style="display:none;">
+<p class="travelers-heading">Traveler names <span class="req">*</span></p>
+<p class="travelers-sub">Required so we can book flights, rooms, and park tickets under the correct names. Use names exactly as they appear on photo ID.</p>
 
-      <!-- SECTION 3: WHEN & WHO -->
-      <div class="section">
-        <h2 class="section-title">When & who's traveling</h2>
-        <p class="section-sub">Approximate is fine — we'll firm it up later.</p>
+<div class="travelers-group" id="adultNamesGroup" style="display:none;">
+<p class="travelers-group-label">Adults</p>
+<div id="adultNamesWrap"></div>
+</div>
 
-        <div class="date-toggle" role="tablist">
-          <button type="button" class="date-tab active" data-mode="approximate" role="tab">Approximate / flexible</button>
-          <button type="button" class="date-tab" data-mode="specific" role="tab">I have specific dates</button>
-        </div>
+<div class="travelers-group" id="childNamesGroup" style="display:none;">
+<p class="travelers-group-label">Children</p>
+<div id="childNamesWrap"></div>
+</div>
+</div>
+</div>
 
-        <!-- Approximate mode -->
-        <div class="date-pane active" data-pane="approximate">
-          <div class="field-row two">
-            <div class="field">
-              <label for="travelMonth">Target travel month</label>
-              <input type="text" id="travelMonth" name="travelMonth" placeholder="e.g. June 2026 or 'flexible'">
-            </div>
-            <div class="field">
-              <label for="dateFlex">How flexible?</label>
-              <select id="dateFlex" name="dateFlex">
-                <option value="">Select...</option>
-                <option>Locked to that month</option>
-                <option>+/- 2 weeks</option>
-                <option>+/- 1 month</option>
-                <option>Anytime that season</option>
-                <option>Wide open — show me deals</option>
-              </select>
-            </div>
-          </div>
-        </div>
+<!-- SECTION 4: BUDGET & STYLE -->
+<div class="section">
+<h2 class="section-title">Budget & style</h2>
+<p class="section-sub">Helps us shape options that actually fit. All amounts in USD, total trip.</p>
+<div class="field">
+<label for="budget">Approximate budget <span class="req">*</span></label>
+<select id="budget" name="budget" required>
+<option value="">Select range...</option>
+<option>Under $3,000</option>
+<option>$3,000 - $5,000</option>
+<option>$5,000 - $8,000</option>
+<option>$8,000 - $12,000</option>
+<option>$12,000 - $20,000</option>
+<option>$20,000+</option>
+<option>Not sure — show me options</option>
+</select>
+</div>
+<div class="field">
+<label>What matters most? (check all that apply)</label>
+<div class="check-grid">
+<label class="check-item"><input type="checkbox" name="priorities" value="First-timer experience">First-timer experience</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Anniversary / Honeymoon">Anniversary / Honeymoon</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Family-friendly">Family-friendly</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Adults-only">Adults-only</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Luxury">Luxury</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Best value">Best value</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Accessibility needs">Accessibility needs</label>
+<label class="check-item"><input type="checkbox" name="priorities" value="Group / multi-family">Group / multi-family</label>
+</div>
+</div>
+</div>
 
-        <!-- Specific mode -->
-        <div class="date-pane" data-pane="specific">
-          <div class="field-row two">
-            <div class="field">
-              <label for="startDate">Departure date</label>
-              <input type="date" id="startDate" name="startDate">
-            </div>
-            <div class="field">
-              <label for="endDate">Return date</label>
-              <input type="date" id="endDate" name="endDate">
-            </div>
-          </div>
-        </div>
+<!-- SECTION 5: NOTES & SOURCE -->
+<div class="section">
+<h2 class="section-title">Anything else?</h2>
+<p class="section-sub">Special occasions, dietary needs, accessibility requirements, must-haves, deal-breakers.</p>
+<div class="field">
+<label for="notes">Tell us more (optional)</label>
+<textarea id="notes" name="notes" placeholder="e.g. Celebrating 25th anniversary, wheelchair accessible cabin needed, must have direct flight from STL..."></textarea>
+</div>
+<div class="field">
+<label for="source">How did you hear about Craystar?</label>
+<select id="source" name="source">
+<option value="">Select...</option>
+<option>Google search</option>
+<option>Facebook / Instagram</option>
+<option>Referred by friend or family</option>
+<option>Nextdoor</option>
+<option>Local event</option>
+<option>Other</option>
+</select>
+</div>
+</div>
 
-        <div class="field">
-          <label for="duration">Trip length</label>
-          <select id="duration" name="duration">
-            <option value="">Select...</option>
-            <option>Long weekend (3-4 nights)</option>
-            <option>About a week (5-7 nights)</option>
-            <option>10-14 nights</option>
-            <option>Two weeks or more</option>
-            <option>Not sure yet</option>
-          </select>
-        </div>
+<div class="submit-row">
+<button type="submit" id="submitBtn">Request my free trip plan</button>
+<p class="fine-print">No spam, no pressure. We'll reach out within 1 business day.</p>
+<div class="error-msg" id="errorMsg">Something went wrong. Please try again or call us at 417-771-0910.</div>
+</div>
+</div>
 
-        <div class="field-row three">
-          <div class="field">
-            <label for="adults">Adults</label>
-            <input type="number" id="adults" name="adults" min="1" max="20" value="2">
-          </div>
-          <div class="field">
-            <label for="children">Children</label>
-            <input type="number" id="children" name="children" min="0" max="20" value="0">
-          </div>
-          <div class="field">
-            <label for="rooms">Rooms / cabins</label>
-            <input type="number" id="rooms" name="rooms" min="1" max="10" value="1">
-          </div>
-        </div>
+<div class="success-state" id="successState">
+<div class="success-icon">✓</div>
+<h2>Request received!</h2>
+<p>Thanks — we've got your details and will reach out within one business day with options. Watch for an email from <strong>eric.crayton@craystartravelagency.com</strong>.</p>
+<p style="font-size: 0.875rem;">In a hurry? Call or text <strong>417-771-0910</strong>.</p>
+</div>
 
-        <div class="field">
-          <label for="childAges">Children's ages (if applicable)</label>
-          <input type="text" id="childAges" name="childAges" placeholder="e.g. 8, 12">
-        </div>
-      </div>
-
-      <!-- SECTION 4: BUDGET & STYLE -->
-      <div class="section">
-        <h2 class="section-title">Budget & style</h2>
-        <p class="section-sub">Helps us shape options that actually fit. All amounts in USD, total trip.</p>
-
-        <div class="field">
-          <label for="budget">Approximate budget</label>
-          <select id="budget" name="budget">
-            <option value="">Select range...</option>
-            <option>Under $3,000</option>
-            <option>$3,000 - $5,000</option>
-            <option>$5,000 - $8,000</option>
-            <option>$8,000 - $12,000</option>
-            <option>$12,000 - $20,000</option>
-            <option>$20,000+</option>
-            <option>Not sure — show me options</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>What matters most? (check all that apply)</label>
-          <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="priorities" value="First-timer experience">First-timer experience</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Anniversary / Honeymoon">Anniversary / Honeymoon</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Family-friendly">Family-friendly</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Adults-only">Adults-only</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Luxury">Luxury</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Best value">Best value</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Accessibility needs">Accessibility needs</label>
-            <label class="check-item"><input type="checkbox" name="priorities" value="Group / multi-family">Group / multi-family</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 5: NOTES & SOURCE -->
-      <div class="section">
-        <h2 class="section-title">Anything else?</h2>
-        <p class="section-sub">Special occasions, dietary needs, accessibility requirements, must-haves, deal-breakers.</p>
-
-        <div class="field">
-          <label for="notes">Tell us more (optional)</label>
-          <textarea id="notes" name="notes" placeholder="e.g. Celebrating 25th anniversary, wheelchair accessible cabin needed, must have direct flight from STL..."></textarea>
-        </div>
-
-        <div class="field">
-          <label for="source">How did you hear about Craystar?</label>
-          <select id="source" name="source">
-            <option value="">Select...</option>
-            <option>Google search</option>
-            <option>Facebook / Instagram</option>
-            <option>Referred by friend or family</option>
-            <option>Nextdoor</option>
-            <option>Local event</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- SUBMIT -->
-      <div class="submit-row">
-        <button type="submit" id="submitBtn">Request my free trip plan</button>
-        <p class="fine-print">No spam, no pressure. We'll reach out within 1 business day.</p>
-        <div class="error-msg" id="errorMsg">Something went wrong. Please try again or call us at 417-771-0910.</div>
-      </div>
-    </div>
-
-    <!-- SUCCESS STATE -->
-    <div class="success-state" id="successState">
-      <div class="success-icon">✓</div>
-      <h2>Request received!</h2>
-      <p>Thanks — we've got your details and will reach out within one business day with options. Watch for an email from <strong>eric.crayton@craystartravelagency.com</strong>.</p>
-      <p style="font-size: 0.875rem;">In a hurry? Call or text <strong>417-771-0910</strong>.</p>
-    </div>
-  </form>
+</form>
 </div>
 
 <footer>
-  <p><strong>Craystar Travel Agency, LLC</strong></p>
-  <p style="margin-top: 0.5rem;">
-    <a href="tel:4177710910">417-771-0910</a> ·
-    <a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a> ·
-    M–F 9am–6pm CST
-  </p>
-  <p class="agent-link">
-    <a href="/portal/">Agent Login</a>
-  </p>
+<p><strong>Craystar Travel Agency, LLC</strong></p>
+<p style="margin-top: 0.5rem;">
+<a href="tel:4177710910">417-771-0910</a> ·
+<a href="mailto:eric.crayton@craystartravelagency.com">eric.crayton@craystartravelagency.com</a> ·
+M–F 9am–6pm CST
+</p>
+<p class="agent-link"><a href="/portal/">Agent Login</a></p>
 </footer>
 
 <script>
-  // ============================================================
-  // CRAYSTAR INTAKE FORM
-  // Submits to: (1) Web3Forms — emails Eric instantly
-  //             (2) Google Sheets via Apps Script — feeds the CRM
-  // ============================================================
+// ============================================================
+// CRAYSTAR INTAKE FORM
+// (1) Web3Forms — emails Eric instantly
+// (2) Google Apps Script — feeds the CRM
+// ============================================================
 
-  // ---- CONFIG ----
-  const WEB3FORMS_KEY = '49234a63-f917-4fd7-9abf-fe428e19ce34';
+const WEB3FORMS_KEY = '49234a63-f917-4fd7-9abf-fe428e19ce34';
+const CRM_SYNC_URL = 'https://script.google.com/macros/s/AKfycbwAVnt4Qpa6219e5ebolGUz_XopwY61IG3uhuVwAF5Km_bcc7eUVtvqFrFQRHpdhCiQVw/exec';
 
-  // Paste your Apps Script Web App URL here once you've deployed the
-  // CRM bridge (see SETUP-README.md). Leave the placeholder in place
-  // until you've deployed — the form will still email you via Web3Forms.
-  const CRM_SYNC_URL = 'https://script.google.com/macros/s/AKfycbwAVnt4Qpa6219e5ebolGUz_XopwY61IG3uhuVwAF5Km_bcc7eUVtvqFrFQRHpdhCiQVw/exec';
-  // ----------------
+const form = document.getElementById('intakeForm');
+const submitBtn = document.getElementById('submitBtn');
+const errorMsg = document.getElementById('errorMsg');
+const formContent = document.getElementById('formContent');
+const successState = document.getElementById('successState');
 
-  const form = document.getElementById('intakeForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  const formContent = document.getElementById('formContent');
-  const successState = document.getElementById('successState');
+// Trip-type → reveal block
+const tripRadios = document.querySelectorAll('input[name="tripType"]');
+const conditionals = document.querySelectorAll('.conditional');
+tripRadios.forEach(r => {
+r.addEventListener('change', () => {
+conditionals.forEach(c => c.classList.toggle('active', c.dataset.show === r.value));
+});
+});
 
-  // Conditional sections based on trip type
-  const tripRadios = document.querySelectorAll('input[name="tripType"]');
-  const conditionals = document.querySelectorAll('.conditional');
+// Disney destination cascade
+const disneyDestSelect = document.getElementById('disneyDestination');
+const disneyNested = document.querySelectorAll('[data-disney-show]');
+if (disneyDestSelect) {
+disneyDestSelect.addEventListener('change', () => {
+disneyNested.forEach(el => el.classList.toggle('active', el.dataset.disneyShow === disneyDestSelect.value));
+});
+}
 
-  tripRadios.forEach(r => {
-    r.addEventListener('change', () => {
-      conditionals.forEach(c => {
-        c.classList.toggle('active', c.dataset.show === r.value);
-      });
-    });
-  });
+// Universal destination cascade
+const universalDestSelect = document.getElementById('universalDestination');
+const universalNested = document.querySelectorAll('[data-universal-show]');
+if (universalDestSelect) {
+universalDestSelect.addEventListener('change', () => {
+universalNested.forEach(el => el.classList.toggle('active', el.dataset.universalShow === universalDestSelect.value));
+});
+}
 
-  // Cruise-line-specific suite tier hints
-  const cruiseLineSelect = document.getElementById('cruiseLine');
-  const roomTypeSelect = document.getElementById('cruiseRoomType');
-  const suiteHint = document.getElementById('suiteHint');
+// ============================================================
+// TRAVELER NAMES — dynamic per adults/children count
+// ============================================================
+const adultsInput = document.getElementById('adults');
+const childrenInput = document.getElementById('children');
+const travelersBlock = document.getElementById('travelersBlock');
+const adultNamesGroup = document.getElementById('adultNamesGroup');
+const childNamesGroup = document.getElementById('childNamesGroup');
+const adultNamesWrap = document.getElementById('adultNamesWrap');
+const childNamesWrap = document.getElementById('childNamesWrap');
 
-  // Each line has its own premium suite branding — show a friendly hint when premium tier is being considered
-  const SUITE_HINTS = {
-    'Royal Caribbean': "Royal Caribbean premium suites include Junior Suite, Grand Suite, Owner's Suite, and Star Class (Royal Genie service on Oasis-class & Icon-class).",
-    'Carnival': 'Carnival premium suites include Grand Suite, Excel Suites (with private hot tubs on Excel-class), and Family Harbor staterooms with private lounge.',
-    'Celebrity': 'Celebrity premium suites are part of The Retreat — private restaurant (Luminae), lounge, and sun deck. Sky Suites through Iconic Suite.',
-    'Norwegian': 'Norwegian premium suites include The Haven — ship-within-a-ship private courtyard, restaurant, sun deck, and butler service.',
-    'Princess': "Princess premium options include Reserve Collection (private restaurant + concierge), Sanctuary Collection on Sphere-class, and Owner's Suite.",
-    'Viking — Ocean': "Viking Ocean suites include Penthouse Veranda, Penthouse Junior Suite, Explorer Suite, and Owner's Suite — all with verandas and butler service.",
-    'Viking — River': 'Viking River top tier is the Explorer Suite — 445 sq ft, the largest river suites in Europe, with wraparound veranda.',
-    'Viking — Expedition': "Viking Expedition top tier is the Owner's Suite on Octantis and Polaris — separate living room and panoramic forward views.",
-    'Disney Cruise Line': 'Disney Cruise Line premium options include Concierge-level staterooms with private lounge, sun deck, and dedicated concierge service.',
-  };
+function escapeAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 
-  function updateSuiteHint() {
-    if (!cruiseLineSelect || !roomTypeSelect || !suiteHint) return;
-    const line = cruiseLineSelect.value;
-    const room = roomTypeSelect.value;
-    const isPremium = room === 'Full Suite' || room === 'Premium suite tier (varies by line)' || room === 'Mini-suite';
-    if (isPremium && SUITE_HINTS[line]) {
-      suiteHint.textContent = SUITE_HINTS[line];
-      suiteHint.style.display = 'block';
-    } else {
-      suiteHint.style.display = 'none';
-    }
-  }
+function renderAdultNames() {
+const count = Math.max(0, parseInt(adultsInput.value, 10) || 0);
+const existing = Array.from(adultNamesWrap.querySelectorAll('input')).map(i => i.value);
+adultNamesWrap.innerHTML = '';
+for (let i = 0; i < count; i++) {
+const row = document.createElement('div');
+row.className = 'adult-row';
+const val = existing[i] ? escapeAttr(existing[i]) : '';
+row.innerHTML =
+'<label for="adultName_' + (i+1) + '">Adult ' + (i+1) + ' — full name <span class="req">*</span></label>' +
+'<input type="text" id="adultName_' + (i+1) + '" name="adultName_' + (i+1) + '" required ' +
+'placeholder="First & last name (as on ID)" value="' + val + '">';
+adultNamesWrap.appendChild(row);
+}
+adultNamesGroup.style.display = count > 0 ? 'block' : 'none';
+toggleTravelersBlock();
+}
 
-  if (cruiseLineSelect) cruiseLineSelect.addEventListener('change', updateSuiteHint);
-  if (roomTypeSelect) roomTypeSelect.addEventListener('change', updateSuiteHint);
+function renderChildNames() {
+const count = Math.max(0, parseInt(childrenInput.value, 10) || 0);
+const existingNames = Array.from(childNamesWrap.querySelectorAll('input[data-kind="name"]')).map(i => i.value);
+const existingDOBs  = Array.from(childNamesWrap.querySelectorAll('input[data-kind="dob"]')).map(i => i.value);
+const today = new Date().toISOString().split('T')[0];
+childNamesWrap.innerHTML = '';
+for (let i = 0; i < count; i++) {
+const row = document.createElement('div');
+row.className = 'child-row';
+const nameVal = existingNames[i] ? escapeAttr(existingNames[i]) : '';
+const dobVal  = existingDOBs[i] ? escapeAttr(existingDOBs[i]) : '';
+row.innerHTML =
+'<div>' +
+'<label for="childName_' + (i+1) + '">Child ' + (i+1) + ' — name <span class="req">*</span></label>' +
+'<input type="text" id="childName_' + (i+1) + '" name="childName_' + (i+1) + '" data-kind="name" required ' +
+'placeholder="First name" value="' + nameVal + '">' +
+'</div>' +
+'<div>' +
+'<label for="childDOB_' + (i+1) + '">Date of birth <span class="req">*</span></label>' +
+'<input type="date" id="childDOB_' + (i+1) + '" name="childDOB_' + (i+1) + '" data-kind="dob" required ' +
+'max="' + today + '" value="' + dobVal + '">' +
+'</div>';
+childNamesWrap.appendChild(row);
+}
+childNamesGroup.style.display = count > 0 ? 'block' : 'none';
+toggleTravelersBlock();
+}
 
-  // Date mode toggle (specific vs approximate)
-  const dateTabs = document.querySelectorAll('.date-tab');
-  const datePanes = document.querySelectorAll('.date-pane');
-  let dateMode = 'approximate';
+function toggleTravelersBlock() {
+const a = parseInt(adultsInput.value, 10) || 0;
+const c = parseInt(childrenInput.value, 10) || 0;
+travelersBlock.style.display = (a + c) > 0 ? 'block' : 'none';
+}
 
-  dateTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      dateMode = tab.dataset.mode;
-      dateTabs.forEach(t => t.classList.toggle('active', t === tab));
-      datePanes.forEach(p => p.classList.toggle('active', p.dataset.pane === dateMode));
-    });
-  });
+adultsInput.addEventListener('input', renderAdultNames);
+childrenInput.addEventListener('input', renderChildNames);
+// Initial render (covers default values: 2 adults, 0 children)
+renderAdultNames();
+renderChildNames();
 
-  // Handle submit
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    errorMsg.classList.remove('show');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
+// Date mode toggle
+const dateTabs = document.querySelectorAll('.date-tab');
+const datePanes = document.querySelectorAll('.date-pane');
+const travelMonthInput = document.getElementById('travelMonth');
+const startDateInput = document.getElementById('startDate');
+let dateMode = 'approximate';
+function applyDateModeRequired() {
+if (dateMode === 'specific') {
+travelMonthInput.removeAttribute('required');
+startDateInput.setAttribute('required', '');
+} else {
+startDateInput.removeAttribute('required');
+travelMonthInput.setAttribute('required', '');
+}
+}
+applyDateModeRequired();
+dateTabs.forEach(tab => {
+tab.addEventListener('click', () => {
+dateMode = tab.dataset.mode;
+dateTabs.forEach(t => t.classList.toggle('active', t === tab));
+datePanes.forEach(p => p.classList.toggle('active', p.dataset.pane === dateMode));
+applyDateModeRequired();
+});
+});
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+// Submit
+form.addEventListener('submit', async (e) => {
+e.preventDefault();
+errorMsg.classList.remove('show');
+submitBtn.disabled = true;
+submitBtn.textContent = 'Sending...';
 
-    // Multi-select priorities (checkboxes share name)
-    data.priorities = formData.getAll('priorities').join(', ');
+const formData = new FormData(form);
+const data = Object.fromEntries(formData.entries());
 
-    // Build a clean "travel_dates" summary based on which mode was used
-    if (dateMode === 'specific') {
-      data.dateMode = 'Specific dates';
-      data.travelDatesSummary = (data.startDate && data.endDate)
-        ? `${data.startDate} → ${data.endDate}`
-        : (data.startDate || data.endDate || 'Specific dates — not entered');
-      // clear the approximate fields so they don't muddy the email
-      data.travelMonth = '';
-      data.dateFlex = '';
-    } else {
-      data.dateMode = 'Approximate / flexible';
-      data.travelDatesSummary = [data.travelMonth, data.dateFlex].filter(Boolean).join(' — ') || 'Flexible';
-      data.startDate = '';
-      data.endDate = '';
-    }
+data.priorities = formData.getAll('priorities').join(', ');
 
-    // Build a clean subject + summary for the email
-    data.subject = `New Trip Request: ${data.firstName} ${data.lastName} — ${data.tripType || 'Unspecified'}`;
-    data.from_name = 'Craystar Intake Form';
+// Collect adult names
+const adultNames = [];
+document.querySelectorAll('#adultNamesWrap input').forEach(inp => {
+if (inp.value.trim()) adultNames.push(inp.value.trim());
+});
+data.adultNames = adultNames.join(', ');
 
-    try {
-      // ---- 1. Submit to Web3Forms (live — emails Eric) ----
-      const w3Res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...data })
-      });
-      const w3Json = await w3Res.json();
-      if (!w3Json.success) throw new Error('Web3Forms submission failed');
+// Collect child names + DOBs (and auto-compute age in years)
+const childNames = [];
+const childDOBs  = [];
+const childAges  = [];
+document.querySelectorAll('#childNamesWrap input[data-kind="name"]').forEach(inp => {
+if (inp.value.trim()) childNames.push(inp.value.trim());
+});
+document.querySelectorAll('#childNamesWrap input[data-kind="dob"]').forEach(inp => {
+if (inp.value) {
+childDOBs.push(inp.value);
+const dob = new Date(inp.value);
+const now = new Date();
+let age = now.getFullYear() - dob.getFullYear();
+const m = now.getMonth() - dob.getMonth();
+if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age--;
+childAges.push(String(age));
+}
+});
+data.childNames = childNames.join(', ');
+data.childDOBs  = childDOBs.join(', ');
+data.childAges  = childAges.join(', ');
 
-      // ---- 2. Send to CRM via Google Sheets (only if URL is configured) ----
-      if (CRM_SYNC_URL && CRM_SYNC_URL.startsWith('https://script.google.com/')) {
-        const crmPayload = {
-          firstName: data.firstName || '',
-          lastName: data.lastName || '',
-          email: data.email || '',
-          phone: data.phone || '',
-          city: data.city || '',
-          tripType: data.tripType || '',
-          destination: data.destination || '',
-          travelDates: data.travelDatesSummary || '',
-          duration: data.duration || '',
-          adults: data.adults || '',
-          children: data.children || '',
-          childAges: data.childAges || '',
-          rooms: data.rooms || '',
-          budget: data.budget || '',
-          priorities: data.priorities || '',
-          notes: data.notes || '',
-          cruiseLine: data.cruiseLine || '',
-          cruiseRegion: data.cruiseRegion || '',
-          cruiseRoomType: data.cruiseRoomType || '',
-          resortBrand: data.resortBrand || '',
-          source: data.source || 'Website',
-          submittedFrom: 'craystartravelagency.com'
-        };
-        try {
-          // Fire-and-forget — don't fail the user's submission if the CRM is down
-          fetch(CRM_SYNC_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            keepalive: true,
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(crmPayload)
-          }).catch(err => console.warn('CRM sync failed (lead still captured via email):', err));
-        } catch (crmErr) {
-          console.warn('CRM sync error (non-blocking):', crmErr);
-        }
-      }
+// Travel dates summary
+if (dateMode === 'specific') {
+data.dateMode = 'Specific dates';
+data.travelDatesSummary = (data.startDate && data.endDate)
+? `${data.startDate} → ${data.endDate}`
+: (data.startDate || data.endDate || 'Specific dates — not entered');
+data.travelMonth = '';
+data.dateFlex = '';
+} else {
+data.dateMode = 'Approximate / flexible';
+data.travelDatesSummary = [data.travelMonth, data.dateFlex].filter(Boolean).join(' — ') || 'Flexible';
+data.startDate = '';
+data.endDate = '';
+}
 
-      // Success
-      formContent.classList.add('hide');
-      successState.classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+data.subject = `New Trip Request: ${data.firstName} ${data.lastName} — ${data.tripType || 'Unspecified'}`;
+data.from_name = 'Craystar Intake Form';
 
-    } catch (err) {
-      console.error(err);
-      errorMsg.classList.add('show');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Request my free trip plan';
-    }
-  });
+try {
+// 1) Web3Forms (email)
+const w3Res = await fetch('https://api.web3forms.com/submit', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...data })
+});
+const w3Json = await w3Res.json();
+if (!w3Json.success) throw new Error('Web3Forms submission failed');
+
+// 2) CRM (Apps Script)
+if (CRM_SYNC_URL && CRM_SYNC_URL.startsWith('https://script.google.com/')) {
+const crmPayload = {
+firstName: data.firstName || '',
+lastName: data.lastName || '',
+email: data.email || '',
+phone: data.phone || '',
+streetAddress: data.streetAddress || '',
+addressLine2: data.addressLine2 || '',
+city: data.city || '',
+state: data.state || '',
+zip: data.zip || '',
+tripType: data.tripType || '',
+destination: data.destination || '',
+travelDates: data.travelDatesSummary || '',
+duration: data.duration || '',
+adults: data.adults || '',
+children: data.children || '',
+adultNames: data.adultNames || '',
+childNames: data.childNames || '',
+childDOBs: data.childDOBs || '',
+childAges: data.childAges || '',
+rooms: data.rooms || '',
+budget: data.budget || '',
+priorities: data.priorities || '',
+notes: data.notes || '',
+disneyDestination: data.disneyDestination || '',
+wdwHotelCategory: data.wdwHotelCategory || '',
+dlHotelCategory: data.dlHotelCategory || '',
+universalDestination: data.universalDestination || '',
+uoHotelCategory: data.uoHotelCategory || '',
+uhHotelCategory: data.uhHotelCategory || '',
+cruiseLine: data.cruiseLine || '',
+cruiseRegion: data.cruiseRegion || '',
+cruiseRoomType: data.cruiseRoomType || '',
+resortBrand: data.resortBrand || '',
+source: data.source || 'Website',
+submittedFrom: 'craystartravelagency.com'
+};
+try {
+fetch(CRM_SYNC_URL, {
+method: 'POST',
+mode: 'no-cors',
+keepalive: true,
+headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+body: JSON.stringify(crmPayload)
+}).catch(err => console.warn('CRM sync failed (lead still captured via email):', err));
+} catch (crmErr) {
+console.warn('CRM sync error (non-blocking):', crmErr);
+}
+}
+
+formContent.classList.add('hide');
+successState.classList.add('show');
+window.scrollTo({ top: 0, behavior: 'smooth' });
+
+} catch (err) {
+console.error(err);
+errorMsg.classList.add('show');
+submitBtn.disabled = false;
+submitBtn.textContent = 'Request my free trip plan';
+}
+});
 </script>
+
 </body>
 </html>
